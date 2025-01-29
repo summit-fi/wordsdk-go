@@ -1,6 +1,7 @@
 package fluent
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 )
@@ -68,12 +69,13 @@ func Time(positional []Value, named map[string]Value, params ...string) Value {
 	}
 
 	dateStr := positional[0].String()
-	date, err := time.Parse(time.RFC3339, dateStr)
+
+	date, err := time.Parse("2006-01-02", dateStr)
 	if err != nil {
-		return &NoValue{value: "func TIME: invalid date format"}
+		return &NoValue{value: fmt.Sprintf("func TIME: invalid date format -> %s", dateStr)}
 	}
 
-	format := "2006-01-02"
+	format := "2006 01 02"
 	if len(positional) > 1 {
 		format = positional[1].String()
 	}
