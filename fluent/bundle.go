@@ -196,7 +196,7 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 		}
 	}
 
-	functions["DATETIME"] = DateTime
+	functions["TIME"] = Time
 
 	return variables, functions
 }

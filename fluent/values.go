@@ -61,16 +61,16 @@ func (value *NoValue) String() string {
 	return "{" + value.value + "}"
 }
 
-// DateTime is a function that returns a formatted date string
-func DateTime(positional []Value, named map[string]Value, params ...string) Value {
+// Time is a function that returns a formatted date string
+func Time(positional []Value, named map[string]Value, params ...string) Value {
 	if len(positional) < 1 {
-		return &NoValue{value: "DATETIME: missing date argument"}
+		return &NoValue{value: "func TIME: missing date argument"}
 	}
 
 	dateStr := positional[0].String()
 	date, err := time.Parse(time.RFC3339, dateStr)
 	if err != nil {
-		return &NoValue{value: "DATETIME: invalid date format"}
+		return &NoValue{value: "func TIME: invalid date format"}
 	}
 
 	format := "2006-01-02"

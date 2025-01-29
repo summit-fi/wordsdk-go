@@ -103,3 +103,42 @@ datetime = { DATETIME($date, pattern:"") }
 		t.Errorf("bundle.FormatMessage error: %s", msg)
 	}
 }
+
+func TestCustomFunction(t *testing.T) {
+	ftl := `key-custom = { CUSTOM() -> 
+[one] room 
+*[other] rooms 
+}`
+	resource, err := fluent.NewResource(string(ftl))
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	bundle := fluent.NewBundle(language.English)
+	bundle.RegisterFunction("CUSTOM", func(positional []fluent.Value, named map[string]fluent.Value, params ...string) fluent.Value {
+		fmt.Println("Named arguments:")
+		for key, value := range named {
+			fmt.Println(key, value)
+		}
+		fmt.Println("Positional arguments:")
+		for i, value := range positional {
+			fmt.Println(i, value)
+		}
+		return &fluent.StringValue{Value: "custom function"}
+	})
+
+	bundle.AddResource(resource)
+
+	msg, _, fatalErr := bundle.FormatMessage("key-custom", fluent.WithVariable("place", "room"), fluent.WithVariable("place2", "place2"))
+	if fatalErr != nil {
+		t.Errorf("bundle.FormatMessage fatal error: %s", fatalErr)
+		//panic(fatalErr)
+	}
+
+	expected := "many rooms"
+	if msg != expected {
+		t.Errorf("bundle.FormatMessage error: %s", msg)
+	}
+
+}
