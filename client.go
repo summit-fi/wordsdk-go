@@ -8,10 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/summit-fi/wordsdk-go/source"
-
-	"golang.org/x/text/language"
 )
 
 type Config struct {
@@ -48,8 +45,7 @@ type Client struct {
 	updateInterval time.Duration
 	logLevel       int
 	maxCacheSizeMB int
-	localizers     map[string]*i18n.Localizer // localCode -> localizer
-	bundles        map[string]*i18n.Bundle    // localCode -> bundle
+	cache          Map[string, string]
 	localizersLock sync.RWMutex
 	saveStrategy   SaveStrategy
 	saveBundle     []source.Object
@@ -71,8 +67,6 @@ func NewClient(config *Config) (SDK, error) {
 		},
 		updateInterval: config.UpdateInterval,
 		maxCacheSizeMB: config.MaxCacheSizeMB,
-		localizers:     make(map[string]*i18n.Localizer),
-		bundles:        make(map[string]*i18n.Bundle),
 		saveStrategy:   config.SaveStrategy,
 	}
 
@@ -80,6 +74,8 @@ func NewClient(config *Config) (SDK, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
+
+	c.cache = NewMap[string, string]()
 
 	c.checksum = checksum
 	err = c.UpdateBundle(data)
@@ -114,12 +110,14 @@ func (c *Client) syncTranslations() {
 	}
 
 	c.checksum = checksum
+
 	err = c.UpdateBundle(data)
 	if err != nil {
 		c.logger.Errorf("Failed to update bundle: %v", err)
 		return
 	}
-	sizeMB := float64(c.GetBundleSize()) / 1024 / 1024
+
+	sizeMB := float64(c.GetCacheSize()) / 1024 / 1024
 	c.logger.Infof("Translations synced, count: %d, size %f MB", len(data), sizeMB)
 	//c.logger.Infof("Translations synced, count: %d", len(data))
 
@@ -131,67 +129,18 @@ func (c *Client) syncTranslations() {
 func (c *Client) UpdateBundle(data []source.Object) error {
 	c.localizersLock.Lock()
 	defer c.localizersLock.Unlock()
-
-	var localizeTags = make(map[string]language.Tag)
-
-	var err error
-	for _, datum := range data {
-
-		var tag language.Tag
-		tag, ok := localizeTags[datum.LocaleCode]
-		if !ok {
-			tag, err = language.Parse(datum.LocaleCode)
-			if err != nil {
-				return err
-			}
-			localizeTags[datum.LocaleCode] = tag
-		}
-
-		localizer, ok := c.localizers[datum.LocaleCode]
-		if !ok {
-			c.bundles[datum.LocaleCode] = i18n.NewBundle(tag)
-			localizer = i18n.NewLocalizer(c.bundles[datum.LocaleCode])
-			c.localizers[datum.LocaleCode] = localizer
-		}
-		bundle := c.bundles[datum.LocaleCode]
-
-		switch datum.Value.(type) {
-		case string:
-			err = bundle.AddMessages(tag, &i18n.Message{
-				ID:    datum.Key,
-				Other: datum.Value.(string),
-			})
-			if err != nil {
-				return err
-			}
-		case map[string]interface{}:
-			value := datum.Value.(map[string]interface{})
-			err = bundle.AddMessages(tag, &i18n.Message{
-				ID:    datum.Key,
-				Zero:  fmt.Sprint(value["zero"]),
-				One:   fmt.Sprint(value["one"]),
-				Two:   fmt.Sprint(value["two"]),
-				Few:   fmt.Sprint(value["few"]),
-				Many:  fmt.Sprint(value["many"]),
-				Other: fmt.Sprint(value["other"]),
-			})
-			if err != nil {
-				return err
-			}
-		default:
-			return fmt.Errorf("unsupported value type %T", datum.Value)
-		}
+	for _, d := range data {
+		c.cache.Set(d.LocaleCode+d.Key, d.Value)
 	}
-
-	return err
+	return nil
 }
 
-func (c *Client) GetBundleSize() int {
+func (c *Client) GetCacheSize() int {
 	c.localizersLock.RLock()
 	defer c.localizersLock.RUnlock()
 
 	size := 0
-	for _, bundle := range c.bundles {
+	for _, bundle := range c.cache.GetAll() {
 		size += int(reflect.TypeOf(bundle).Size())
 	}
 	return size
