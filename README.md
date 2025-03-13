@@ -1,1 +1,1 @@
-# wordsdk-go
+# word-go
