@@ -2,9 +2,9 @@ package word
 
 import (
 	"fmt"
+	"reflect"
 
-	"github.com/nicksnyder/go-i18n/v2/i18n"
-
+	"github.com/gotnospirit/messageformat"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
@@ -12,26 +12,55 @@ func (c *Client) T(lang string, key string) string {
 	c.localizersLock.RLock()
 	defer c.localizersLock.RUnlock()
 
-	localizer, ok := c.localizers[lang]
-	if !ok {
+	datum := c.cache.Get(lang + key)
+
+	if len(datum) == 0 {
+		c.logger.Debugf("translation '%s' not found", key)
+		return key
+	}
+	return ""
+}
+
+func (c *Client) TA(lang string, key string, args any) string {
+	// temporary
+	datum := c.cache.Get(lang + key)
+
+	if len(datum) == 0 {
+		c.logger.Debugf("translation '%s' not found", key)
 		return key
 	}
 
-	result, err := localizer.Localize(&i18n.LocalizeConfig{
-		MessageID: key,
-	})
+	parser, err := messageformat.NewWithCulture(lang[:2])
+	if err != nil {
+		c.logger.Errorf("Failed to create ICU parser: %v", err)
+		return ""
+	}
+
+	icu, err := parser.Parse(datum)
 	if err != nil {
 		c.logger.Errorf("Failed to translate %s: %v", key, err)
 		return key
 	}
 
-	c.logger.Debugf("Translate(%s, %s) -> %s", lang, key, result)
-	return result
-}
+	var template map[string]interface{}
 
-func (c *Client) TA(lang string, key string, args any) string {
-	// temporary
-	return c.T(lang, key)
+	switch temp := args.(type) {
+	case string:
+		return c.T(lang, key)
+
+	case map[string]interface{}:
+		template = temp
+	default:
+		c.logger.Errorf("Unsupported type of args -> key: %s, sent type: %s", key, reflect.TypeOf(datum).String())
+	}
+
+	result, err := icu.FormatMap(template)
+	if err != nil {
+		c.logger.Errorf("Failed to translate %s: %v", key, err)
+		return key
+	}
+
+	return result
 }
 
 func (c *Client) SaveTranslations(data []source.Object) error {

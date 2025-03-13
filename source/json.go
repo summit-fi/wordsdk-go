@@ -96,7 +96,7 @@ func (j *LocalJson) LoadAll(checksumIn string) ([]Object, string, error) {
 	// Format result
 	var objects []Object
 	for _, file := range files {
-		var data map[string]interface{}
+		var data map[string]string
 		err := json.Unmarshal(file.bytes, &data)
 		if err != nil {
 			return nil, "", fmt.Errorf("failed to unmarshal file %s: %v", file.localeCode, err)

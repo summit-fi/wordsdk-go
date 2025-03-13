@@ -6,7 +6,7 @@ type Source interface {
 }
 
 type Object struct {
-	LocaleCode string      `json:"localeCode"`
-	Key        string      `json:"key"`
-	Value      interface{} `json:"value"`
+	LocaleCode string `json:"localeCode"`
+	Key        string `json:"key"`
+	Value      string `json:"value"`
 }
