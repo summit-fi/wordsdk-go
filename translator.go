@@ -29,6 +29,11 @@ func (c *Client) T(lang string, key string) string {
 	return result
 }
 
+func (c *Client) TA(lang string, key string, args any) string {
+	// temporary
+	return c.T(lang, key)
+}
+
 func (c *Client) SaveTranslations(data []source.Object) error {
 	err := c.saveObjects(data)
 	if err != nil {
