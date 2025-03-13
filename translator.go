@@ -45,6 +45,8 @@ func (c *Client) TA(lang string, key string, args any) string {
 	var template map[string]interface{}
 
 	switch temp := args.(type) {
+	case string:
+		return c.T(lang, key)
 
 	case map[string]interface{}:
 		template = temp

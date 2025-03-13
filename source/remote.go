@@ -30,11 +30,11 @@ type response struct {
 	Id     int    `json:"id"`
 	Name   string `json:"name"`
 	Values []struct {
-		Id          int         `json:"id"`
-		Value       interface{} `json:"value"`
-		Locale      string      `json:"locale"`
-		Status      string      `json:"status"`
-		HasComments bool        `json:"hasComments"`
+		Id          int    `json:"id"`
+		Value       string `json:"value"`
+		Locale      string `json:"locale"`
+		Status      string `json:"status"`
+		HasComments bool   `json:"hasComments"`
 	} `json:"values"`
 }
 
