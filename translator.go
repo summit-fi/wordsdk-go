@@ -18,7 +18,7 @@ func (c *Client) T(lang string, key string) string {
 		c.logger.Debugf("translation '%s' not found", key)
 		return key
 	}
-	return ""
+	return datum
 }
 
 func (c *Client) TA(lang string, key string, args any) string {
