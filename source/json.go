@@ -14,6 +14,20 @@ type LocalJson struct {
 	sync.RWMutex
 }
 
+func (j *LocalJson) SaveDynamic(accessKey string, data []Object) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (j *LocalJson) LoadAllDynamic(key string, checksumIn string) (result []Object, checksumOut string, err error) {
+	//TODO implement me
+	panic("implement me")
+}
+func (j *LocalJson) LoadOneDynamic(accessKey, lang, key string) (string, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 type file struct {
 	localeCode string
 	path       string
@@ -57,7 +71,7 @@ type openedFile struct {
 	bytes      []byte
 }
 
-func (j *LocalJson) LoadAll(checksumIn string) ([]Object, string, error) {
+func (j *LocalJson) LoadAllStatic(checksumIn string) ([]Object, string, error) {
 	j.RLock()
 	defer j.RUnlock()
 

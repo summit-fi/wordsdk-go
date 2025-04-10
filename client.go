@@ -31,25 +31,29 @@ var (
 
 func GetDefaultConfig(apiKey string) *Config {
 	return &Config{
-		Source:         source.NewRemote("https://dev.wordapi.thesumm.it/api/v1", apiKey),
+		Source: source.NewRemote(
+			"https://dev.wordapi.thesumm.it/api/v1",
+			apiKey,
+		),
 		UpdateInterval: 10 * time.Second,
 		MaxCacheSizeMB: 256,
 	}
 }
 
 type Client struct {
-	httpClient     *http.Client
-	source         source.Source
-	logger         Logger
-	checksum       string
-	updateInterval time.Duration
-	logLevel       int
-	maxCacheSizeMB int
-	cache          Map[string, string]
-	localizersLock sync.RWMutex
-	saveStrategy   SaveStrategy
-	saveBundle     []source.Object
-	saveBundleLock sync.Mutex
+	httpClient              *http.Client
+	source                  source.Source
+	dynamicContentAccessKey string
+	logger                  Logger
+	checksum                string
+	updateInterval          time.Duration
+	logLevel                int
+	maxCacheSizeMB          int
+	cache                   Map[string, string]
+	localizersLock          sync.RWMutex
+	saveStrategy            SaveStrategy
+	saveBundle              []source.Object
+	saveBundleLock          sync.Mutex
 }
 
 func NewClient(config *Config) (SDK, error) {
@@ -70,7 +74,7 @@ func NewClient(config *Config) (SDK, error) {
 		saveStrategy:   config.SaveStrategy,
 	}
 
-	data, checksum, err := config.Source.LoadAll("")
+	data, checksum, err := config.Source.LoadAllStatic("")
 	if err != nil {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
@@ -87,6 +91,19 @@ func NewClient(config *Config) (SDK, error) {
 	return &c, nil
 }
 
+func (c *Client) EnableDynamicContent(key string) *DynamicContent {
+	cli := c
+	cli.dynamicContentAccessKey = key
+	return &DynamicContent{
+		Client: cli,
+	}
+}
+func (c *Client) Dynamic() *DynamicContent {
+	return &DynamicContent{
+		Client: c,
+	}
+}
+
 func (c *Client) runSyncTranslationsJob() {
 	c.syncTranslations()
 	go func() {
@@ -98,7 +115,7 @@ func (c *Client) runSyncTranslationsJob() {
 }
 
 func (c *Client) syncTranslations() {
-	data, checksum, err := c.source.LoadAll(c.checksum)
+	data, checksum, err := c.source.LoadAllStatic(c.checksum)
 	if err != nil {
 		c.logger.Errorf("Failed to sync translations: %v", err)
 		return

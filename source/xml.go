@@ -32,7 +32,7 @@ func NewLocalXml(path string) (*LocalXml, error) {
 	return &LocalXml{path: path}, nil
 }
 
-func (x *LocalXml) LoadAll(checksumIn string) ([]Object, string, error) {
+func (x *LocalXml) LoadAllStatic(checksumIn string) ([]Object, string, error) {
 	file, err := os.Open(x.path)
 	if err != nil {
 		return nil, "", err

@@ -33,7 +33,7 @@ func NewLocalYaml(path string) (*LocalYaml, error) {
 	return &LocalYaml{path: path}, nil
 }
 
-func (y *LocalYaml) LoadAll(checksumIn string) ([]Object, string, error) {
+func (y *LocalYaml) LoadAllStatic(checksumIn string) ([]Object, string, error) {
 	file, err := os.Open(y.path)
 	if err != nil {
 		return nil, "", err

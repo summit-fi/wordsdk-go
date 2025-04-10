@@ -12,14 +12,14 @@ import (
 
 type Remote struct {
 	ApiBaseUrl string
-	AccessKey  string
+	StaticKey  string
 	httpClient *http.Client
 }
 
 func NewRemote(apiBaseUrl, accessKey string) *Remote {
 	return &Remote{
 		ApiBaseUrl: apiBaseUrl,
-		AccessKey:  accessKey,
+		StaticKey:  accessKey,
 		httpClient: &http.Client{
 			Timeout: 5 * time.Second,
 		},
@@ -38,14 +38,14 @@ type response struct {
 	} `json:"values"`
 }
 
-func (c *Remote) LoadAll(checksumIn string) (result []Object, checksumOut string, err error) {
+func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut string, err error) {
 
-	url := fmt.Sprintf("%s/values", c.ApiBaseUrl)
+	url := fmt.Sprintf("%s/static/values", c.ApiBaseUrl)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, "", err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
+	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
 	if checksumIn != "" {
 		req.Header.Set("If-None-Match", checksumIn)
 	}
@@ -89,6 +89,97 @@ func (c *Remote) LoadAll(checksumIn string) (result []Object, checksumOut string
 	return result, checksumOut, nil
 }
 
+func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []Object, checkSumOut string, err error) {
+	url := fmt.Sprintf("%s/values", c.ApiBaseUrl)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, "", err
+	}
+	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+
+	fmt.Println("Static", c.StaticKey)
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
+	if checksumIn != "" {
+		req.Header.Set("If-None-Match", checksumIn)
+	}
+	return nil, "", nil
+}
+
+type singleKeyResponse struct {
+}
+
+func (c *Remote) LoadOneDynamic(accessKey, lang, key string) (string, error) {
+	url := fmt.Sprintf("%s/dynamic/value?lang=%s&key=%s", c.ApiBaseUrl, lang, key)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return key, err
+	}
+
+	req.Header.Set("X-Dynamic-Key", accessKey)
+	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+
+		return key, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+
+		return key, err
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return key, err
+
+	}
+	return string(b), err
+}
+
+func (c *Remote) SaveDynamic(accessKey string, data []Object) error {
+	var r = struct {
+		Values []Object `json:"values"`
+	}{
+
+		Values: data,
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
+
+	fmt.Println(bytes.NewBuffer(b))
+
+	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(b))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("X-Dynamic-Key", accessKey)
+	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		b, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+
+		return errors.New("Error from server returned: " + string(b))
+	}
+
+	return nil
+}
+
 func (c *Remote) Save(data []Object) error {
 
 	var r = struct {
@@ -106,7 +197,7 @@ func (c *Remote) Save(data []Object) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
+	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
