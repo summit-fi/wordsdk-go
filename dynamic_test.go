@@ -1,7 +1,6 @@
 package word
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -21,29 +20,90 @@ func remoteConnection() SDK {
 	if err != nil {
 		panic(err)
 	}
+	word.SetLogger(&DefaultLogger{
+		LogLevel: LogLevelDebug,
+	})
 
 	return word
 }
+
 func TestDynamicContent_T(t *testing.T) {
 	connect := remoteConnection()
 
 	// Test 1
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
-	//connect.Dynamic().T("en_US", "core.every")
-	fmt.Println(XKeyGen("S", "summit", "notification"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
 
 	err := connect.Dynamic().SaveTranslation("en_EU", "core.every", "Everything is ok")
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
 		return
 	}
-	//// Test 2
+
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
-	str := connect.Dynamic().T("en_EU", "core.every")
-	if str == "core.every" {
+	str1 := connect.Dynamic().T("en_EU", "core.every")
+	if str1 == "core.every" {
+		t.Errorf("Failed to save translation: %v", str1)
+		return
+	}
+	t.Logf("Translation: %s", str1)
+
+}
+
+func TestDynamicContent_TA(t *testing.T) {
+	connect := remoteConnection()
+
+	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
+
+	err := connect.Dynamic().SaveTranslation("en_EU", "select.ICU.test", `{every, select, weekly {Every week} monthly {Every month} yearly {Every year} other {Never}}`)
+	if err != nil {
+		t.Errorf("Failed to save translation: %v", err)
+		return
+	}
+
+	str := connect.Dynamic().TA("en_EU", "select.ICU.test", map[string]interface{}{
+		"every": "weekly",
+	})
+
+	if str == "plural.test" {
 		t.Errorf("Failed to save translation: %v", str)
 		return
 	}
 
-	fmt.Println(str, len(str))
+	t.Logf("Translation: %s", str)
+}
+
+func TestDynamicContent_SaveTranslations(t *testing.T) {
+	connect := remoteConnection()
+
+	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
+
+	err := connect.Dynamic().SaveTranslations([]source.Object{
+		{
+			LocaleCode: "en_EU",
+			Key:        "core.every1",
+			Value:      "Every week",
+		},
+		{
+			LocaleCode: "en_EU",
+			Key:        "ordinal.ICU.test",
+			Value:      `Our {count, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} tree!`,
+		},
+	})
+
+	if err != nil {
+		t.Errorf("Failed to save translations: %v", err)
+		return
+	}
+
+	str := connect.Dynamic().TA("en_EU", "ordinal.ICU.test", map[string]interface{}{
+		"count": 5,
+	})
+	if str == "select.ICU.test" {
+		t.Errorf("Failed to save translation: %v", str)
+		return
+	}
+	t.Logf("Translation: %s", str)
 }

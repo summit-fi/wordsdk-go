@@ -150,9 +150,8 @@ func (c *Remote) SaveDynamic(accessKey string, data []Object) error {
 	if err != nil {
 		return err
 	}
-	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
 
-	fmt.Println(bytes.NewBuffer(b))
+	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
 
 	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(b))
 	if err != nil {

@@ -33,7 +33,7 @@ func (c *Client) TA(lang string, key string, args any) string {
 	parser, err := messageformat.NewWithCulture(lang[:2])
 	if err != nil {
 		c.logger.Errorf("Failed to create ICU parser: %v", err)
-		return ""
+		return key
 	}
 
 	icu, err := parser.Parse(datum)
