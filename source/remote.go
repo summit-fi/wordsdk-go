@@ -12,14 +12,14 @@ import (
 
 type Remote struct {
 	ApiBaseUrl string
-	StaticKey  string
+	AccessKey  string
 	httpClient *http.Client
 }
 
 func NewRemote(apiBaseUrl, accessKey string) *Remote {
 	return &Remote{
 		ApiBaseUrl: apiBaseUrl,
-		StaticKey:  accessKey,
+		AccessKey:  accessKey,
 		httpClient: &http.Client{
 			Timeout: 5 * time.Second,
 		},
@@ -45,7 +45,7 @@ func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut 
 	if err != nil {
 		return nil, "", err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 	if checksumIn != "" {
 		req.Header.Set("If-None-Match", checksumIn)
 	}
@@ -95,9 +95,8 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 	if err != nil {
 		return nil, "", err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
-	fmt.Println("Static", c.StaticKey)
 	req.Header.Set("X-Dynamic-Key", dynamicKey)
 	if checksumIn != "" {
 		req.Header.Set("If-None-Match", checksumIn)
@@ -108,15 +107,15 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 type singleKeyResponse struct {
 }
 
-func (c *Remote) LoadOneDynamic(accessKey, lang, key string) (string, error) {
+func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
 	url := fmt.Sprintf("%s/dynamic/value?lang=%s&key=%s", c.ApiBaseUrl, lang, key)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return key, err
 	}
 
-	req.Header.Set("X-Dynamic-Key", accessKey)
-	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -138,7 +137,7 @@ func (c *Remote) LoadOneDynamic(accessKey, lang, key string) (string, error) {
 	return string(b), err
 }
 
-func (c *Remote) SaveDynamic(accessKey string, data []Object) error {
+func (c *Remote) SaveDynamic(dynamicKey string, data []Object) error {
 	var r = struct {
 		Values []Object `json:"values"`
 	}{
@@ -158,8 +157,8 @@ func (c *Remote) SaveDynamic(accessKey string, data []Object) error {
 		return err
 	}
 
-	req.Header.Set("X-Dynamic-Key", accessKey)
-	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -196,7 +195,7 @@ func (c *Remote) Save(data []Object) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.StaticKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {

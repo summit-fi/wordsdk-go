@@ -27,7 +27,7 @@ func remoteConnection() SDK {
 	return word
 }
 
-func TestDynamicContent_T(t *testing.T) {
+func TestRemoteDynamicContent_T(t *testing.T) {
 	connect := remoteConnection()
 
 	// Test 1
@@ -50,19 +50,19 @@ func TestDynamicContent_T(t *testing.T) {
 
 }
 
-func TestDynamicContent_TA(t *testing.T) {
+func TestRemoteDynamicContent_TA(t *testing.T) {
 	connect := remoteConnection()
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
 	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
-
-	err := connect.Dynamic().SaveTranslation("en_EU", "select.ICU.test", `{every, select, weekly {Every week} monthly {Every month} yearly {Every year} other {Never}}`)
+	value := `{every, select, weekly {Every week} monthly {Every month} yearly {Every year} other {Never}}`
+	err := connect.Dynamic().SaveTranslation("en_EU", XKeyGen(value), value)
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
 		return
 	}
 
-	str := connect.Dynamic().TA("en_EU", "select.ICU.test", map[string]interface{}{
+	str := connect.Dynamic().TA("en_EU", XKeyGen(value), map[string]interface{}{
 		"every": "weekly",
 	})
 
@@ -74,7 +74,7 @@ func TestDynamicContent_TA(t *testing.T) {
 	t.Logf("Translation: %s", str)
 }
 
-func TestDynamicContent_SaveTranslations(t *testing.T) {
+func TestRemoteDynamicContent_SaveTranslations(t *testing.T) {
 	connect := remoteConnection()
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
