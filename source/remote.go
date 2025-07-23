@@ -27,12 +27,11 @@ func NewRemote(apiBaseUrl, accessKey string) *Remote {
 }
 
 type response struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Values []struct {
-		Id          int    `json:"id"`
+	Key         string `json:"key"`
+	HasComments bool   `json:"hasComments"`
+	Value       []struct {
 		Value       string `json:"value"`
-		Locale      string `json:"locale"`
+		LocaleCode  string `json:"locale"`
 		Status      string `json:"status"`
 		HasComments bool   `json:"hasComments"`
 	} `json:"values"`
@@ -76,10 +75,10 @@ func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut 
 	}
 
 	for _, d := range data {
-		for _, v := range d.Values {
+		for _, v := range d.Value {
 			result = append(result, Object{
-				LocaleCode: v.Locale,
-				Key:        d.Name,
+				LocaleCode: v.LocaleCode,
+				Key:        d.Key,
 				Value:      v.Value,
 			})
 		}
