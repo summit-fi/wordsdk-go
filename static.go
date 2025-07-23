@@ -64,6 +64,7 @@ func (c *Client) TA(lang string, key string, args any) string {
 }
 
 func (c *Client) SaveTranslations(data []source.Object) error {
+	return fmt.Errorf("SaveTranslations is deprecated, DynamicContent.SaveTranslations should be used instead")
 	err := c.saveObjects(data)
 	if err != nil {
 		return err
@@ -82,6 +83,7 @@ func (c *Client) SaveTranslations(data []source.Object) error {
 }
 
 func (c *Client) SaveTranslation(lang string, key string, value string) error {
+	return fmt.Errorf("SaveTranslation is deprecated, DynamicContent.SaveTranslation should be used instead")
 	data := []source.Object{
 		{
 			LocaleCode: lang,
