@@ -2,14 +2,15 @@ package fluent
 
 import (
 	"fmt"
-	"strconv"
 	"time"
+
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 )
 
 // TODO: Implement DateTimes
 
 // Function represents a function that builds a Value based on parameters
-type Function func(positional []Value, named map[string]Value, params ...string) Value
+type Function func(positional []Value, named map[string]Value, primaryLanguage cldr.Language, params ...string) Value
 
 // A Value is the result of a resolving operation performed by the Resolver.
 // It represents either a string, a number or a date time.
@@ -44,17 +45,8 @@ func (value *NoValue) String() string {
 	return "{" + value.value + "}"
 }
 
-type FluentNumber struct {
-	Value float32
-}
-
-func (value *FluentNumber) String() string {
-	// TODO: Simulate JavaScript number formatting
-	return strconv.FormatFloat(float64(value.Value), 'f', -1, 32)
-}
-
 // Time is a function that returns a formatted date string
-func Time(positional []Value, named map[string]Value, params ...string) Value {
+func Time(positional []Value, named map[string]Value, primaryLanguage cldr.Language, params ...string) Value {
 	if len(positional) < 1 {
 		return &NoValue{value: "func TIME: missing date argument"}
 	}

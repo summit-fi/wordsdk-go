@@ -3,6 +3,9 @@ package fluent
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
+	"github.com/summit-fi/wordsdk-go/fluent/numfmt"
 )
 
 // NumberValue wraps a number (float32 at the moment) in order to comply with the Value API
@@ -23,17 +26,107 @@ func NumberLiteral(val float32) *NumberValue {
 	}
 }
 
-func NumberFunc(positional []Value, named map[string]Value, params ...string) Value {
+type FluentNumber struct {
+	value string
+}
+
+func (value *FluentNumber) String() string {
+	return value.value
+}
+
+func NumberFunc(positional []Value, named map[string]Value, language cldr.Language, params ...string) Value {
 	if len(positional) < 1 {
-		return &NoValue{value: "func NUMBER: missing number argument"}
+		return &StringValue{Value: positional[0].String()}
 	}
-	fmt.Println("positional:", positional)
-	fmt.Println("named:", named)
-	fmt.Println("params:", params)
+
+	options := numfmt.Option{}
+	if num, hasMinimumFractionDigits := named[numberParameterMinimumFractionDigits]; hasMinimumFractionDigits {
+		minFractionDigits, err := strconv.Atoi(num.String())
+		if err != nil {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid minimum fraction digits -> %s", num.String())}
+		}
+		if minFractionDigits < 0 {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: minimum fraction digits cannot be negative -> %d", minFractionDigits)}
+		}
+		options.MinimumFractionDigits = minFractionDigits
+	}
+
+	if num, hasMaximumFractionDigits := named[numberParameterMaximumFractionDigits]; hasMaximumFractionDigits {
+		maxFractionDigits, err := strconv.Atoi(num.String())
+		if err != nil {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid maximum fraction digits -> %s", num.String())}
+		}
+		if maxFractionDigits < 0 {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: maximum fraction digits cannot be negative -> %d", maxFractionDigits)}
+		}
+		options.MaximumFractionDigits = maxFractionDigits
+	}
+
+	switch named[numberStyle].String() {
+	case numberStyleCurrency:
+		// clone needs to be cloned because it is mutable
+		cloneFormat := language.GetNumbers()
+
+		if currency, hasCurrency := named[numberStyleCurrency]; hasCurrency {
+			cloneFormat.SelectedCurrencyCode = currency.String()
+		}
+
+		cloneFormat.SelectedCurrencyCode = cloneFormat.CurrencyCode
+		if err := cloneFormat.EnsureCurrencyExists(); err != nil {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid currency code -> %s", cloneFormat.SelectedCurrencyCode)}
+		}
+
+		if symbol, hasCurrencySymbol := named[numberCurrencyDisplaySymbol]; hasCurrencySymbol {
+			err := cloneFormat.ModifyCurrencySymbol(symbol.String())
+			if err != nil {
+				return &NoValue{value: fmt.Sprintf("func NUMBER: invalid currency symbol -> %s", symbol.String())}
+			}
+		}
+
+		if code, hasCurrencyCode := named[numberCurrencyDisplayCode]; hasCurrencyCode {
+			err := cloneFormat.ModifyCurrencyCode(code.String())
+			if err != nil {
+				return &NoValue{value: fmt.Sprintf("func NUMBER: invalid currency code -> %s", code.String())}
+			}
+		}
+
+		num, err := strconv.ParseFloat(positional[0].String(), 64)
+		if err != nil {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid number cloneFormat -> %s", positional[0].String())}
+		}
+
+		currencyFormatter := numfmt.CurrencyFormatter{
+			Base: cloneFormat,
+		}
+
+		if pattern, hasPattern := named[numberPattern]; hasPattern {
+			currencyFormatter.Pattern = pattern.String()
+		}
+
+		result := currencyFormatter.Format(num, options)
+
+		return &StringValue{result}
+
+	case numberStylePercent:
+		num, _ := strconv.ParseFloat(positional[0].String(), 32)
+
+		percentFormatter := numfmt.PercentFormatter{
+			Base: language.GetNumbers(),
+		}
+
+		if pattern, hasPattern := named[numberPattern]; hasPattern {
+			percentFormatter.Pattern = pattern.String()
+		}
+
+		result := percentFormatter.Format(num, options)
+
+		return &StringValue{result}
+	}
+
 	numStr := positional[0].String()
 	num, err := strconv.ParseFloat(numStr, 32)
 	if err != nil {
-		return &NoValue{value: fmt.Sprintf("func NUMBER: invalid number format -> %s", numStr)}
+		return &NoValue{value: fmt.Sprintf("func NUMBER: invalid number cloneFormat -> %s", numStr)}
 	}
 
 	return &NumberValue{Value: float32(num)}

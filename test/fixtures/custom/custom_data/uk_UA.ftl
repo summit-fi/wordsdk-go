@@ -1,51 +1,3 @@
-
-shared-photos =
-    {$userName} {$photoCount ->
-    [one] added a new photo
-    *[other] added {$photoCount} new photos
-        }to {$userGender ->
-    [male] his stream
-    [female] her stream
-    *[other] their stream
-        }.
-
-### A Resource comment
--brand-name = Mozilla
--other-brand = Chrome
-
-use-case = { $Browser ->
-[mozilla] {-brand-name }
-*[other] { -other-brand }
-}.
-
-
-spot =
-    { $center ->
-    *[hotel] Welcome to your { room }
-    [restaurant] Welcome to your { table }
-    [tennis]  Welcome to your { court }
-       }.
-
-room = { $count ->
-*[one] one room
-[other] {$count} rooms
-}
-
-table = { $count ->
-*[one] one table
-[other] {$count} tables
-}
-
-court = { $count ->
-*[one] one court
-[other] {$count} courts
-}
-
-function-test = { TIME($date) }
-
-
-# cldr date
-
 cldr-era-narrow = { $index ->
     *[0] до н. е.
      [1] н. е.
@@ -172,7 +124,7 @@ cldr-weekday = { $index ->
      [2] вівторок
      [3] середа
      [4] четвер
-     [5] п'ятниця
+     [5] пʼятниця
      [6] субота
 }
 
@@ -182,7 +134,7 @@ cldr-weekday-standalone = { $index ->
      [2] вівторок
      [3] середа
      [4] четвер
-     [5] п'ятниця
+     [5] пʼятниця
      [6] субота
 }
 
@@ -213,7 +165,7 @@ cldr-quater-short = { $index ->
      [3] 4-й кв.
 }
 
-cldr-quater= { $index ->
+cldr-quater = { $index ->
     *[0] 1-й квартал
      [1] 2-й квартал
      [2] 3-й квартал
@@ -231,7 +183,7 @@ cldr-date-patterns =
     .EEEE = cccc
     .LLL = LLL
     .LLLL = LLLL
-    .M = LL
+    .M = MM
     .Md = dd.MM
     .MEd = EEE, dd.MM
     .MMM = LLL
@@ -251,7 +203,7 @@ cldr-date-patterns =
     .yMMMEd = EEE, d MMM y р.
     .yMMMM = LLLL y р.
     .yMMMMd = d MMMM y р.
-    .yMMMMEEEEd = EEEE, d MMMM
+    .yMMMMEEEEd = EEEE, d MMMM y р.
     .yQQQ = QQQ y
     .yQQQQ = QQQQ y р.
     .H = HH
@@ -276,7 +228,7 @@ cldr-date-patterns =
 
 cldr-decimal-sep = ,
 
-cldr-group-sep = {" "}
+cldr-group-sep = {" "}
 
 cldr-percent = %
 
@@ -286,7 +238,7 @@ cldr-plus-sign = +
 
 cldr-minus-sign = -
 
-cldr-exp-symbol = Е
+cldr-exp-symbol = E
 
 cldr-permill = ‰
 
@@ -300,6 +252,6 @@ cldr-scientific-pattern = #E0
 
 cldr-percent-pattern = #,##0%
 
-cldr-currency-pattern = #,##0.00 ¤
+cldr-currency-pattern = #,##0.00 ¤
 
 cldr-def-currency-code = UAH

@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/fluent/parser/ast"
 	"golang.org/x/text/feature/plural"
 )
@@ -21,11 +22,12 @@ var pluralStrings = map[plural.Form]string{
 // The resolver is used to resolve instances of as t.Pattern into instances of Value.
 // It uses context-relevant values and the initial Bundle for resolving specific values.
 type resolver struct {
-	bundle    *Bundle
-	params    map[string]Value
-	variables map[string]Value
-	functions map[string]Function
-	errors    []error
+	bundle          *Bundle
+	primaryLanguage cldr.Language
+	params          map[string]Value
+	variables       map[string]Value
+	functions       map[string]Function
+	errors          []error
 }
 
 func (resolver *resolver) resolveExpression(expression ast.Node) Value {
@@ -185,7 +187,7 @@ func (resolver *resolver) resolveFunctionReference(ref *ast.FunctionReference) V
 	}
 
 	positional, named := resolver.assembleArguments(ref.Arguments)
-	return function(positional, named)
+	return function(positional, named, resolver.primaryLanguage)
 }
 
 func (resolver *resolver) resolveSelectExpression(ref *ast.SelectExpression) Value {
@@ -273,5 +275,5 @@ func (resolver *resolver) getPluralCategory(value float32) plural.Form {
 		bytes[i+len(parts[0])] = byte(digit - 48)
 	}
 
-	return plural.Cardinal.MatchDigits(resolver.bundle.locales[0], bytes, len(parts[0]), len(parts[1]))
+	return plural.Cardinal.MatchDigits(resolver.bundle.locales[0].BCP47(), bytes, len(parts[0]), len(parts[1]))
 }

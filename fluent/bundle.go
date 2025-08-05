@@ -4,22 +4,22 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/fluent/parser/ast"
-	"golang.org/x/text/language"
 )
 
 // Bundle represents a collection of messages and terms collected from one or many resources.
 // It provides the main API to format messages.
 type Bundle struct {
-	locales   []language.Tag
+	locales   []cldr.Language
 	messages  map[string]*ast.Message
 	terms     map[string]*ast.Term
 	functions map[string]Function
 }
 
 // NewBundle creates a new empty bundle
-func NewBundle(primaryLocale language.Tag, fallbackLocales ...language.Tag) *Bundle {
-	locales := make([]language.Tag, 0, len(fallbackLocales)+1)
+func NewBundle(primaryLocale cldr.Language, fallbackLocales ...cldr.Language) *Bundle {
+	locales := make([]cldr.Language, 0, len(fallbackLocales)+1)
 	locales = append(locales, primaryLocale)
 	for _, fallback := range fallbackLocales {
 		locales = append(locales, fallback)
@@ -71,6 +71,13 @@ func (bundle *Bundle) RegisterFunction(name string, function Function) {
 		bundle.functions = make(map[string]Function)
 	}
 	bundle.functions[strings.ToUpper(name)] = function
+}
+
+func (bundle *Bundle) RootLocale() cldr.Language {
+	if len(bundle.locales) > 0 {
+		return bundle.locales[0]
+	}
+	return cldr.LanguageEnUa
 }
 
 // A FormatContext holds variables and functions to pass them to Bundle.FormatMessage
@@ -222,11 +229,12 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 	}
 
 	res := &resolver{
-		bundle:    bundle,
-		params:    nil,
-		variables: variables,
-		functions: functions,
-		errors:    []error{},
+		bundle:          bundle,
+		primaryLanguage: bundle.locales[0],
+		params:          nil,
+		variables:       variables,
+		functions:       functions,
+		errors:          []error{},
 	}
 	result := res.resolvePattern(msg.Value).String()
 	return result, res.errors, nil

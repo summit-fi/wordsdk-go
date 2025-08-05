@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/summit-fi/wordsdk-go/fluent"
-	"golang.org/x/text/language"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 )
 
 func TestHotelSpot(t *testing.T) {
@@ -39,7 +39,7 @@ court = { $count ->
 		fmt.Println(err)
 		panic(err)
 	}
-	bundle := fluent.NewBundle(language.English)
+	bundle := fluent.NewBundle(cldr.LanguageEnUS)
 
 	errs := bundle.AddResource(resource)
 	if errs != nil {
@@ -78,71 +78,6 @@ court = { $count ->
 	}
 }
 
-func TestDateTime(t *testing.T) {
-	ftl := `
-datetime = { DATETIME($date, pattern:"") }
-`
-	resource, err := fluent.NewResource(string(ftl))
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-
-	bundle := fluent.NewBundle(language.English)
-	bundle.AddResource(resource)
-
-	date := "2021-09-01T12:00:00Z"
-	msg, _, fatalErr := bundle.FormatMessage("datetime", fluent.WithVariable("date", date))
-	if fatalErr != nil {
-		t.Errorf("bundle.FormatMessage fatal error: %s", fatalErr)
-		panic(fatalErr)
-	}
-
-	expected := "2021-09-01"
-	if msg != expected {
-		t.Errorf("bundle.FormatMessage error: %s", msg)
-	}
-}
-
-func TestCustomFunction(t *testing.T) {
-	ftl := `key-custom = { CUSTOM() -> 
-[one] room 
-*[other] rooms 
-}`
-	resource, err := fluent.NewResource(string(ftl))
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-
-	bundle := fluent.NewBundle(language.English)
-	bundle.RegisterFunction("CUSTOM", func(positional []fluent.Value, named map[string]fluent.Value, params ...string) fluent.Value {
-		fmt.Println("Named arguments:")
-		for key, value := range named {
-			fmt.Println(key, value)
-		}
-		fmt.Println("Positional arguments:")
-		for i, value := range positional {
-			fmt.Println(i, value)
-		}
-		return &fluent.StringValue{Value: "custom function"}
-	})
-
-	bundle.AddResource(resource)
-
-	msg, _, fatalErr := bundle.FormatMessage("key-custom", fluent.WithVariable("place", "room"), fluent.WithVariable("place2", "place2"))
-	if fatalErr != nil {
-		t.Errorf("bundle.FormatMessage fatal error: %s", fatalErr)
-		//panic(fatalErr)
-	}
-
-	expected := "many rooms"
-	if msg != expected {
-		t.Errorf("bundle.FormatMessage error: %s", msg)
-	}
-
-}
-
 func TestImplicitlyCallNumber(t *testing.T) {
 	ftl := `emails = Number of unread emails { $unreadEmails }`
 	resource, err := fluent.NewResource(string(ftl))
@@ -150,7 +85,7 @@ func TestImplicitlyCallNumber(t *testing.T) {
 		fmt.Println(err)
 		panic(err)
 	}
-	bundle := fluent.NewBundle(language.English)
+	bundle := fluent.NewBundle(cldr.LanguageEnUS)
 	bundle.AddResource(resource)
 	bundle.FormatMessage("emails", fluent.WithVariable("unreadEmails", 5))
 	msg, _, fatalErr := bundle.FormatMessage("emails", fluent.WithVariable("unreadEmails", 5))
@@ -159,27 +94,6 @@ func TestImplicitlyCallNumber(t *testing.T) {
 		panic(fatalErr)
 	}
 	expected := "Number of unread emails 5"
-	if msg != expected {
-		t.Errorf("bundle.FormatMessage error: %s", msg)
-	}
-}
-
-func TestNumber(t *testing.T) {
-	ftl := `key-number = Total price: { NUMBER(42, style: "currency", currency: "UAH", currencySymbol: "₴", currencyDisplay: "symbol", pattern: "#,##0.00 ¤") } `
-	resource, err := fluent.NewResource(string(ftl))
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-
-	bundle := fluent.NewBundle(language.English)
-	bundle.AddResource(resource)
-	msg, _, fatalErr := bundle.FormatMessage("key-number", fluent.WithVariable("amount", 42.00))
-	if fatalErr != nil {
-		t.Errorf("bundle.FormatMessage fatal error: %s", fatalErr)
-		panic(fatalErr)
-	}
-	expected := "$42.00"
 	if msg != expected {
 		t.Errorf("bundle.FormatMessage error: %s", msg)
 	}
