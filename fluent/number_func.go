@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
-	"github.com/summit-fi/wordsdk-go/fluent/numfmt"
+	"github.com/summit-fi/wordsdk-go/fluent/numbers"
 )
 
 // NumberValue wraps a number (float32 at the moment) in order to comply with the Value API
@@ -26,20 +26,12 @@ func NumberLiteral(val float32) *NumberValue {
 	}
 }
 
-type FluentNumber struct {
-	value string
-}
-
-func (value *FluentNumber) String() string {
-	return value.value
-}
-
 func NumberFunc(positional []Value, named map[string]Value, language cldr.Language, params ...string) Value {
 	if len(positional) < 1 {
 		return &StringValue{Value: positional[0].String()}
 	}
 
-	options := numfmt.Option{}
+	options := numbers.Option{}
 	if num, hasMinimumFractionDigits := named[numberParameterMinimumFractionDigits]; hasMinimumFractionDigits {
 		minFractionDigits, err := strconv.Atoi(num.String())
 		if err != nil {
@@ -95,7 +87,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid number cloneFormat -> %s", positional[0].String())}
 		}
 
-		currencyFormatter := numfmt.CurrencyFormatter{
+		currencyFormatter := numbers.CurrencyFormatter{
 			Base: cloneFormat,
 		}
 
@@ -108,9 +100,9 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		return &StringValue{result}
 
 	case numberStylePercent:
-		num, _ := strconv.ParseFloat(positional[0].String(), 32)
+		num, _ := strconv.ParseFloat(positional[0].String(), 64)
 
-		percentFormatter := numfmt.PercentFormatter{
+		percentFormatter := numbers.PercentFormatter{
 			Base: language.GetNumbers(),
 		}
 
@@ -121,6 +113,18 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		result := percentFormatter.Format(num, options)
 
 		return &StringValue{result}
+	case numberStyleDecimal:
+		num, _ := strconv.ParseFloat(positional[0].String(), 64)
+
+		decimalFormatter := numbers.DecimalFormatter{
+			Base: language.GetNumbers(),
+		}
+		if pattern, hasPattern := named[numberPattern]; hasPattern {
+			decimalFormatter.Pattern = pattern.String()
+		}
+		result := decimalFormatter.Format(num, options)
+		return &StringValue{result}
+
 	}
 
 	numStr := positional[0].String()

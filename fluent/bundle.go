@@ -12,8 +12,8 @@ import (
 // It provides the main API to format messages.
 type Bundle struct {
 	locales   []cldr.Language
-	messages  map[string]*ast.Message
-	terms     map[string]*ast.Term
+	messages  Map[string, *ast.Message]
+	terms     Map[string, *ast.Term]
 	functions map[string]Function
 }
 
@@ -27,8 +27,8 @@ func NewBundle(primaryLocale cldr.Language, fallbackLocales ...cldr.Language) *B
 
 	return &Bundle{
 		locales:  locales,
-		messages: make(map[string]*ast.Message),
-		terms:    make(map[string]*ast.Term),
+		messages: NewMap[string, *ast.Message](),
+		terms:    NewMap[string, *ast.Term](),
 	}
 }
 
@@ -37,19 +37,20 @@ func NewBundle(primaryLocale cldr.Language, fallbackLocales ...cldr.Language) *B
 func (bundle *Bundle) AddResource(resource *Resource) (errs []error) {
 	for _, message := range resource.messages {
 		id := message.ID.Name
-		if bundle.messages[id] != nil {
+
+		if _, ok := bundle.messages.Exist(id); ok {
 			errs = append(errs, fmt.Errorf("message '%s' is already defined", id))
 			continue
 		}
-		bundle.messages[id] = message
+		bundle.messages.Set(id, message)
 	}
 	for _, term := range resource.terms {
 		id := term.ID.Name
-		if bundle.terms[id] != nil {
+		if bundle.terms.Get(id) != nil {
 			errs = append(errs, fmt.Errorf("term '%s' is already defined", id))
 			continue
 		}
-		bundle.terms[id] = term
+		bundle.terms.Set(id, term)
 	}
 	return
 }
@@ -58,10 +59,10 @@ func (bundle *Bundle) AddResource(resource *Resource) (errs []error) {
 // If a message or term was already defined by another resource, the already existing one gets overridden.
 func (bundle *Bundle) AddResourceOverriding(resource *Resource) {
 	for _, message := range resource.messages {
-		bundle.messages[message.ID.Name] = message
+		bundle.messages.Set(message.ID.Name, message)
 	}
 	for _, term := range resource.terms {
-		bundle.terms[term.ID.Name] = term
+		bundle.terms.Set(term.ID.Name, term)
 	}
 }
 
@@ -73,7 +74,7 @@ func (bundle *Bundle) RegisterFunction(name string, function Function) {
 	bundle.functions[strings.ToUpper(name)] = function
 }
 
-func (bundle *Bundle) RootLocale() cldr.Language {
+func (bundle *Bundle) PrimaryLocale() cldr.Language {
 	if len(bundle.locales) > 0 {
 		return bundle.locales[0]
 	}
@@ -203,8 +204,8 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 		}
 	}
 
-	functions["TIME"] = Time
 	functions["NUMBER"] = NumberFunc
+	functions["DATETIME"] = DateTimeFunc
 
 	return variables, functions
 }
@@ -216,11 +217,11 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 // If the resolver returns errors it does not automatically mean that the whole message could not be resolved.
 // It may be just incomplete.
 func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (string, []error, error) {
-	if bundle.messages[key] == nil {
+	if bundle.messages.Get(key) == nil {
 		return "", nil, fmt.Errorf("message '%s' does not exist", key)
 	}
 
-	msg := bundle.messages[key]
+	msg := bundle.messages.Get(key)
 	variables, functions := assembleContexts(contexts...)
 
 	// Add the bundle's functions to the resolver's functions
@@ -242,5 +243,5 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 
 // Checks whether the bundle contains a message with the given key.
 func (bundle *Bundle) HasMessage(key string) bool {
-	return bundle.messages[key] != nil
+	return bundle.messages.Get(key) != nil
 }

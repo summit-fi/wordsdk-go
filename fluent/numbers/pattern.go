@@ -1,4 +1,4 @@
-package numfmt
+package numbers
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ type PatternInfo struct {
 	MaxIntegerDigits int
 	GroupingSize     int
 	HasGrouping      bool
-	HasNBNS          bool   // Non-breaking space
+	HasNBSP          bool   // Non-breaking space
 	SpacePosition    string // "prefix" or "suffix"
 }
 
@@ -136,7 +136,7 @@ func AnalyzePattern(pattern string) PatternInfo {
 		} else {
 			info.SpacePosition = "suffix"
 		}
-		info.HasNBNS = true
+		info.HasNBSP = true
 
 	}
 
@@ -146,7 +146,7 @@ func AnalyzePattern(pattern string) PatternInfo {
 		} else {
 			info.SpacePosition = "suffix"
 		}
-		info.HasNBNS = true
+		info.HasNBSP = true
 	}
 
 	for _, ch := range integerPart {
@@ -192,7 +192,6 @@ func (f PatternFormatter) Format(n float64, opts ...Option) string {
 	ip, fp := formatWithOptions(n, info, opt)
 
 	// Apply grouping if needed
-	// Apply grouping if needed
 	if info.HasGrouping {
 		groupSep := s.GroupSep
 		ip = insertGrouping(ip, groupSep)
@@ -221,7 +220,7 @@ func (f PatternFormatter) Format(n float64, opts ...Option) string {
 		}
 
 		if info.CurrencyPosition == "prefix" {
-			if info.HasNBNS {
+			if info.HasNBSP {
 				display = display + " "
 			}
 

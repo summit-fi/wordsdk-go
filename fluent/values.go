@@ -1,13 +1,8 @@
 package fluent
 
 import (
-	"fmt"
-	"time"
-
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 )
-
-// TODO: Implement DateTimes
 
 // Function represents a function that builds a Value based on parameters
 type Function func(positional []Value, named map[string]Value, primaryLanguage cldr.Language, params ...string) Value
@@ -43,25 +38,4 @@ type NoValue struct {
 // String returns the NoValue's string representation
 func (value *NoValue) String() string {
 	return "{" + value.value + "}"
-}
-
-// Time is a function that returns a formatted date string
-func Time(positional []Value, named map[string]Value, primaryLanguage cldr.Language, params ...string) Value {
-	if len(positional) < 1 {
-		return &NoValue{value: "func TIME: missing date argument"}
-	}
-
-	dateStr := positional[0].String()
-
-	date, err := time.Parse("2006-01-02", dateStr)
-	if err != nil {
-		return &NoValue{value: fmt.Sprintf("func TIME: invalid date format -> %s", dateStr)}
-	}
-
-	format := "2006 01 02"
-	if len(positional) > 1 {
-		format = positional[1].String()
-	}
-
-	return &StringValue{Value: date.Format(format)}
 }

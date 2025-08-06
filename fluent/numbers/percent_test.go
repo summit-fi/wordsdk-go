@@ -1,4 +1,4 @@
-package numfmt
+package numbers
 
 import (
 	"testing"

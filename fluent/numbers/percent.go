@@ -1,4 +1,4 @@
-package numfmt
+package numbers
 
 import "github.com/summit-fi/wordsdk-go/fluent/cldr"
 

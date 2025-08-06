@@ -70,7 +70,7 @@ func (resolver *resolver) resolveExpression(expression ast.Node) Value {
 }
 
 func (resolver *resolver) resolveMessageReference(ref *ast.MessageReference) Value {
-	message := resolver.bundle.messages[ref.ID.Name]
+	message := resolver.bundle.messages.Get(ref.ID.Name)
 	if message == nil {
 		resolver.errors = append(resolver.errors, fmt.Errorf("unknown message '%s'", ref.ID.Name))
 		return &NoValue{
@@ -106,7 +106,7 @@ func (resolver *resolver) resolveMessageReference(ref *ast.MessageReference) Val
 }
 
 func (resolver *resolver) resolveTermReference(ref *ast.TermReference) Value {
-	term := resolver.bundle.terms[ref.ID.Name]
+	term := resolver.bundle.terms.Get(ref.ID.Name)
 	if term == nil {
 		resolver.errors = append(resolver.errors, fmt.Errorf("unknown term '%s'", ref.ID.Name))
 		return &NoValue{

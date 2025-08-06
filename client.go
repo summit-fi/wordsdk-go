@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/summit-fi/wordsdk-go/fluent"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
@@ -49,7 +50,7 @@ type Client struct {
 	updateInterval          time.Duration
 	logLevel                int
 	maxCacheSizeMB          int
-	cache                   Map[string, string]
+	cache                   fluent.Map[string, string]
 	localizersLock          sync.RWMutex
 	saveStrategy            SaveStrategy
 	saveBundle              []source.Object
@@ -79,7 +80,7 @@ func NewClient(config *Config) (SDK, error) {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
 
-	c.cache = NewMap[string, string]()
+	c.cache = fluent.NewMap[string, string]()
 
 	c.checksum = checksum
 	err = c.UpdateBundle(data)
