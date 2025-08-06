@@ -40,7 +40,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		if minFractionDigits < 0 {
 			return &NoValue{value: fmt.Sprintf("func NUMBER: minimum fraction digits cannot be negative -> %d", minFractionDigits)}
 		}
-		options.MinimumFractionDigits = minFractionDigits
+		options.MinimumFractionDigits = &minFractionDigits
 	}
 
 	if num, hasMaximumFractionDigits := named[numberParameterMaximumFractionDigits]; hasMaximumFractionDigits {
@@ -51,13 +51,13 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		if maxFractionDigits < 0 {
 			return &NoValue{value: fmt.Sprintf("func NUMBER: maximum fraction digits cannot be negative -> %d", maxFractionDigits)}
 		}
-		options.MaximumFractionDigits = maxFractionDigits
+		options.MaximumFractionDigits = &maxFractionDigits
 	}
 
 	switch named[numberStyle].String() {
 	case numberStyleCurrency:
 		// clone needs to be cloned because it is mutable
-		cloneFormat := language.GetNumbers()
+		cloneFormat := language.GetNumberRules()
 
 		if currency, hasCurrency := named[numberStyleCurrency]; hasCurrency {
 			cloneFormat.SelectedCurrencyCode = currency.String()
@@ -103,7 +103,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		num, _ := strconv.ParseFloat(positional[0].String(), 64)
 
 		percentFormatter := numbers.PercentFormatter{
-			Base: language.GetNumbers(),
+			Base: language.GetNumberRules(),
 		}
 
 		if pattern, hasPattern := named[numberPattern]; hasPattern {
@@ -117,7 +117,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		num, _ := strconv.ParseFloat(positional[0].String(), 64)
 
 		decimalFormatter := numbers.DecimalFormatter{
-			Base: language.GetNumbers(),
+			Base: language.GetNumberRules(),
 		}
 		if pattern, hasPattern := named[numberPattern]; hasPattern {
 			decimalFormatter.Pattern = pattern.String()

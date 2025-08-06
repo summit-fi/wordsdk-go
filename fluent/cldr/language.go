@@ -60,7 +60,7 @@ func (l Language) BCP47() language.Tag {
 	}
 }
 
-func (l Language) GetNumbers() Numbers {
+func (l Language) GetNumberRules() Numbers {
 	switch l {
 	case LanguageEnUS:
 		return Numbers{}.NumberRules(LanguageEnUS)

@@ -1,16 +1,17 @@
-package numbers
+package test
 
 import (
 	"testing"
 
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
+	"github.com/summit-fi/wordsdk-go/fluent/numbers"
 )
 
-func TestMaximumFractionDigits(t *testing.T) {
-	numbers := cldr.LanguageEnUS.GetNumbers()
-	formatter := CurrencyFormatter{
-		Pattern: numbers.CurrencyPattern,
-		Base:    numbers,
+func TestCurrencyMaximumFractionDigits(t *testing.T) {
+	rules := cldr.LanguageEnUS.GetNumberRules()
+	formatter := numbers.CurrencyFormatter{
+		Pattern: rules.CurrencyPattern,
+		Base:    rules,
 	}
 
 	tests := []struct {
@@ -25,18 +26,18 @@ func TestMaximumFractionDigits(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := formatter.Format(tt.value, MaximumFractionDigits(tt.maxFrac))
+		got := formatter.Format(tt.value, numbers.MaximumFractionDigits(tt.maxFrac))
 		if got != tt.expected {
 			t.Errorf("value=%v, maxFrac=%d: got %q, want %q", tt.value, tt.maxFrac, got, tt.expected)
 		}
 	}
 }
 
-func TestMinimumFractionDigits(t *testing.T) {
-	numbers := cldr.LanguageEnUS.GetNumbers()
-	formatter := CurrencyFormatter{
-		Pattern: numbers.CurrencyPattern,
-		Base:    numbers,
+func TestCurrencyMinimumFractionDigits(t *testing.T) {
+	rules := cldr.LanguageEnUS.GetNumberRules()
+	formatter := numbers.CurrencyFormatter{
+		Pattern: rules.CurrencyPattern,
+		Base:    rules,
 	}
 
 	tests := []struct {
@@ -51,7 +52,7 @@ func TestMinimumFractionDigits(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := formatter.Format(tt.value, MinimumFractionDigits(tt.minFrac))
+		got := formatter.Format(tt.value, numbers.MinimumFractionDigits(tt.minFrac))
 		if got != tt.expected {
 			t.Errorf("value=%v, minFrac=%d: got %q, want %q", tt.value, tt.minFrac, got, tt.expected)
 		}
