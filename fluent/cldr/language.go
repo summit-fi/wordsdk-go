@@ -81,3 +81,29 @@ func (l Language) GetNumberRules() Numbers {
 		return Numbers{}
 	}
 }
+
+func (l Language) OrdinalRules(num int) string {
+	switch l {
+	case LanguageEnUS, LanguageEnEu, LanguageEnUa, LanguageEnCo:
+		if num%10 == 1 && num%100 != 11 {
+			return "one"
+		}
+		if num%10 == 2 && num%100 != 12 {
+			return "two"
+		}
+		if num%10 == 3 && num%100 != 13 {
+			return "few"
+		}
+		return "other"
+	case LanguageUkUa:
+		if num%10 == 3 && num%100 != 13 {
+			return "few"
+		}
+		return "other"
+	case LanguageRuUa:
+		return "other" // Russian does not have specific ordinal rules in this context
+	case LanguageEsCo:
+		return "other" // Spanish does not have specific ordinal rules in this context
+	}
+	return "other"
+}

@@ -42,7 +42,7 @@ func (resolver *resolver) resolveExpression(expression ast.Node) Value {
 		return &StringValue{Value: e.Value}
 
 	case *ast.NumberLiteral:
-		parsed, err := strconv.ParseFloat(e.Value, 32)
+		parsed, err := strconv.ParseFloat(e.Value, 64)
 		if err != nil {
 			resolver.errors = append(resolver.errors, err)
 			return &NoValue{value: "[" + e.Value + "]"}

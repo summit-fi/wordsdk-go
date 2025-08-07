@@ -5,6 +5,7 @@ const (
 	numberStyleCurrency = "currency" // Currency style
 	numberStylePercent  = "percent"  // Percent style
 	numberStyleDecimal  = "decimal"  // Decimal style
+	numberStyleOrdinal  = "ordinal"  // Ordinal style
 
 	numberCurrencyDisplay       = "currencyDisplay" // Named parameter for currency display
 	numberCurrencyDisplaySymbol = "symbol"          // Display currency as symbol

@@ -45,6 +45,8 @@ func TestCurrencyMinimumFractionDigits(t *testing.T) {
 		minFrac  int
 		expected string
 	}{
+		{0.0, 1, "$0.0"},
+		{1234, 2, "$1,234.00"},
 		{1234.5, 2, "$1,234.50"},
 		{1234.5678, 3, "$1,234.568"},
 		{1234.5, 0, "$1,235"},

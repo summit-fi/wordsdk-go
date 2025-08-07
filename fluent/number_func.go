@@ -32,6 +32,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 	}
 
 	options := numbers.Option{}
+
 	if num, hasMinimumFractionDigits := named[numberParameterMinimumFractionDigits]; hasMinimumFractionDigits {
 		minFractionDigits, err := strconv.Atoi(num.String())
 		if err != nil {
@@ -52,6 +53,11 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 			return &NoValue{value: fmt.Sprintf("func NUMBER: maximum fraction digits cannot be negative -> %d", maxFractionDigits)}
 		}
 		options.MaximumFractionDigits = &maxFractionDigits
+	}
+
+	// Default if parameter style is not provided, we use decimal mode
+	if _, hasStyle := named[numberStyle]; !hasStyle {
+		named[numberStyle] = &StringValue{Value: numberStyleDecimal}
 	}
 
 	switch named[numberStyle].String() {
@@ -113,6 +119,7 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		result := percentFormatter.Format(num, options)
 
 		return &StringValue{result}
+
 	case numberStyleDecimal:
 		num, _ := strconv.ParseFloat(positional[0].String(), 64)
 
@@ -125,6 +132,17 @@ func NumberFunc(positional []Value, named map[string]Value, language cldr.Langua
 		result := decimalFormatter.Format(num, options)
 		return &StringValue{result}
 
+	case numberStyleOrdinal:
+		num, err := strconv.ParseFloat(positional[0].String(), 64)
+		if err != nil {
+			return &NoValue{value: fmt.Sprintf("func NUMBER: invalid number cloneFormat -> %s", positional[0].String())}
+		}
+		ordinalFormatter := numbers.OrdinalFormatter{
+			Language: language,
+		}
+		return &StringValue{
+			Value: ordinalFormatter.Format(num),
+		}
 	}
 
 	numStr := positional[0].String()

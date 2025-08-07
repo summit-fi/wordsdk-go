@@ -51,6 +51,13 @@ func (f PatternFormatter) Format(n float64, opts ...Option) string {
 	// Format number with options
 	intPart, fracPart := formatWithOptions(n, info, options)
 
+	if options.MinimumFractionDigits != nil {
+		minFrac := *options.MinimumFractionDigits
+		if len(fracPart) < minFrac {
+			fracPart += strings.Repeat("0", minFrac-len(fracPart))
+		}
+	}
+
 	// Apply grouping if needed
 	if info.HasGrouping {
 		groupSep := s.GroupSep
@@ -60,9 +67,6 @@ func (f PatternFormatter) Format(n float64, opts ...Option) string {
 	// Handle maximum fraction digits
 	if options.MaximumFractionDigits != nil && len(fracPart) > *options.MaximumFractionDigits {
 		fracPart = fracPart[:*options.MaximumFractionDigits]
-	}
-	if options.MaximumFractionDigits == nil && info.HasDecimal && len(fracPart) > info.DecimalPrecision {
-		fracPart = fracPart[:info.DecimalPrecision]
 	}
 
 	if options.MinimumFractionDigits == nil && info.HasDecimal && len(fracPart) > 0 {
@@ -77,7 +81,7 @@ func (f PatternFormatter) Format(n float64, opts ...Option) string {
 	if (info.HasDecimal && len(fracPart) > 0) || options.MinimumFractionDigits != nil {
 		if len(fracPart) > 0 {
 			res += s.DecimalSep + fracPart
-		} else if options.MinimumFractionDigits != nil {
+		} else if options.MinimumFractionDigits != nil && *options.MinimumFractionDigits > 0 {
 			res += s.DecimalSep + strings.Repeat("0", *options.MinimumFractionDigits)
 		}
 	}
@@ -216,7 +220,7 @@ func formatWithOptions(n float64, info PatternInfo, opts Option) (string, string
 	precision := info.DecimalPrecision
 	if opts.MaximumFractionDigits != nil {
 		precision = *opts.MaximumFractionDigits
-	} else if opts.MinimumFractionDigits != nil && precision < *opts.MinimumFractionDigits {
+	} else if opts.MinimumFractionDigits != nil {
 		precision = *opts.MinimumFractionDigits
 	}
 
