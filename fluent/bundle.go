@@ -3,6 +3,7 @@ package fluent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/fluent/parser/ast"
@@ -164,6 +165,9 @@ func resolveValue(value interface{}) Value {
 	if numVal, ok := value.(*NumberValue); ok {
 		return numVal
 	}
+	if timeVal, ok := value.(time.Time); ok {
+		return &DateTimeValue{Value: timeVal}
+	}
 	return nil
 }
 
@@ -206,6 +210,7 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 
 	functions["NUMBER"] = NumberFunc
 	functions["DATETIME"] = DateTimeFunc
+	functions["CLDRDATETIME"] = CLDRDateTimeFunc
 
 	return variables, functions
 }
