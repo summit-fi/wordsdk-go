@@ -2,69 +2,49 @@ package word
 
 import (
 	"fmt"
-	"reflect"
 
-	"github.com/gotnospirit/messageformat"
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
 func (c *Client) T(lang string, key string) string {
-	c.localizersLock.RLock()
-	defer c.localizersLock.RUnlock()
 
-	datum := c.cache.Get(lang + key)
+	bundle := c.cache.Get(cldr.Language(lang))
 
-	if len(datum) == 0 {
-		c.logger.Debugf("translation '%s' not found", key)
-		return key
+	message, errs, err := bundle.FormatMessage(key)
+	if err != nil {
+		c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
+		return ""
 	}
-	return datum
+
+	return message
 }
 
 func (c *Client) TA(lang string, key string, args any) string {
 	// temporary
-	datum := c.cache.Get(lang + key)
+	bundle := c.cache.Get(cldr.Language(lang))
 
-	if len(datum) == 0 {
-		c.logger.Debugf("translation '%s' not found", key)
-		return key
-	}
+	var FormatContext []*fluent.FormatContext
 
-	parser, err := messageformat.NewWithCulture(lang[:2])
-	if err != nil {
-		c.logger.Errorf("Failed to create ICU parser: %v", err)
-		return key
-	}
-
-	icu, err := parser.Parse(datum)
-	if err != nil {
-		c.logger.Errorf("Failed to translate %s: %v", key, err)
-		return key
-	}
-
-	var template map[string]interface{}
-
-	switch temp := args.(type) {
-	case string:
-		return c.T(lang, key)
-
+	switch args.(type) {
 	case map[string]interface{}:
-		template = temp
-	default:
-		c.logger.Errorf("Unsupported type of args -> key: %s, sent type: %s", key, reflect.TypeOf(datum).String())
+		for k, v := range args.(map[string]interface{}) {
+			FormatContext = append(FormatContext, fluent.WithVariable(k, v))
+		}
 	}
 
-	result, err := icu.FormatMap(template)
+	message, errs, err := bundle.FormatMessage(key, FormatContext...)
 	if err != nil {
-		c.logger.Errorf("Failed to translate %s: %v", key, err)
-		return key
+		c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
+		return ""
 	}
 
-	return result
+	return message
 }
 
 func (c *Client) SaveTranslations(data []source.Object) error {
-	return fmt.Errorf("SaveTranslations is deprecated, DynamicContent.SaveTranslations should be used instead")
+
 	err := c.saveObjects(data)
 	if err != nil {
 		return err
@@ -121,41 +101,38 @@ func (c *Client) saveObjects(data []source.Object) error {
 }
 
 func (c *Client) updateSaveBundleWithData(data []source.Object) {
-	c.saveBundleLock.Lock()
-	defer c.saveBundleLock.Unlock()
-	var updatedSaveBundle []source.Object
-	updatedSaveBundle = append(updatedSaveBundle, c.saveBundle...)
-	for _, d := range data {
-		found := false
-		for i, s := range updatedSaveBundle {
-			if s.LocaleCode == d.LocaleCode && s.Key == d.Key {
-				updatedSaveBundle[i] = d
-				found = true
-				break
+	for _, item := range data {
+		bundle := c.cache.Get(cldr.Language(item.LocaleCode))
+		if !bundle.HasMessage(item.Key) {
+			resource, errs := fluent.NewResource(fmt.Sprintf("%s = %s", item.Key, item.Value))
+			if errs != nil {
+				c.logger.Errorf("Failed to create resource for language %s: %v", item.LocaleCode, errs)
+				continue
 			}
-		}
-		if !found {
-			updatedSaveBundle = append(updatedSaveBundle, d)
+			if err := bundle.AddResource(resource); err != nil {
+				c.logger.Errorf("Failed to add resource for language %s: %v", item.LocaleCode, err)
+				continue
+			}
+		} else {
+			c.logger.Debugf("Key '%s' already exists in the bundle for language '%s'", item.Key, item.LocaleCode)
 		}
 	}
-	c.saveBundle = updatedSaveBundle
+
 }
 
 // Flush saves all pending translations to the database.
 // This method is useful when SaveStrategy is set to SaveStrategyOnDemand.
 func (c *Client) Flush() error {
-	c.saveBundleLock.Lock()
-	defer c.saveBundleLock.Unlock()
 
-	if len(c.saveBundle) == 0 {
-		return nil
-	}
+	//if len(c.saveBundle) == 0 {
+	//	return nil
+	//}
 
-	err := c.source.Save(c.saveBundle)
-	if err != nil {
-		return err
-	}
-
-	c.saveBundle = nil
+	//err := c.source.Save(c.saveBundle)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//c.saveBundle = nil
 	return nil
 }

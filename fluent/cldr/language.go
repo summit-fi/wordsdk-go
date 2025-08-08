@@ -14,31 +14,6 @@ const (
 	LanguageRuUa Language = "ru_UA"
 )
 
-func GetLanguageTypeByCode(code string) Language {
-	if len(code) == 0 {
-		return LanguageEnUS // Default to English US if empty
-	}
-
-	switch code {
-	case "en_CO":
-		return LanguageEnCo
-	case "es_CO":
-		return LanguageEsCo
-	case "en_EU":
-		return LanguageEnEu
-	case "en_UA":
-		return LanguageEnUa
-	case "en_US":
-		return LanguageEnUS
-	case "uk_UA":
-		return LanguageUkUa
-	case "ru_UA":
-		return LanguageRuUa
-	default:
-		return LanguageEnUS // Default to English US if unknown
-	}
-}
-
 func (l Language) BCP47() language.Tag {
 	switch l {
 	case LanguageEnUS:

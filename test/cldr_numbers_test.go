@@ -55,7 +55,7 @@ func TestCurrencyCLDRTest(t *testing.T) {
 				continue
 			}
 
-			bundle := fluent.NewBundle(cldr.GetLanguageTypeByCode(key))
+			bundle := fluent.NewBundle(cldr.Language(key))
 
 			errors := executeNumberFormatterCurrency(t, bundle, test.Scenarios)
 			for _, err := range errors {
@@ -71,33 +71,35 @@ func executeNumberFormatterCurrency(t *testing.T, bundle *fluent.Bundle, testSce
 	var errors []error
 
 	for i, scenario := range testScenarios {
-		name := fmt.Sprintf("%s-%d", "scenario", i)
+		t.Run(fmt.Sprintf("Scenario-%d", i), func(t *testing.T) {
+			name := fmt.Sprintf("%s-%d", "scenario", i)
 
-		// Add currency formatting message to bundle
-		currencyMessage := fmt.Sprintf(`%s = { NUMBER($amount, style: "currency", currencyDisplay: "symbol") }`, name)
-		resource, errs := fluent.NewResource(currencyMessage)
-		if errs != nil {
-			errors = append(errors, fmt.Errorf("failed to create currency resource: %v", errs))
-			continue
-		}
+			// Add currency formatting message to bundle
+			currencyMessage := fmt.Sprintf(`%s = { NUMBER($amount, style: "currency", currencyDisplay: "symbol") }`, name)
+			resource, errs := fluent.NewResource(currencyMessage)
+			if errs != nil {
+				errors = append(errors, fmt.Errorf("failed to create currency resource: %v", errs))
+				return
+			}
 
-		bundle.AddResource(resource)
+			bundle.AddResource(resource)
 
-		amount, err := strconv.ParseFloat(scenario.Value, 64)
-		if err != nil {
-			errors = append(errors, fmt.Errorf("failed to parse amount %s: %v", scenario.Value, err))
-			continue
-		}
-		msg, _, fatalErr := bundle.FormatMessage(name, fluent.WithVariable("amount", amount))
-		if fatalErr != nil {
-			errors = append(errors, fmt.Errorf("bundle.FormatMessage fatal error: %s", fatalErr))
-			continue
-		}
+			amount, err := strconv.ParseFloat(scenario.Value, 64)
+			if err != nil {
+				errors = append(errors, fmt.Errorf("failed to parse amount %s: %v", scenario.Value, err))
+				return
+			}
+			msg, _, fatalErr := bundle.FormatMessage(name, fluent.WithVariable("amount", amount))
+			if fatalErr != nil {
+				errors = append(errors, fmt.Errorf("bundle.FormatMessage fatal error: %s", fatalErr))
+				return
+			}
 
-		if msg != scenario.Expected {
-			t.Errorf("%s - %+v : expected %s, got %s",
-				bundle.PrimaryLocale(), scenario, scenario.Expected, msg)
-		}
+			if msg != scenario.Expected {
+				t.Errorf("%s - %+v : expected %s, got %s",
+					bundle.PrimaryLocale(), scenario, scenario.Expected, msg)
+			}
+		})
 	}
 
 	return errors
@@ -107,11 +109,12 @@ func TestDecimalCLDR(t *testing.T) {
 
 	for key, tests := range ReadScenarios(t) {
 		for _, test := range tests.Tests {
+
 			if test.Type != "NumberFormatter::decimal" {
 				continue
 			}
 
-			bundle := fluent.NewBundle(cldr.GetLanguageTypeByCode(key))
+			bundle := fluent.NewBundle(cldr.Language(key))
 
 			errors := executeNumberFormatterDecimal(t, bundle, test.Scenarios)
 			for _, err := range errors {
@@ -120,40 +123,41 @@ func TestDecimalCLDR(t *testing.T) {
 
 		}
 	}
-	t.Logf("Tested %d scenarios for decimal formatting in CLDR", len(ReadScenarios(t)))
 }
 
 func executeNumberFormatterDecimal(t *testing.T, bundle *fluent.Bundle, testScenarios []TestScenarios) []error {
 	var errors []error
 
 	for i, scenario := range testScenarios {
-		name := fmt.Sprintf("%s-%d", "scenario", i)
+		t.Run(fmt.Sprintf("Scenario-%s", scenario.Value), func(t *testing.T) {
+			name := fmt.Sprintf("%s-%d", "scenario", i)
 
-		// Add decimal formatting message to bundle
-		decimalMessage := fmt.Sprintf(`%s = { NUMBER($amount, style: "decimal") }`, name)
-		resource, errs := fluent.NewResource(decimalMessage)
-		if errs != nil {
-			errors = append(errors, fmt.Errorf("failed to create decimal resource: %v", errs))
-			continue
-		}
+			// Add decimal formatting message to bundle
+			decimalMessage := fmt.Sprintf(`%s = { NUMBER($amount, style: "decimal") }`, name)
+			resource, errs := fluent.NewResource(decimalMessage)
+			if errs != nil {
+				errors = append(errors, fmt.Errorf("failed to create decimal resource: %v", errs))
+				return
+			}
 
-		bundle.AddResource(resource)
+			bundle.AddResource(resource)
 
-		amount, err := strconv.ParseFloat(scenario.Value, 64)
-		if err != nil {
-			errors = append(errors, fmt.Errorf("failed to parse amount %s: %v", scenario.Value, err))
-			continue
-		}
-		msg, _, fatalErr := bundle.FormatMessage(name, fluent.WithVariable("amount", amount))
-		if fatalErr != nil {
-			errors = append(errors, fmt.Errorf("bundle.FormatMessage fatal error: %s", fatalErr))
-			continue
-		}
+			amount, err := strconv.ParseFloat(scenario.Value, 64)
+			if err != nil {
+				errors = append(errors, fmt.Errorf("failed to parse amount %s: %v", scenario.Value, err))
+				return
+			}
+			msg, _, fatalErr := bundle.FormatMessage(name, fluent.WithVariable("amount", amount))
+			if fatalErr != nil {
+				errors = append(errors, fmt.Errorf("bundle.FormatMessage fatal error: %s", fatalErr))
+				return
+			}
 
-		if msg != scenario.Expected {
-			t.Errorf("%s - %+v : expected %s, got %s",
-				bundle.PrimaryLocale(), scenario, scenario.Expected, msg)
-		}
+			if msg != scenario.Expected {
+				t.Errorf("%s - %+v : expected %s, got %s",
+					bundle.PrimaryLocale(), scenario, scenario.Expected, msg)
+			}
+		})
 	}
 
 	return errors

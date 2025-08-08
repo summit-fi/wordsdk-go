@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
-	"sync"
+	"strings"
 	"time"
 
 	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
@@ -50,11 +51,8 @@ type Client struct {
 	updateInterval          time.Duration
 	logLevel                int
 	maxCacheSizeMB          int
-	cache                   fluent.Map[string, string]
-	localizersLock          sync.RWMutex
+	cache                   fluent.Map[cldr.Language, *fluent.Bundle]
 	saveStrategy            SaveStrategy
-	saveBundle              []source.Object
-	saveBundleLock          sync.Mutex
 }
 
 func NewClient(config *Config) (SDK, error) {
@@ -80,7 +78,7 @@ func NewClient(config *Config) (SDK, error) {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
 
-	c.cache = fluent.NewMap[string, string]()
+	c.cache = fluent.NewMap[cldr.Language, *fluent.Bundle]()
 
 	c.checksum = checksum
 	err = c.UpdateBundle(data)
@@ -145,17 +143,40 @@ func (c *Client) syncTranslations() {
 }
 
 func (c *Client) UpdateBundle(data []source.Object) error {
-	c.localizersLock.Lock()
-	defer c.localizersLock.Unlock()
-	for _, d := range data {
-		c.cache.Set(d.LocaleCode+d.Key, d.Value)
+
+	var mapData = make(map[string]*strings.Builder)
+
+	for _, item := range data {
+
+		if _, ok := mapData[item.LocaleCode]; !ok {
+			mapData[item.LocaleCode] = &strings.Builder{}
+		}
+		mapData[item.LocaleCode].WriteString(item.Key)
+		mapData[item.LocaleCode].WriteString("=")
+		mapData[item.LocaleCode].WriteString(item.Value)
+		mapData[item.LocaleCode].WriteString("\n")
 	}
+
+	for lang, sb := range mapData {
+		if len(sb.String()) == 0 {
+			continue
+		}
+		bundle := fluent.NewBundle(cldr.Language(lang))
+
+		resource, errs := fluent.NewResource(sb.String())
+		if errs != nil {
+			return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+		}
+		if err := bundle.AddResource(resource); err != nil {
+			return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
+		}
+		c.cache.Set(cldr.Language(lang), bundle)
+	}
+
 	return nil
 }
 
 func (c *Client) GetCacheSize() int {
-	c.localizersLock.RLock()
-	defer c.localizersLock.RUnlock()
 
 	size := 0
 	for _, bundle := range c.cache.GetAll() {

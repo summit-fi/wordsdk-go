@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
@@ -26,10 +27,13 @@ func TestCurrencyMaximumFractionDigits(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := formatter.Format(tt.value, numbers.MaximumFractionDigits(tt.maxFrac))
-		if got != tt.expected {
-			t.Errorf("value=%v, maxFrac=%d: got %q, want %q", tt.value, tt.maxFrac, got, tt.expected)
-		}
+		t.Run(fmt.Sprintf("value=%v,maxFrac=%d", tt.value, tt.maxFrac), func(t *testing.T) {
+			got := formatter.Format(tt.value, numbers.MaximumFractionDigits(tt.maxFrac))
+			if got != tt.expected {
+				t.Errorf("value=%v, maxFrac=%d: got %q, want %q", tt.value, tt.maxFrac, got, tt.expected)
+			}
+		})
+
 	}
 }
 
@@ -54,9 +58,11 @@ func TestCurrencyMinimumFractionDigits(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := formatter.Format(tt.value, numbers.MinimumFractionDigits(tt.minFrac))
-		if got != tt.expected {
-			t.Errorf("value=%v, minFrac=%d: got %q, want %q", tt.value, tt.minFrac, got, tt.expected)
-		}
+		t.Run(fmt.Sprintf("value=%v,minFrac=%d", tt.value, tt.minFrac), func(t *testing.T) {
+			got := formatter.Format(tt.value, numbers.MinimumFractionDigits(tt.minFrac))
+			if got != tt.expected {
+				t.Errorf("value=%v, minFrac=%d: got %q, want %q", tt.value, tt.minFrac, got, tt.expected)
+			}
+		})
 	}
 }
