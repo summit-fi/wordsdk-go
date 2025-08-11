@@ -15,7 +15,7 @@ func (c *Client) T(lang string, key string) string {
 	message, errs, err := bundle.FormatMessage(key)
 	if err != nil {
 		c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
-		return ""
+		return key
 	}
 
 	return message
@@ -25,22 +25,19 @@ func (c *Client) TA(lang string, key string, args any) string {
 	// temporary
 	bundle := c.cache.Get(cldr.Language(lang))
 
-	var FormatContext []*fluent.FormatContext
-
 	switch args.(type) {
-	case map[string]interface{}:
-		for k, v := range args.(map[string]interface{}) {
-			FormatContext = append(FormatContext, fluent.WithVariable(k, v))
+	case map[string]any:
+		message, errs, err := bundle.FormatMessage(key, fluent.WithVariables(args.(map[string]any)))
+		if err != nil {
+			c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
+			return key
 		}
+		return message
+	default:
+		c.logger.Debugf("TA function expects a map[string]any for args, got %T", args)
+		return key
 	}
 
-	message, errs, err := bundle.FormatMessage(key, FormatContext...)
-	if err != nil {
-		c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
-		return ""
-	}
-
-	return message
 }
 
 func (c *Client) SaveTranslations(data []source.Object) error {
@@ -102,6 +99,7 @@ func (c *Client) updateSaveBundleWithData(data []source.Object) {
 	for _, item := range data {
 		bundle := c.cache.Get(cldr.Language(item.LocaleCode))
 		if !bundle.HasMessage(item.Key) {
+			c.logger.Debugf("Adding key '%s' for language '%s'", item.Key, item.LocaleCode)
 			resource, errs := fluent.NewResource(fmt.Sprintf("%s = %s", item.Key, item.Value))
 			if errs != nil {
 				c.logger.Errorf("Failed to create resource for language %s: %v", item.LocaleCode, errs)

@@ -66,7 +66,7 @@ func NewClient(config *Config) (SDK, error) {
 		},
 		source: config.Source,
 		logger: &DefaultLogger{
-			LogLevel: LogLevelError,
+			LogLevelError,
 		},
 		updateInterval: config.UpdateInterval,
 		maxCacheSizeMB: config.MaxCacheSizeMB,
