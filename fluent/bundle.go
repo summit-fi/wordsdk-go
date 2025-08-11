@@ -126,6 +126,12 @@ func resolveValue(value interface{}) Value {
 	if strVal, ok := value.(*StringValue); ok {
 		return strVal
 	}
+	if boolVal, ok := value.(bool); ok {
+		if boolVal {
+			return String("true")
+		}
+		return String("false")
+	}
 	if float32Val, ok := value.(float32); ok {
 		return NumberLiteral(float32Val)
 	}

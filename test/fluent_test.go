@@ -469,3 +469,191 @@ func testSaveResourcesInBundle(t *testing.T, ftl string, expectedMsg string, key
 		return
 	}
 }
+
+func TestBooleanSelection(t *testing.T) {
+	ftl := `boolean-selection = { $isTrue ->
+[true] The condition is true.
+[false] The condition is false.
+*[other] Invalid condition.
+}`
+	resource, err := fluent.NewResource(string(ftl))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	bundle := fluent.NewBundle(cldr.LanguageEnUS)
+	errs := bundle.AddResource(resource)
+	if errs != nil {
+		for _, errt := range errs {
+			if errt != nil {
+				t.Errorf("bundle.AddResource error: %s", errt)
+			}
+		}
+		return
+	}
+	tests := []struct {
+		name string
+		vars map[string]any
+	}{
+		{
+			name: "True Condition",
+			vars: map[string]any{
+				"isTrue": true,
+			},
+		},
+		{
+			name: "False Condition",
+			vars: map[string]any{
+				"isTrue": false,
+			},
+		},
+		{
+			name: "Invalid Condition",
+			vars: map[string]any{
+				"isTrue": "maybe",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			msg, _, fatalErr := bundle.FormatMessage("boolean-selection", fluent.WithVariables(tt.vars))
+			if fatalErr != nil {
+				t.Errorf("bundle.FormatMessage fatal error for %s: %s", tt.name, fatalErr)
+				return
+			}
+			expected := ""
+			switch tt.vars["isTrue"] {
+			case true:
+				expected = "The condition is true."
+			case false:
+				expected = "The condition is false."
+			default:
+				expected = "Invalid condition."
+			}
+			if msg != expected {
+				t.Errorf("Expected: %s, Got: %s", expected, msg)
+			}
+		})
+	}
+}
+
+func TestRepeatMode(t *testing.T) {
+	ftl := `core-repeat-mode =
+    { $every ->
+        [weekly] { $count ->
+            [0] Never
+            [1] Every { $weekday ->
+                [mon] Monday
+                [tue] Tuesday
+                [wed] Wednesday
+                [thu] Thursday
+                [fri] Friday
+                [sat] Saturday
+                [sun] Sunday
+               *[other] Never
+            }
+           *[other] { $isAllWeekdays ->
+                [true] Every day
+                [false] { $formatDayGroups }
+               *[other] invalid
+            }
+        }
+        [monthly] Every month
+        [yearly] Every year
+       *[other] Never
+    }`
+
+	resource, err := fluent.NewResource(string(ftl))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	bundle := fluent.NewBundle(cldr.LanguageEnUS)
+	errs := bundle.AddResource(resource)
+	if errs != nil {
+		for _, errt := range errs {
+			if errt != nil {
+				t.Errorf("bundle.AddResource error: %s", errt)
+			}
+		}
+		return
+	}
+	tests := []struct {
+		name     string
+		vars     map[string]any
+		expected string
+	}{
+		{
+			name: "Weekly - Never",
+			vars: map[string]any{
+				"every":         "weekly",
+				"count":         0,
+				"weekday":       "mon",
+				"isAllWeekdays": false,
+			},
+			expected: "Never",
+		},
+		{
+			name: "Weekly - Every Monday",
+			vars: map[string]any{
+				"every":         "weekly",
+				"count":         1,
+				"weekday":       "mon",
+				"isAllWeekdays": false,
+			},
+			expected: "Every Monday",
+		},
+		{
+			name: "Weekly - Every day",
+			vars: map[string]any{
+				"every":         "weekly",
+				"count":         5,
+				"isAllWeekdays": true,
+			},
+			expected: "Every day",
+		},
+		{
+			name: "Monthly - Every month",
+			vars: map[string]any{
+				"every":         "monthly",
+				"count":         0,
+				"weekday":       "mon",
+				"isAllWeekdays": false,
+			},
+			expected: "Every month",
+		},
+		{
+			name: "Yearly - Every year",
+			vars: map[string]any{
+				"every":         "yearly",
+				"count":         0,
+				"weekday":       "mon",
+				"isAllWeekdays": false,
+			},
+			expected: "Every year",
+		},
+		{
+			name: "Format Day Groups - Mon - Fri",
+			vars: map[string]any{
+				"every":           "weekly",
+				"count":           5,
+				"isAllWeekdays":   false,
+				"formatDayGroups": "Mon - Fri",
+			},
+			expected: "Mon - Fri",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			msg, _, fatalErr := bundle.FormatMessage("core-repeat-mode", fluent.WithVariables(tt.vars))
+			if fatalErr != nil {
+				t.Errorf("bundle.FormatMessage fatal error for %s: %s", tt.name, fatalErr)
+				return
+			}
+			if msg != tt.expected {
+				t.Errorf("Expected: %s, Got: %s", tt.expected, msg)
+			}
+		})
+	}
+}
