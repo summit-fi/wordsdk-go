@@ -15,6 +15,7 @@ yMd = short: { CLDRDATETIME($date, pattern: "yMd") }
 Hm = time short: { CLDRDATETIME($date, pattern: "Hm") }
 yMMMM = year month: { CLDRDATETIME($date, pattern: "yMMMM") }
 Ehms = weekday and time: { CLDRDATETIME($date, pattern: "Ehms") }
+htrbfgsdnr = error-date: { CLDRDATETIME($date, pattern: "htrbfgsdnr") }
 `
 
 	tests := []struct {
@@ -63,6 +64,13 @@ Ehms = weekday and time: { CLDRDATETIME($date, pattern: "Ehms") }
 				"date": time.Date(2025, time.February, 17, 21, 45, 5, 0, time.UTC),
 			},
 			expected: "weekday and time: lun, 9:45:05 p.m.",
+		},
+		{
+			name: "htrbfgsdnr",
+			vars: map[string]any{
+				"date": time.Date(2025, time.February, 17, 21, 45, 5, 0, time.UTC),
+			},
+			expected: "error-date: error: unsupported skeleton symbol \"t\"",
 		},
 	}
 
