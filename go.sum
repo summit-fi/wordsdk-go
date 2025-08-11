@@ -1,5 +1,5 @@
-github.com/boltegg/intl v0.0.0-20250808114223-845336dd11fc h1:ov5D4RenVYALNLLLKQ1zI5ifjmfde7+L8MO2LY/fUTk=
-github.com/boltegg/intl v0.0.0-20250808114223-845336dd11fc/go.mod h1:bmlhkYjRKwNReZr3dlM2oEROfJI94XALp1VtFWSk/ak=
+github.com/boltegg/intl v0.0.0-20250808155525-55e9e24f1b15 h1:FXZIZBtPxcnD5xYYR13z5ZfzKH3cBPJYlWd6TWqxowc=
+github.com/boltegg/intl v0.0.0-20250808155525-55e9e24f1b15/go.mod h1:bmlhkYjRKwNReZr3dlM2oEROfJI94XALp1VtFWSk/ak=
 github.com/gotnospirit/makeplural v0.0.0-20180622080156-a5f48d94d976 h1:b70jEaX2iaJSPZULSUxKtm73LBfsCrMsIlYCUgNGSIs=
 github.com/gotnospirit/makeplural v0.0.0-20180622080156-a5f48d94d976/go.mod h1:ZGQeOwybjD8lkCjIyJfqR5LD2wMVHJ31d6GdPxoTsWY=
 github.com/gotnospirit/messageformat v0.0.0-20221001023931-dfe49f1eb092 h1:c7gcNWTSr1gtLp6PyYi3wzvFCEcHJ4YRobDgqmIgf7Q=

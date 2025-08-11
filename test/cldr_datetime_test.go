@@ -53,7 +53,10 @@ func TestCLDRDateTimeFormatter_Format(t *testing.T) {
 		tt := tt // capture loop variable
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			f := fluent.CLDRDateTimeFormatter(tt.locale, tt.pattern)
+			f, err := fluent.CLDRDateTimeFormatter(tt.locale, tt.pattern)
+			if err != nil {
+				t.Fatalf("failed to create formatter for %s: %v", tt.name, err)
+			}
 			result := f.Format(tt.time)
 			if result != tt.expected {
 				t.Errorf("expected %q, got %q", tt.expected, result)
