@@ -16,9 +16,13 @@ func TestFixtures(t *testing.T) {
 	// Collect the file names (without extension) from the fixtures in the '../../test/fixtures' directory
 	var fileNames []string
 	filepath.Walk(filepath.Join("../../test", "fixtures"), func(path string, info fs.FileInfo, err error) error {
-		if info == nil || info.IsDir() {
+		if info == nil {
 			return nil
 		}
+		if info.IsDir() && info.Name() == "custom" {
+			return filepath.SkipDir
+		}
+
 		if strings.HasSuffix(info.Name(), ".ftl") {
 			fileNames = append(fileNames, strings.TrimSuffix(info.Name(), ".ftl"))
 		}

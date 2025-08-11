@@ -14,7 +14,7 @@ import (
 )
 
 func ReadScenarios(t *testing.T) map[string]MainCustomTestModel {
-	readDir, err := os.ReadDir(filepath.Join(word.Root(), fixturesPath))
+	readDir, err := os.ReadDir(filepath.Join(word.Root(), cldrSourcePath))
 	if err != nil {
 		t.Fatalf("Failed to read directory: %v", err)
 	}
@@ -26,7 +26,7 @@ func ReadScenarios(t *testing.T) map[string]MainCustomTestModel {
 			continue
 		}
 
-		file, err := os.OpenFile(filepath.Join(word.Root(), fixturesPath, entry.Name()), os.O_RDONLY, 0644)
+		file, err := os.OpenFile(filepath.Join(word.Root(), cldrSourcePath, entry.Name()), os.O_RDONLY, 0644)
 		if err != nil {
 			t.Fatalf("Failed to open file %s: %v", entry.Name(), err)
 		}

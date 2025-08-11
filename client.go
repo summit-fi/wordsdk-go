@@ -151,17 +151,31 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if _, ok := mapData[item.LocaleCode]; !ok {
 			mapData[item.LocaleCode] = &strings.Builder{}
 		}
-		mapData[item.LocaleCode].WriteString(item.Key)
-		mapData[item.LocaleCode].WriteString("=")
-		mapData[item.LocaleCode].WriteString(item.Value)
-		mapData[item.LocaleCode].WriteString("\n")
+		if len(item.Value) > 0 {
+
+			// Strip any leading/trailing whitespace that might cause formatting issues
+			value := strings.TrimSpace(item.Value)
+
+			mapData[item.LocaleCode].WriteString(item.Key)
+			mapData[item.LocaleCode].WriteString(" = ") // Add space before and after equals sign
+			mapData[item.LocaleCode].WriteString(value)
+			mapData[item.LocaleCode].WriteString("\n") // Only one newline at the end
+
+		}
 	}
 
 	for lang, sb := range mapData {
 		if len(sb.String()) == 0 {
 			continue
 		}
-		bundle := fluent.NewBundle(cldr.Language(lang))
+		var (
+			bundle *fluent.Bundle
+			ok     bool
+		)
+
+		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
+			bundle = fluent.NewBundle(cldr.Language(lang))
+		}
 
 		resource, errs := fluent.NewResource(sb.String())
 		if errs != nil {
@@ -170,6 +184,7 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if err := bundle.AddResource(resource); err != nil {
 			return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
 		}
+
 		c.cache.Set(cldr.Language(lang), bundle)
 	}
 

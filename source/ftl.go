@@ -74,13 +74,12 @@ type openedFile struct {
 	bytes      []byte
 }
 
-func FtlParse(data []byte) []Object {
+func FtlParse(locale string, data []byte) []Object {
 	scanner := bufio.NewScanner(bytes.NewReader(data))
 
 	var foundedKey string
 	var foundedValue json.RawMessage
 
-	// Use a map to store key-value pairs instead of the undefined ptype.Rows
 	entries := make(map[string]json.RawMessage)
 
 	for scanner.Scan() {
@@ -129,10 +128,9 @@ func FtlParse(data []byte) []Object {
 	var result []Object
 	for key, value := range entries {
 		result = append(result, Object{
-			Key:   key,
-			Value: string(value),
-			// Note: LocaleCode isn't set here since it's not available in the parsing context
-			// You might need to pass it as a parameter if needed
+			LocaleCode: locale,
+			Key:        key,
+			Value:      string(value),
 		})
 	}
 
@@ -178,7 +176,7 @@ func (f *Ftl) LoadAllStatic(checksumIn string) ([]Object, string, error) {
 	// Format result
 	var objects []Object
 	for _, file := range files {
-		objects = FtlParse(file.bytes)
+		objects = append(objects, FtlParse(file.localeCode, file.bytes)...)
 	}
 
 	return objects, checksum, nil

@@ -1,6 +1,9 @@
 package test
 
-const fixturesPath = "/test/fixtures/custom"
+const (
+	cldrSourcePath = "/test/fixtures/custom"
+	fixturesPath   = "/test/fixtures"
+)
 
 type MainCustomTestModel struct {
 	Locale string            `json:"locale"`

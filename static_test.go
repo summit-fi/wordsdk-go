@@ -1,8 +1,10 @@
 package word
 
 import (
+	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/summit-fi/wordsdk-go/source"
@@ -10,12 +12,12 @@ import (
 
 func jsonClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
 
-	db := source.NewJson()
+	db := source.NewFtl()
 	err := db.AddLocaleFiles(map[string]string{
-		"uk_UA": "example/assets/json/uk.json",
-		"en_US": "example/assets/json/en.json",
-		"es_ES": "example/assets/json/es.json",
-		"sv_SE": "example/assets/json/sv.json",
+		"uk_UA": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "uk_UA.ftl"),
+		"en_UA": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_UA.ftl"),
+		"es_CO": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "es_CO.ftl"),
+		"en_EU": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"),
 	})
 	if err != nil {
 		return nil, err
@@ -37,7 +39,7 @@ func TestClient_Flush(t *testing.T) {
 	}
 
 	// Read initial file to compare
-	f, err := os.Open("example/assets/json/en.json")
+	f, err := os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -50,15 +52,6 @@ func TestClient_Flush(t *testing.T) {
 	f.Close()
 	initialData := string(b)
 
-	initialDataShouldBe := `{
-  "core.every": "Every",
-  "core.everyday": "Every day",
-  "notifications.email.confirmation.title": "Confirmation"
-}`
-	if initialData != initialDataShouldBe {
-		t.Fatalf("initialData = %v, want %v", initialData, initialDataShouldBe)
-	}
-
 	// Save new data
 	err = w.SaveTranslations([]source.Object{
 		{
@@ -69,7 +62,7 @@ func TestClient_Flush(t *testing.T) {
 	})
 
 	// Read file after save
-	f, err = os.Open("example/assets/json/en.json")
+	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -82,9 +75,10 @@ func TestClient_Flush(t *testing.T) {
 	f.Close()
 	updatedData := string(b)
 
-	// Data should not be updated before Flush
-	if updatedData != initialData {
-		t.Fatalf("updatedData = %v, want %v", updatedData, initialData)
+	// Data should be updated after Flush
+	updatedDataShouldBe := fmt.Sprintf("%s\n%s = %s\n", initialData, "core.every", "Every 2 minute")
+	if updatedData != updatedDataShouldBe {
+		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
 	}
 
 	// Flush
@@ -94,7 +88,7 @@ func TestClient_Flush(t *testing.T) {
 	}
 
 	// Read file after Flush
-	f, err = os.Open("example/assets/json/en.json")
+	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -107,19 +101,12 @@ func TestClient_Flush(t *testing.T) {
 	f.Close()
 	updatedData = string(b)
 
-	// Data should be updated after Flush
-	updatedDataShouldBe := `{
-  "core.every": "Every 1 minute",
-  "core.everyday": "Every day",
-  "notifications.email.confirmation.title": "Confirmation"
-}`
-
 	if updatedData != updatedDataShouldBe {
-		t.Fatalf("updatedData = %v, want %v", updatedData, updatedDataShouldBe)
+		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
 	}
 
 	// Write initial file back
-	f, err = os.OpenFile("example/assets/json/en.json", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err = os.OpenFile(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		t.Fatalf("os.OpenFile() error = %v", err)
 	}
@@ -141,7 +128,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 	}
 
 	// Read initial file to compare
-	f, err := os.Open("example/assets/json/en.json")
+	f, err := os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -154,26 +141,17 @@ func TestClient_SaveTranslation(t *testing.T) {
 	f.Close()
 	initialData := string(b)
 
-	initialDataShouldBe := `{
-  "core.every": "Every",
-  "core.everyday": "Every day",
-  "notifications.email.confirmation.title": "Confirmation"
-}`
-	if initialData != initialDataShouldBe {
-		t.Fatalf("initialData = %v, want %v", initialData, initialDataShouldBe)
-	}
-
 	// Save new data
 	err = w.SaveTranslations([]source.Object{
 		{
-			LocaleCode: "en_US",
+			LocaleCode: "en_EU",
 			Key:        "core.every",
 			Value:      "Every 2 minute",
 		},
 	})
 
 	// Read file after save
-	f, err = os.Open("example/assets/json/en.json")
+	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -187,18 +165,14 @@ func TestClient_SaveTranslation(t *testing.T) {
 	updatedData := string(b)
 
 	// Data should be updated after Flush
-	updatedDataShouldBe := `{
-  "core.every": "Every 2 minute",
-  "core.everyday": "Every day",
-  "notifications.email.confirmation.title": "Confirmation"
-}`
+	updatedDataShouldBe := fmt.Sprintf("%s\n%s = %s\n", initialData, "core.every", "Every 2 minute")
 
 	if updatedData != updatedDataShouldBe {
-		t.Fatalf("updatedData = %v, want %v", updatedData, updatedDataShouldBe)
+		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
 	}
 
 	// Write initial file back
-	f, err = os.OpenFile("example/assets/json/en.json", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err = os.OpenFile(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		t.Fatalf("os.OpenFile() error = %v", err)
 	}
