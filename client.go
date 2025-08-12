@@ -160,13 +160,14 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 			continue // Skip invalid keys
 		}
 
-		if len(item.Value) > 0 {
-			mapData[item.LocaleCode].WriteString(item.Key)
-			mapData[item.LocaleCode].WriteString(" = ") // Add space before and after equals sign
-			mapData[item.LocaleCode].WriteString(value)
-			mapData[item.LocaleCode].WriteString("\n") // Only one newline at the end
-
+		mapData[item.LocaleCode].WriteString(key)
+		mapData[item.LocaleCode].WriteString(" = ") // Add space before and after equals sign
+		if len(value) == 0 {
+			mapData[item.LocaleCode].WriteString(fmt.Sprintf("%s", `\u0020`))
 		}
+		mapData[item.LocaleCode].WriteString(fmt.Sprintf("%s", value))
+		mapData[item.LocaleCode].WriteString("\n") // Only one newline at the end
+
 	}
 
 	for lang, sb := range mapData {

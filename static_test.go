@@ -3,9 +3,11 @@ package word
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/summit-fi/wordsdk-go/source"
 )
@@ -183,4 +185,21 @@ func TestClient_SaveTranslation(t *testing.T) {
 	}
 
 	f.Close()
+}
+
+func TestRemote_Client(t *testing.T) {
+	storage := source.NewRemote("http://localhost:8000/api/v1", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJiODZhODE1Ny03NmNjLTExZjAtYWVjZS0yY2YwNWQ1N2EzZjIiLCJleHAiOjE3ODY0NjQyMDgsImtleSI6ImEwMTM1NDQ3NzNiNDRkM2M4YmQ1YWMwYWZjYTY0MDAwIiwicGlkIjoiZTgyNTFmNzItYjE4MS0xMWVmLTkwNDYtNmE0YmQxZGQ3MzBjIiwidWlkIjoiOWQ1ZGEwMGEtYjFiNy0xMWVmLWE4YzctNmE0YmQxZGQ3MzBiIn0.xsKlZVdxbuefUGnj680A8UtBuC7RNTjYFYpOfYY2dxA")
+
+	cfg := &Config{
+		UpdateInterval: 5 * time.Minute,
+		Source:         storage,
+		SaveStrategy:   SaveStrategyOnDemand,
+	}
+	w, err := NewClient(cfg)
+	if err != nil {
+		log.Fatalf("Failed to create word sdk client: %v", err)
+	}
+	lg := DefaultLogger{}
+	lg.SetLogLevel(LogLevelDebug)
+	w.SetLogger(&lg)
 }

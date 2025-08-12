@@ -21,7 +21,7 @@ func remoteConnection() SDK {
 		panic(err)
 	}
 	word.SetLogger(&DefaultLogger{
-		LogLevel: LogLevelDebug,
+		LogLevelDebug,
 	})
 
 	return word
@@ -55,7 +55,7 @@ func TestRemoteDynamicContent_TA(t *testing.T) {
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
 	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
-	value := `{every, select, weekly {Every week} monthly {Every month} yearly {Every year} other {Never}}`
+	value := `Test`
 	err := connect.Dynamic().SaveTranslation("en_EU", XKeyGen(value), value)
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
@@ -77,19 +77,14 @@ func TestRemoteDynamicContent_TA(t *testing.T) {
 func TestRemoteDynamicContent_SaveTranslations(t *testing.T) {
 	connect := remoteConnection()
 
-	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
-	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
+	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
 
 	err := connect.Dynamic().SaveTranslations([]source.Object{
 		{
 			LocaleCode: "en_EU",
-			Key:        "core.every1",
-			Value:      "Every week",
-		},
-		{
-			LocaleCode: "en_EU",
-			Key:        "ordinal.ICU.test",
-			Value:      `Our {count, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} tree!`,
+			Key:        "test_test",
+			Value:      "Testing dynamic content",
 		},
 	})
 
@@ -98,12 +93,32 @@ func TestRemoteDynamicContent_SaveTranslations(t *testing.T) {
 		return
 	}
 
-	str := connect.Dynamic().TA("en_EU", "ordinal.ICU.test", map[string]interface{}{
-		"count": 5,
-	})
-	if str == "select.ICU.test" {
-		t.Errorf("Failed to save translation: %v", str)
+	str := connect.Dynamic().T("en_EU", "test_test")
+	if str == "test_test" {
+		t.Errorf("Failed to retrieve translation: %v", str)
 		return
 	}
+
+	t.Logf("Translation: %s", str)
+}
+
+func TestRemoteDynamicContent_SaveTranslation(t *testing.T) {
+	connect := remoteConnection()
+
+	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
+
+	err := connect.Dynamic().SaveTranslation("en_EU", "test_test_2", "Testing dynamic content 2")
+	if err != nil {
+		t.Errorf("Failed to save translation: %v", err)
+		return
+	}
+
+	str := connect.Dynamic().T("en_EU", "test_test_2")
+	if str == "test_test_2" {
+		t.Errorf("Failed to retrieve translation: %v", str)
+		return
+	}
+
 	t.Logf("Translation: %s", str)
 }
