@@ -188,7 +188,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 }
 
 func TestRemote_Client(t *testing.T) {
-	storage := source.NewRemote("http://localhost:8000/api/v1", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJiODZhODE1Ny03NmNjLTExZjAtYWVjZS0yY2YwNWQ1N2EzZjIiLCJleHAiOjE3ODY0NjQyMDgsImtleSI6ImEwMTM1NDQ3NzNiNDRkM2M4YmQ1YWMwYWZjYTY0MDAwIiwicGlkIjoiZTgyNTFmNzItYjE4MS0xMWVmLTkwNDYtNmE0YmQxZGQ3MzBjIiwidWlkIjoiOWQ1ZGEwMGEtYjFiNy0xMWVmLWE4YzctNmE0YmQxZGQ3MzBiIn0.xsKlZVdxbuefUGnj680A8UtBuC7RNTjYFYpOfYY2dxA")
+	storage := source.NewRemote("http://localhost:8000/api/v1", "")
 
 	cfg := &Config{
 		UpdateInterval: 5 * time.Minute,

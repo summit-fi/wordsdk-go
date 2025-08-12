@@ -148,12 +148,13 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 
 	for _, item := range data {
 
-		builder, exists := mapData[item.LocaleCode]
+		localeMap, exists := mapData[item.LocaleCode]
 		if !exists {
-			mapData[item.LocaleCode] = make(map[string]*strings.Builder)
-			builder = mapData[item.LocaleCode]
-			builder[item.Key] = &strings.Builder{}
-
+			localeMap = make(map[string]*strings.Builder)
+			mapData[item.LocaleCode] = localeMap
+		}
+		if _, keyExists := localeMap[item.Key]; !keyExists {
+			localeMap[item.Key] = &strings.Builder{}
 		}
 
 		key := strings.TrimSpace(item.Key)
@@ -164,13 +165,13 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 			continue // Skip invalid keys
 		}
 
-		builder[item.Key].WriteString(key)
-		builder[item.Key].WriteString(" = ") // Add space before and after equals sign
+		localeMap[item.Key].WriteString(key)
+		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
 		if len(value) == 0 {
-			builder[item.Key].WriteString(fmt.Sprintf("%s", `\u0020`))
+			localeMap[item.Key].WriteString(fmt.Sprintf("%s", `\u0020`))
 		}
-		builder[item.Key].WriteString(fmt.Sprintf("%s", value))
-		builder[item.Key].WriteString("\n") // Only one newline at the end
+		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
+		localeMap[item.Key].WriteString("\n") // Only one newline at the end
 
 	}
 
