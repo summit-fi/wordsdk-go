@@ -144,12 +144,16 @@ func (c *Client) syncTranslations() {
 
 func (c *Client) UpdateBundle(data []source.Object) error {
 
-	var mapData = make(map[string]*strings.Builder)
+	var mapData = make(map[string]map[string]*strings.Builder)
 
 	for _, item := range data {
 
-		if _, ok := mapData[item.LocaleCode]; !ok {
-			mapData[item.LocaleCode] = &strings.Builder{}
+		builder, exists := mapData[item.LocaleCode]
+		if !exists {
+			mapData[item.LocaleCode] = make(map[string]*strings.Builder)
+			builder = mapData[item.LocaleCode]
+			builder[item.Key] = &strings.Builder{}
+
 		}
 
 		key := strings.TrimSpace(item.Key)
@@ -160,18 +164,18 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 			continue // Skip invalid keys
 		}
 
-		mapData[item.LocaleCode].WriteString(key)
-		mapData[item.LocaleCode].WriteString(" = ") // Add space before and after equals sign
+		builder[item.Key].WriteString(key)
+		builder[item.Key].WriteString(" = ") // Add space before and after equals sign
 		if len(value) == 0 {
-			mapData[item.LocaleCode].WriteString(fmt.Sprintf("%s", `\u0020`))
+			builder[item.Key].WriteString(fmt.Sprintf("%s", `\u0020`))
 		}
-		mapData[item.LocaleCode].WriteString(fmt.Sprintf("%s", value))
-		mapData[item.LocaleCode].WriteString("\n") // Only one newline at the end
+		builder[item.Key].WriteString(fmt.Sprintf("%s", value))
+		builder[item.Key].WriteString("\n") // Only one newline at the end
 
 	}
 
-	for lang, sb := range mapData {
-		if len(sb.String()) == 0 {
+	for lang, builder := range mapData {
+		if len(builder) == 0 {
 			continue
 		}
 		var (
@@ -182,16 +186,19 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
 			bundle = fluent.NewBundle(cldr.Language(lang))
 		}
+		for key, sb := range builder {
+			if !bundle.HasMessage(key) {
+				resource, errs := fluent.NewResource(sb.String())
+				if errs != nil {
+					return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+				}
+				if err := bundle.AddResource(resource); err != nil {
+					return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
+				}
 
-		resource, errs := fluent.NewResource(sb.String())
-		if errs != nil {
-			return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+				c.cache.Set(cldr.Language(lang), bundle)
+			}
 		}
-		if err := bundle.AddResource(resource); err != nil {
-			return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
-		}
-
-		c.cache.Set(cldr.Language(lang), bundle)
 	}
 
 	return nil
