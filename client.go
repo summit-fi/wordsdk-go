@@ -151,11 +151,16 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if _, ok := mapData[item.LocaleCode]; !ok {
 			mapData[item.LocaleCode] = &strings.Builder{}
 		}
+
+		key := strings.TrimSpace(item.Key)
+		value := strings.TrimSpace(item.Value)
+
+		// Make sure key doesn't contain invalid characters
+		if strings.ContainsAny(key, "\n\r") {
+			continue // Skip invalid keys
+		}
+
 		if len(item.Value) > 0 {
-
-			// Strip any leading/trailing whitespace that might cause formatting issues
-			value := strings.TrimSpace(item.Value)
-
 			mapData[item.LocaleCode].WriteString(item.Key)
 			mapData[item.LocaleCode].WriteString(" = ") // Add space before and after equals sign
 			mapData[item.LocaleCode].WriteString(value)
