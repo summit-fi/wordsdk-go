@@ -1,9 +1,10 @@
 package word
 
 import (
-	"reflect"
+	"fmt"
 
-	"github.com/gotnospirit/messageformat"
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
@@ -22,6 +23,7 @@ func (d *DynamicContent) T(lang string, key string) string {
 		d.logger.Debugf("translation '%s' not found", key)
 		return key
 	}
+
 	d.logger.Debugf("Translated %s: %s", key, datum)
 	return datum
 }
@@ -38,44 +40,38 @@ func (d *DynamicContent) TA(lang, key string, args any) string {
 		return key
 	}
 
-	parser, err := messageformat.NewWithCulture(lang[:2])
-	if err != nil {
-		d.logger.Errorf("Failed to create ICU parser: %v", err)
-		return key
+	return datum
+}
+
+func (d *DynamicContent) saveObjects(data []source.Object) error {
+	if d.saveStrategy == SaveStrategyImmediate {
+		err := d.source.SaveDynamic(d.dynamicContentAccessKey, data)
+		if err != nil {
+			return err
+		}
+	} else if d.saveStrategy == SaveStrategyOnDemand {
+		d.updateSaveBundleWithData(data)
+	} else {
+		return fmt.Errorf("unknown save strategy: %v", d.saveStrategy)
 	}
-
-	icu, err := parser.Parse(datum)
-	if err != nil {
-		d.logger.Errorf("Failed to translate %s: %v", key, err)
-		return key
-	}
-
-	var template map[string]interface{}
-
-	switch temp := args.(type) {
-	case string:
-		return d.T(lang, key)
-
-	case map[string]interface{}:
-		template = temp
-	default:
-		d.logger.Errorf("Unsupported type of args -> key: %s, sent type: %s", key, reflect.TypeOf(datum).String())
-		return key
-	}
-
-	result, err := icu.FormatMap(template)
-	if err != nil {
-		d.logger.Errorf("Failed to translate %s: %v", key, err)
-		return key
-	}
-
-	d.logger.Debugf("Translated %s: %s", key, result)
-
-	return result
+	return nil
 }
 
 func (d *DynamicContent) SaveTranslation(lang string, key string, value string) error {
-	return d.source.SaveDynamic(d.dynamicContentAccessKey, []source.Object{{LocaleCode: lang, Key: key, Value: value}})
+	data := []source.Object{{LocaleCode: lang, Key: key, Value: value}}
+	if err := d.saveObjects([]source.Object{{LocaleCode: lang, Key: key, Value: value}}); err != nil {
+		return err
+	}
+	// Update local cache
+	err := d.UpdateBundle(data)
+	if err != nil {
+		return err
+	}
+
+	for _, datum := range data {
+		d.logger.Debugf("SaveTranslations(%s, %s, %s)", datum.LocaleCode, datum.Key, datum.Value)
+	}
+	return nil
 }
 
 func (d *DynamicContent) SaveTranslations(data []source.Object) error {
@@ -85,4 +81,25 @@ func (d *DynamicContent) SaveTranslations(data []source.Object) error {
 	}
 	d.logger.Debugf("Saved %d translations", len(data))
 	return nil
+}
+
+func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
+	for _, item := range data {
+		bundle := d.cache.Get(cldr.Language(item.LocaleCode))
+		if !bundle.HasMessage(item.Key) {
+			d.logger.Debugf("Adding key '%s' for language '%s'", item.Key, item.LocaleCode)
+			resource, errs := fluent.NewResource(fmt.Sprintf("%s = %s", item.Key, item.Value))
+			if errs != nil {
+				d.logger.Errorf("Failed to create resource for language %s: %v", item.LocaleCode, errs)
+				continue
+			}
+			if err := bundle.AddResource(resource); err != nil {
+				d.logger.Errorf("Failed to add resource for language %s: %v", item.LocaleCode, err)
+				continue
+			}
+		} else {
+			d.logger.Debugf("Key '%s' already exists in the bundle for language '%s'", item.Key, item.LocaleCode)
+		}
+	}
+
 }

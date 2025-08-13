@@ -5,7 +5,6 @@ type Source interface {
 	LoadAllDynamic(dynamicKey string, checksumIn string) (result []Object, checkSumOut string, err error)
 	LoadOneDynamic(accessKey, lang, key string) (string, error)
 	SaveDynamic(accessKey string, data []Object) error
-	Save(data []Object) error
 }
 
 type Object struct {
