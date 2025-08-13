@@ -49,6 +49,12 @@ func (d *DynamicContent) saveObjects(data []source.Object) error {
 		if err != nil {
 			return err
 		}
+
+		// Update local cache
+		err = d.UpdateBundle(data)
+		if err != nil {
+			return err
+		}
 	} else if d.saveStrategy == SaveStrategyOnDemand {
 		d.updateSaveBundleWithData(data)
 	} else {
@@ -62,12 +68,6 @@ func (d *DynamicContent) SaveTranslation(lang string, key string, value string) 
 	if err := d.saveObjects([]source.Object{{LocaleCode: lang, Key: key, Value: value}}); err != nil {
 		return err
 	}
-	// Update local cache
-	err := d.UpdateBundle(data)
-	if err != nil {
-		return err
-	}
-
 	for _, datum := range data {
 		d.logger.Debugf("SaveTranslations(%s, %s, %s)", datum.LocaleCode, datum.Key, datum.Value)
 	}
@@ -75,11 +75,16 @@ func (d *DynamicContent) SaveTranslation(lang string, key string, value string) 
 }
 
 func (d *DynamicContent) SaveTranslations(data []source.Object) error {
-	err := d.source.SaveDynamic(d.dynamicContentAccessKey, data)
+	err := d.saveObjects(data)
 	if err != nil {
+		d.logger.Errorf("Failed to save translations: %v", err)
 		return err
 	}
-	d.logger.Debugf("Saved %d translations", len(data))
+
+	for _, datum := range data {
+		d.logger.Debugf("SaveTranslations(%s, %s, %s)", datum.LocaleCode, datum.Key, datum.Value)
+	}
+
 	return nil
 }
 
