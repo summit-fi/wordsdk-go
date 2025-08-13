@@ -18,17 +18,83 @@ type Ftl struct {
 }
 
 func (f *Ftl) SaveDynamic(accessKey string, data []Object) error {
-	//TODO implement me
-	panic("implement me")
+	f.Lock()
+	defer f.Unlock()
+
+	var dataMap = make(map[string]map[string]interface{}) // localeCode -> key -> value
+	for _, datum := range data {
+		if _, ok := dataMap[datum.LocaleCode]; !ok {
+			dataMap[datum.LocaleCode] = make(map[string]interface{})
+		}
+		dataMap[datum.LocaleCode][datum.Key] = datum.Value
+	}
+
+	for _, fi := range f.files {
+		if _, ok := dataMap[fi.localeCode]; !ok {
+			// File with this locale is not loaded/attached
+			continue
+		}
+
+		file, err := os.Open(fi.path)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		b, err := io.ReadAll(file)
+		if err != nil {
+			return err
+		}
+
+		builder, err := strings.Builder{}, nil
+
+		for key, value := range dataMap[fi.localeCode] {
+			builder.Write(b)
+			builder.WriteString("\n")
+			builder.WriteString(key)
+			builder.WriteString(" = ")
+			if strValue, ok := value.(string); ok {
+				builder.WriteString(strValue)
+			}
+			builder.WriteString("\n")
+		}
+
+		os.WriteFile(fi.path, []byte(builder.String()), 0755)
+	}
+
+	return nil
 }
 
 func (f *Ftl) LoadAllDynamic(key string, checksumIn string) (result []Object, checksumOut string, err error) {
-	//TODO implement me
-	panic("implement me")
+	return f.LoadAllStatic(checksumIn)
 }
 func (f *Ftl) LoadOneDynamic(accessKey, lang, key string) (string, error) {
-	//TODO implement me
-	panic("implement me")
+	f.RLock()
+	defer f.RUnlock()
+
+	for _, file := range f.files {
+		if file.localeCode == lang {
+			f, err := os.Open(file.path)
+			if err != nil {
+				return key, err
+			}
+			defer f.Close()
+
+			b, err := io.ReadAll(f)
+			if err != nil {
+				return key, err
+			}
+
+			objects := FtlParse(lang, b)
+			for _, obj := range objects {
+				if obj.Key == key {
+					return strings.Trim(obj.Value, "\n"), nil
+				}
+			}
+		}
+	}
+
+	return key, fmt.Errorf(fmt.Sprintf("Key: %s, nof found", key)) // Not found
 }
 
 type file struct {
@@ -180,52 +246,4 @@ func (f *Ftl) LoadAllStatic(checksumIn string) ([]Object, string, error) {
 	}
 
 	return objects, checksum, nil
-}
-
-func (f *Ftl) Save(data []Object) error {
-	f.Lock()
-	defer f.Unlock()
-
-	var dataMap = make(map[string]map[string]interface{}) // localeCode -> key -> value
-	for _, datum := range data {
-		if _, ok := dataMap[datum.LocaleCode]; !ok {
-			dataMap[datum.LocaleCode] = make(map[string]interface{})
-		}
-		dataMap[datum.LocaleCode][datum.Key] = datum.Value
-	}
-
-	for _, fi := range f.files {
-		if _, ok := dataMap[fi.localeCode]; !ok {
-			// File with this locale is not loaded/attached
-			continue
-		}
-
-		file, err := os.Open(fi.path)
-		if err != nil {
-			return err
-		}
-		defer file.Close()
-
-		b, err := io.ReadAll(file)
-		if err != nil {
-			return err
-		}
-
-		builder, err := strings.Builder{}, nil
-
-		for key, value := range dataMap[fi.localeCode] {
-			builder.Write(b)
-			builder.WriteString("\n")
-			builder.WriteString(key)
-			builder.WriteString(" = ")
-			if strValue, ok := value.(string); ok {
-				builder.WriteString(strValue)
-			}
-			builder.WriteString("\n")
-		}
-
-		os.WriteFile(fi.path, []byte(builder.String()), 0755)
-	}
-
-	return nil
 }
