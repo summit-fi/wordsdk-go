@@ -190,7 +190,7 @@ func (c *Remote) Save(data []Object) error {
 		return err
 	}
 
-	req, err := http.NewRequest("PATCH", c.ApiBaseUrl+"/values", bytes.NewBuffer(b))
+	req, err := http.NewRequest("PATCH", c.ApiBaseUrl+"/dynamic/values", bytes.NewBuffer(b))
 	if err != nil {
 		return err
 	}
