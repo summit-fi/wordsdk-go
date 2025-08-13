@@ -89,7 +89,7 @@ func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut 
 }
 
 func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []Object, checkSumOut string, err error) {
-	url := fmt.Sprintf("%s/values", c.ApiBaseUrl)
+	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, "", err
