@@ -13,6 +13,24 @@ type DynamicContent struct {
 }
 
 func (d *DynamicContent) T(lang string, key string) string {
+
+	bundle := d.cache.Get(cldr.Language(lang))
+
+	if bundle == nil {
+		d.logger.Debugf("Bundle for language '%s' is nil, returning key: %s", lang, key)
+		return key
+	}
+
+	if bundle.HasMessage(key) {
+		message, errs, err := bundle.FormatMessage(key)
+		if err != nil {
+			d.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
+			return key
+		}
+		d.logger.Debugf("Translated %s: %s", key, message)
+		return message
+	}
+
 	datum, err := d.source.LoadOneDynamic(d.dynamicContentAccessKey, lang, key)
 	if err != nil {
 		d.logger.Errorf("Failed to get dynamic content: %v", err)
@@ -29,7 +47,25 @@ func (d *DynamicContent) T(lang string, key string) string {
 }
 
 func (d *DynamicContent) TA(lang, key string, args any) string {
+	bundle := d.cache.Get(cldr.Language(lang))
+
+	if bundle == nil {
+		d.logger.Debugf("Bundle for language '%s' is nil, returning key: %s", lang, key)
+		return key
+	}
+
+	if bundle.HasMessage(key) {
+		message, errs, err := bundle.FormatMessage(key, fluent.WithVariables(args.(map[string]any)))
+		if err != nil {
+			d.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
+			return key
+		}
+		d.logger.Debugf("Translated %s: %s", key, message)
+		return message
+	}
+
 	datum, err := d.source.LoadOneDynamic(d.dynamicContentAccessKey, lang, key)
+
 	if err != nil {
 		d.logger.Errorf("Failed to get dynamic content: %v", err)
 		return key
