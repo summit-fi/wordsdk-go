@@ -125,13 +125,20 @@ func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
 		return key, err
 	}
 
+	var temp struct {
+		Value string `json:"value"`
+	}
+
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return key, err
 
 	}
-	result := string(b)
-	return result, err
+	err = json.Unmarshal(b, &temp)
+	if err != nil {
+		return key, err
+	}
+	return temp.Value, err
 }
 
 func (c *Remote) SaveDynamic(dynamicKey string, data []Object) error {
