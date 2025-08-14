@@ -77,7 +77,6 @@ func NewClient(config *Config) (SDK, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
-
 	c.cache = fluent.NewMap[cldr.Language, *fluent.Bundle]()
 
 	c.checksum = checksum
@@ -168,7 +167,7 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		localeMap[item.Key].WriteString(key)
 		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
 		if len(value) == 0 {
-			localeMap[item.Key].WriteString(fmt.Sprintf("%s", `\u0020`))
+			localeMap[item.Key].WriteString(fmt.Sprintf("%s", `\u00a0`))
 		}
 		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
 		localeMap[item.Key].WriteString("\n") // Only one newline at the end

@@ -144,3 +144,17 @@ func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 	}
 
 }
+
+func (c *Client) Reset() error {
+	locales := c.cache.GetAll()
+	for _, locale := range locales {
+		bundle := c.cache.Get(cldr.Language(locale))
+		if bundle != nil {
+			c.logger.Debugf("Resetting bundle for language '%s'", locale)
+			//bundle.Reset()
+		} else {
+			c.logger.Debugf("No bundle found for language '%s', skipping reset", locale)
+		}
+	}
+	return nil
+}

@@ -103,9 +103,6 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 	return nil, "", nil
 }
 
-type singleKeyResponse struct {
-}
-
 func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
 	url := fmt.Sprintf("%s/dynamic/value?lang=%s&key=%s", c.ApiBaseUrl, lang, key)
 	req, err := http.NewRequest("GET", url, nil)
@@ -133,7 +130,8 @@ func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
 		return key, err
 
 	}
-	return string(b), err
+	result := string(b)
+	return result, err
 }
 
 func (c *Remote) SaveDynamic(dynamicKey string, data []Object) error {
@@ -173,6 +171,5 @@ func (c *Remote) SaveDynamic(dynamicKey string, data []Object) error {
 
 		return errors.New("Error from server returned: " + string(b))
 	}
-
 	return nil
 }

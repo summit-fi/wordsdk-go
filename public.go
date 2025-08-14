@@ -13,4 +13,5 @@ type SDK interface {
 	SaveTranslation(lang string, key string, value string) error
 	SetLogger(logger Logger)
 	Flush() error
+	Reset() error
 }

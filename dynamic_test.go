@@ -12,7 +12,7 @@ func remoteConnection() SDK {
 
 		Source: source.NewRemote(
 			"http://localhost:8000/api/v1",
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiI0MmM5MTE1NC0wZTJiLTExZjAtODhkNS0yY2YwNWQ1N2EzZjIiLCJleHAiOjE3NzQ5NTk5NDEsImtleSI6ImEwMTM1NDQ3NzNiNDRkM2M4YmQ1YWMwYWZjYTY0MDAwIiwicGlkIjoiZTgyNTFmNzItYjE4MS0xMWVmLTkwNDYtNmE0YmQxZGQ3MzBjIiwidWlkIjoiOWQ1ZGEwMGEtYjFiNy0xMWVmLWE4YzctNmE0YmQxZGQ3MzBiIn0.0cboeSjqja6VZVNT4TnSqhG00Xwl_pfEeBH6F__Hz88"),
+			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiIzNGViYmM2OS03OTBkLTExZjAtYWRlNC0yY2YwNWQ1N2EzZjIiLCJleHAiOjE3ODY3MTE4MDcsImtleSI6ImEwMTM1NDQ3NzNiNDRkM2M4YmQ1YWMwYWZjYTY0MDAwIiwicGlkIjoiZTgyNTFmNzItYjE4MS0xMWVmLTkwNDYtNmE0YmQxZGQ3MzBjIiwidWlkIjoiOWQ1ZGEwMGEtYjFiNy0xMWVmLWE4YzctNmE0YmQxZGQ3MzBiIn0.AxCQKY_NsZRmSqPULH9HgxmuLjHyo4NTvrWKipBBHzQ"),
 		UpdateInterval: 10 * time.Second,
 		MaxCacheSizeMB: 256,
 	}
@@ -114,7 +114,7 @@ func TestRemoteDynamicContent_SaveTranslation(t *testing.T) {
 		return
 	}
 
-	str := connect.Dynamic().T("en_EU", "test_test_2")
+	str := connect.Dynamic().TA("en_EU", "test_test_2", map[string]any{})
 	if str == "test_test_2" {
 		t.Errorf("Failed to retrieve translation: %v", str)
 		return
