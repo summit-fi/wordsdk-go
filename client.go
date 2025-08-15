@@ -152,7 +152,7 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 			localeMap = make(map[string]*strings.Builder)
 			mapData[item.LocaleCode] = localeMap
 		}
-		if _, keyExists := localeMap[item.Key]; !keyExists {
+		if _, bundleExists := localeMap[item.Key]; !bundleExists {
 			localeMap[item.Key] = &strings.Builder{}
 		}
 
@@ -186,18 +186,18 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
 			bundle = fluent.NewBundle(cldr.Language(lang))
 		}
-		for key, sb := range builder {
-			if !bundle.HasMessage(key) {
-				resource, errs := fluent.NewResource(sb.String())
-				if errs != nil {
-					return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
-				}
-				if err := bundle.AddResource(resource); err != nil {
-					return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
-				}
+		for _, sb := range builder {
 
-				c.cache.Set(cldr.Language(lang), bundle)
+			resource, errs := fluent.NewResource(sb.String())
+			if errs != nil {
+				return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
 			}
+			if err := bundle.AddResource(resource); err != nil {
+				return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
+			}
+
+			c.cache.Set(cldr.Language(lang), bundle)
+
 		}
 	}
 
