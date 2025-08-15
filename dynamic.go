@@ -139,7 +139,13 @@ func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 				continue
 			}
 		} else {
-			d.logger.Debugf("Key '%s' already exists in the bundle for language '%s'", item.Key, item.LocaleCode)
+			resource, errs := fluent.NewResource(fmt.Sprintf("%s = %s", item.Key, item.Value))
+			if errs != nil {
+				d.logger.Errorf("Failed to create resource for language %s: %v", item.LocaleCode, errs)
+				continue
+			}
+			bundle.AddResourceOverriding(resource) // This method should override the existing resource if it exists
+			d.logger.Debugf("Updated key '%s' for language '%s'", item.Key, item.LocaleCode)
 		}
 	}
 

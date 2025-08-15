@@ -166,9 +166,11 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 
 		localeMap[item.Key].WriteString(key)
 		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
+
 		if len(value) == 0 {
 			localeMap[item.Key].WriteString(fmt.Sprintf("%s", `\u00a0`))
 		}
+
 		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
 		localeMap[item.Key].WriteString("\n") // Only one newline at the end
 
@@ -186,12 +188,29 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
 			bundle = fluent.NewBundle(cldr.Language(lang))
 		}
-		for _, sb := range builder {
+
+		for key, sb := range builder {
+			if bundle.HasMessage(key) {
+
+				resource, errs := fluent.NewResource(sb.String())
+				if errs != nil {
+					return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+				}
+
+				bundle.AddResourceOverriding(resource)
+				c.logger.Debugf("Updated key '%s' for language '%s'", key, lang)
+
+				c.cache.Set(cldr.Language(lang), bundle)
+
+				continue
+
+			}
 
 			resource, errs := fluent.NewResource(sb.String())
 			if errs != nil {
 				return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
 			}
+
 			if err := bundle.AddResource(resource); err != nil {
 				return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
 			}
