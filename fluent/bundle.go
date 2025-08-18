@@ -263,7 +263,7 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 		errors:          []error{},
 	}
 	result := res.resolvePattern(msg.Value).String()
-	if strings.TrimSpace(result) == "" || result == "\u00a0" {
+	if strings.TrimSpace(result) == "" || result == " " {
 		result = key
 	}
 	return result, res.errors, nil

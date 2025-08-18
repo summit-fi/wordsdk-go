@@ -168,7 +168,7 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
 
 		if len(value) == 0 {
-			localeMap[item.Key].WriteString(fmt.Sprintf("%s", `\u00a0`))
+			localeMap[item.Key].WriteString(` `)
 		}
 
 		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
