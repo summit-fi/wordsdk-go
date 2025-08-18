@@ -100,6 +100,20 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 	if checksumIn != "" {
 		req.Header.Set("If-None-Match", checksumIn)
 	}
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, "", err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusNotModified {
+		return nil, checksumIn, nil
+	}
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, "", err
+	}
+	fmt.Println("Response body:", string(b))
+	fmt.Println(json.MarshalIndent(string(b), "", "  "))
 	return nil, "", nil
 }
 

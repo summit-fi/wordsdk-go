@@ -48,19 +48,34 @@ func (c *Client) SaveTranslation(lang string, key string, value string) error {
 	return fmt.Errorf("use DynamicContent.SaveTranslation() instead of Client.SaveTranslation()")
 }
 
-// Flush saves all pending translations to the database.
-// This method is useful when SaveStrategy is set to SaveStrategyOnDemand.
-func (c *Client) Flush() error {
+func (c *Client) Reset() error {
 
-	//if len(c.saveBundle) == 0 {
-	//	return nil
-	//}
+	static, _, err := c.source.LoadAllStatic("")
+	if err != nil {
+		return err
+	}
 
-	//err := c.source.Save(c.saveBundle)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//c.saveBundle = nil
+	locales := c.cache.GetAll()
+
+	for _, locale := range locales {
+		bundle := c.cache.Get(cldr.Language(locale))
+		if bundle == nil {
+			return fmt.Errorf("no bundle found for language '%s'", locale)
+		}
+		bundle = fluent.NewBundle(cldr.Language(locale))
+		c.cache.Set(cldr.Language(locale), bundle)
+
+		c.logger.Debugf("Reset bundle for language '%s'", locale)
+	}
+
+	err = c.UpdateBundle(static)
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func (c *Client) Flush() error {
+	return fmt.Errorf("use DynamicContent.Flush() instead of Client.Flush()")
 }

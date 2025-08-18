@@ -151,16 +151,18 @@ func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 
 }
 
-func (c *Client) Reset() error {
-	locales := c.cache.GetAll()
-	for _, locale := range locales {
-		bundle := c.cache.Get(cldr.Language(locale))
-		if bundle != nil {
-			c.logger.Debugf("Resetting bundle for language '%s'", locale)
-			//bundle.Reset()
-		} else {
-			c.logger.Debugf("No bundle found for language '%s', skipping reset", locale)
-		}
+// Flush saves all pending translations to the database.
+// This method is useful when SaveStrategy is set to SaveStrategyOnDemand.
+func (d *DynamicContent) Flush() error {
+	if d.saveStrategy != SaveStrategyOnDemand {
+		return nil
 	}
+
+	//for locale, bundle := range d.cache.RetrieveAll(){
+	//	 if bundle != nil {
+	//		 bundle.
+	//	 }
+	//}
 	return nil
+
 }

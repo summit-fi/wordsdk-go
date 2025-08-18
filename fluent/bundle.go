@@ -67,6 +67,20 @@ func (bundle *Bundle) AddResourceOverriding(resource *Resource) {
 	}
 }
 
+func (bundle *Bundle) RetrieveMessages() map[string]string {
+	if !bundle.messages.IsInitialized() {
+		return nil
+	}
+	result := make(map[string]string, len(bundle.messages.RetrieveAll()))
+	//for key, message := range bundle.messages.RetrieveAll() {
+	//	if message == nil {
+	//		continue
+	//	}
+	//	//result[key] = message.Attributes
+	//}
+	return result
+}
+
 // RegisterFunction registers a function with the given name.
 func (bundle *Bundle) RegisterFunction(name string, function Function) {
 	if bundle.functions == nil {
@@ -249,6 +263,9 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 		errors:          []error{},
 	}
 	result := res.resolvePattern(msg.Value).String()
+	if result == "\u00a0" {
+		result = key
+	}
 	return result, res.errors, nil
 }
 

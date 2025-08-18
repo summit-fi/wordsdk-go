@@ -15,7 +15,6 @@ type NumberValue struct {
 
 // String formats a NumberValue into a string
 func (value *NumberValue) String() string {
-	// TODO: Simulate JavaScript number formatting
 	return strconv.FormatFloat(float64(value.Value), 'f', -1, 32)
 }
 

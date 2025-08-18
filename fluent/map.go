@@ -36,6 +36,16 @@ func (m *Map[K, V]) GetAll() []K {
 	return keys
 }
 
+func (m *Map[K, V]) RetrieveAll() map[K]V {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	result := make(map[K]V, len(m.m))
+	for k, v := range m.m {
+		result[k] = v
+	}
+	return result
+}
+
 func (m *Map[K, V]) Set(key K, value V) {
 	m.mu.Lock()
 	m.m[key] = value
