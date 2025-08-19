@@ -657,3 +657,34 @@ func TestRepeatMode(t *testing.T) {
 		})
 	}
 }
+
+func TestNBSPBundle(t *testing.T) {
+	ftl := `only-nbsp =  `
+	resource, err := fluent.NewResource(string(ftl))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	bundle := fluent.NewBundle(cldr.LanguageEnUS)
+	errs := bundle.AddResource(resource)
+	if errs != nil {
+		for _, errt := range errs {
+			if errt != nil {
+				t.Errorf("bundle.AddResource error: %s", errt)
+			}
+		}
+		return
+	}
+	msg, _, fatalErr := bundle.FormatMessage("only-nbsp")
+	if fatalErr != nil {
+		t.Errorf("bundle.FormatMessage fatal error for core-nbsp: %s", fatalErr)
+		return
+	}
+	expected := "only-nbsp"
+	if msg != expected {
+		t.Errorf("Expected: '%s', Got: '%s'", expected, msg)
+		return
+	}
+
+}

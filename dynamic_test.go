@@ -12,7 +12,7 @@ func remoteConnection() SDK {
 
 		Source: source.NewRemote(
 			"http://localhost:8000/api/v1",
-			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiIzNGViYmM2OS03OTBkLTExZjAtYWRlNC0yY2YwNWQ1N2EzZjIiLCJleHAiOjE3ODY3MTE4MDcsImtleSI6ImEwMTM1NDQ3NzNiNDRkM2M4YmQ1YWMwYWZjYTY0MDAwIiwicGlkIjoiZTgyNTFmNzItYjE4MS0xMWVmLTkwNDYtNmE0YmQxZGQ3MzBjIiwidWlkIjoiOWQ1ZGEwMGEtYjFiNy0xMWVmLWE4YzctNmE0YmQxZGQ3MzBiIn0.AxCQKY_NsZRmSqPULH9HgxmuLjHyo4NTvrWKipBBHzQ"),
+			"1"),
 		UpdateInterval: 10 * time.Second,
 		MaxCacheSizeMB: 256,
 	}

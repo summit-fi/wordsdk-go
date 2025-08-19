@@ -139,22 +139,30 @@ func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 				continue
 			}
 		} else {
-			d.logger.Debugf("Key '%s' already exists in the bundle for language '%s'", item.Key, item.LocaleCode)
+			resource, errs := fluent.NewResource(fmt.Sprintf("%s = %s", item.Key, item.Value))
+			if errs != nil {
+				d.logger.Errorf("Failed to create resource for language %s: %v", item.LocaleCode, errs)
+				continue
+			}
+			bundle.AddResourceOverriding(resource) // This method should override the existing resource if it exists
+			d.logger.Debugf("Updated key '%s' for language '%s'", item.Key, item.LocaleCode)
 		}
 	}
 
 }
 
-func (c *Client) Reset() error {
-	locales := c.cache.GetAll()
-	for _, locale := range locales {
-		bundle := c.cache.Get(cldr.Language(locale))
-		if bundle != nil {
-			c.logger.Debugf("Resetting bundle for language '%s'", locale)
-			//bundle.Reset()
-		} else {
-			c.logger.Debugf("No bundle found for language '%s', skipping reset", locale)
-		}
+// Flush saves all pending translations to the database.
+// This method is useful when SaveStrategy is set to SaveStrategyOnDemand.
+func (d *DynamicContent) Flush() error {
+	if d.saveStrategy != SaveStrategyOnDemand {
+		return nil
 	}
+
+	//for locale, bundle := range d.cache.RetrieveAll(){
+	//	 if bundle != nil {
+	//		 bundle.
+	//	 }
+	//}
 	return nil
+
 }

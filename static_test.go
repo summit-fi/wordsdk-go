@@ -3,16 +3,14 @@ package word
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"testing"
-	"time"
 
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
-func jsonClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
+func ftlClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
 
 	db := source.NewFtl()
 	err := db.AddLocaleFiles(map[string]string{
@@ -35,7 +33,7 @@ func jsonClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
 func TestClient_Flush(t *testing.T) {
 
 	// Init client
-	w, err := jsonClientWithSaveStrategy(SaveStrategyOnDemand)
+	w, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
 	if err != nil {
 		t.Fatalf("NewClient() error = %v", err)
 	}
@@ -124,7 +122,7 @@ func TestClient_Flush(t *testing.T) {
 func TestClient_SaveTranslation(t *testing.T) {
 
 	// Init client
-	w, err := jsonClientWithSaveStrategy(SaveStrategyImmediate)
+	w, err := ftlClientWithSaveStrategy(SaveStrategyImmediate)
 	if err != nil {
 		t.Fatalf("NewClient() error = %v", err)
 	}
@@ -187,19 +185,28 @@ func TestClient_SaveTranslation(t *testing.T) {
 	f.Close()
 }
 
-func TestRemote_Client(t *testing.T) {
-	storage := source.NewRemote("http://localhost:8000/api/v1", "")
-
-	cfg := &Config{
-		UpdateInterval: 5 * time.Minute,
-		Source:         storage,
-		SaveStrategy:   SaveStrategyOnDemand,
-	}
-	w, err := NewClient(cfg)
+func TestClient_Reset(t *testing.T) {
+	connect, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
 	if err != nil {
-		log.Fatalf("Failed to create word sdk client: %v", err)
+		t.Fatalf("NewClient() error = %v", err)
 	}
-	lg := DefaultLogger{}
-	lg.SetLogLevel(LogLevelDebug)
-	w.SetLogger(&lg)
+
+	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
+
+	err = connect.Dynamic().SaveTranslation("en_EU", "test_reset", "Testing reset")
+	if err != nil {
+		t.Errorf("Failed to save translation: %v", err)
+		return
+	}
+
+	connect.Reset()
+
+	str := connect.Dynamic().T("en_EU", "test_reset")
+	if str != "test_reset" {
+		t.Errorf("Failed to reset translation: %v", str)
+		return
+	}
+
+	t.Logf("Translation after reset: %s", str)
 }
