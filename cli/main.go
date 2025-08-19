@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 )
 
@@ -15,8 +17,15 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().String("api-key", "", "API key")
-	rootCmd.PersistentFlags().String("dynamic-key", "", "Dynamic key for fetching dynamic translations")
-	rootCmd.PersistentFlags().String("environment", "production", "API environment: production or stage")
-	rootCmd.PersistentFlags().StringP("output", "o", "./exported", "Output directory")
+	rootCmd.PersistentFlags().String("api-key", getenv("WORDSDK_API_KEY", ""), "API key")
+	rootCmd.PersistentFlags().String("dynamic-key", getenv("WORDSDK_DYNAMIC_KEY", ""), "Dynamic key for fetching dynamic translations")
+	rootCmd.PersistentFlags().String("environment", getenv("WORDSDK_ENVIRONMENT", "production"), "API environment: production or stage")
+	rootCmd.PersistentFlags().StringP("output", "o", getenv("WORDSDK_OUTPUT", "./exported"), "Output directory")
+}
+
+func getenv(key, fallback string) string {
+	if v, ok := os.LookupEnv(key); ok {
+		return v
+	}
+	return fallback
 }
