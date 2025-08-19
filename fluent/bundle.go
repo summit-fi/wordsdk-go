@@ -71,13 +71,34 @@ func (bundle *Bundle) RetrieveMessages() map[string]string {
 	if !bundle.messages.IsInitialized() {
 		return nil
 	}
-	result := make(map[string]string, len(bundle.messages.RetrieveAll()))
-	//for key, message := range bundle.messages.RetrieveAll() {
-	//	if message == nil {
-	//		continue
-	//	}
-	//	//result[key] = message.Attributes
-	//}
+
+	all := bundle.messages.RetrieveAll()
+	result := make(map[string]string, len(all))
+
+	// Build a resolver once (no external contexts)
+	variables, functions := assembleContexts()
+	for name, fn := range bundle.functions {
+		functions[name] = fn
+	}
+	res := &resolver{
+		bundle:          bundle,
+		primaryLanguage: bundle.locales[0],
+		params:          nil,
+		variables:       variables,
+		functions:       functions,
+		errors:          []error{},
+	}
+
+	for key, message := range all {
+		if message == nil || message.Value == nil {
+			continue
+		}
+		formatted := res.resolvePattern(message.Value).String()
+		if strings.TrimSpace(formatted) == "" || formatted == " " {
+			formatted = key
+		}
+		result[key] = formatted
+	}
 	return result
 }
 

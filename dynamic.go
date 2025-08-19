@@ -155,14 +155,29 @@ func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 // This method is useful when SaveStrategy is set to SaveStrategyOnDemand.
 func (d *DynamicContent) Flush() error {
 	if d.saveStrategy != SaveStrategyOnDemand {
-		return nil
+		return fmt.Errorf("flush is only applicable when SaveStrategy is set to SaveStrategyOnDemand")
 	}
 
-	//for locale, bundle := range d.cache.RetrieveAll(){
-	//	 if bundle != nil {
-	//		 bundle.
-	//	 }
-	//}
+	for locale, bundle := range d.cache.RetrieveAll() {
+		if bundle != nil {
+
+			var object []source.Object
+
+			for key, message := range bundle.RetrieveMessages() {
+				object = append(object, source.Object{
+					LocaleCode: string(locale),
+					Key:        key,
+					Value:      message,
+				})
+			}
+			err := d.SaveTranslations(object)
+			if err != nil {
+				return err
+			}
+		}
+		d.logger.Debugf("Flushed translations for locale: %s", locale)
+	}
+
 	return nil
 
 }

@@ -12,6 +12,11 @@ func (c *Client) T(lang string, key string) string {
 
 	bundle := c.cache.Get(cldr.Language(lang))
 
+	if bundle == nil {
+		c.logger.Debugf("Bundle for language '%s' is nil, returning key: %s", lang, key)
+		return key
+	}
+
 	message, errs, err := bundle.FormatMessage(key)
 	if err != nil {
 		c.logger.Debugf("Failed to format message for key '%s': %v, stack:%v", key, err, errs)
@@ -24,6 +29,11 @@ func (c *Client) T(lang string, key string) string {
 func (c *Client) TA(lang string, key string, args any) string {
 	// temporary
 	bundle := c.cache.Get(cldr.Language(lang))
+
+	if bundle == nil {
+		c.logger.Debugf("Bundle for language '%s' is nil, returning key: %s", lang, key)
+		return key
+	}
 
 	switch args.(type) {
 	case map[string]any:
