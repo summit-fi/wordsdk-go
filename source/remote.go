@@ -100,21 +100,45 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 	if checksumIn != "" {
 		req.Header.Set("If-None-Match", checksumIn)
 	}
+
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, "", err
 	}
+
 	defer resp.Body.Close()
+
 	if resp.StatusCode == http.StatusNotModified {
 		return nil, checksumIn, nil
 	}
+
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, "", err
 	}
-	fmt.Println("Response body:", string(b))
-	fmt.Println(json.MarshalIndent(string(b), "", "  "))
-	return nil, "", nil
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, "", errors.New("Error from server returned: " + string(b))
+	}
+
+	var data []response
+	err = json.Unmarshal(b, &data)
+	if err != nil {
+		return nil, "", err
+	}
+
+	for _, d := range data {
+		for _, v := range d.Value {
+			result = append(result, Object{
+				LocaleCode: v.LocaleCode,
+				Key:        d.Key,
+				Value:      v.Value,
+			})
+		}
+	}
+
+	checkSumOut = resp.Header.Get("ETag")
+	return result, checkSumOut, nil
 }
 
 func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
