@@ -53,10 +53,6 @@ var exportCmd = &cobra.Command{
 			}
 		}
 
-		for i, datum := range data {
-			fmt.Println(i, datum)
-		}
-
 		err = exportObjectsToFTLFiles(data, outDir, path)
 		if err != nil {
 			return fmt.Errorf("failed to export translations: %w", err)
