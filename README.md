@@ -33,6 +33,15 @@ Options:
 - `--environment` – target API environment (`production` or `stage`, default `production`).
 - `--output`, `-o` – destination directory for generated files (default `./exported`).
 
+These options can also be supplied via environment variables. If both a flag and an environment variable are provided, the flag takes precedence.
+
+| Flag          | Environment variable   |
+|---------------|------------------------|
+| `--api-key`   | `WORDSDK_API_KEY`      |
+| `--dynamic-key` | `WORDSDK_DYNAMIC_KEY` |
+| `--environment` | `WORDSDK_ENVIRONMENT` |
+| `--output`    | `WORDSDK_OUTPUT`       |
+
 Instead of building you can run the CLI directly:
 
 ```bash
