@@ -2,46 +2,28 @@ package word
 
 import (
 	"testing"
-	"time"
 
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
-func remoteConnection() SDK {
-	config := &Config{
-
-		Source: source.NewRemote(
-			"http://localhost:8000/api/v1",
-			"1"),
-		UpdateInterval: 10 * time.Second,
-		MaxCacheSizeMB: 256,
-	}
-	word, err := NewClient(config)
-	if err != nil {
-		panic(err)
-	}
-	word.SetLogger(&DefaultLogger{
-		LogLevelDebug,
-	})
-
-	return word
-}
-
 func TestRemoteDynamicContent_T(t *testing.T) {
-	connect := remoteConnection()
+	connect, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
+	if err != nil {
+		t.Fatalf("NewClient() error = %v", err)
+	}
 
 	// Test 1
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
 	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
 
-	err := connect.Dynamic().SaveTranslation("en_EU", "core.every", "Everything is ok")
+	err = connect.Dynamic().SaveTranslation("en_EU", "core_every", "Everything is ok")
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
 		return
 	}
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
-	str1 := connect.Dynamic().T("en_EU", "core.every")
+	str1 := connect.Dynamic().T("en_EU", "core_every")
 	if str1 == "core.every" {
 		t.Errorf("Failed to save translation: %v", str1)
 		return
@@ -51,18 +33,21 @@ func TestRemoteDynamicContent_T(t *testing.T) {
 }
 
 func TestRemoteDynamicContent_TA(t *testing.T) {
-	connect := remoteConnection()
+	connect, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
+	if err != nil {
+		t.Fatalf("NewClient() error = %v", err)
+	}
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "notification"))
-	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "notification"))
+
 	value := `Test`
-	err := connect.Dynamic().SaveTranslation("en_EU", XKeyGen(value), value)
+	err = connect.Dynamic().SaveTranslation("en_EU", "key", value)
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
 		return
 	}
 
-	str := connect.Dynamic().TA("en_EU", XKeyGen(value), map[string]interface{}{
+	str := connect.Dynamic().TA("en_EU", XKeyGen("S", "summit", "notification"), map[string]interface{}{
 		"every": "weekly",
 	})
 
@@ -75,12 +60,15 @@ func TestRemoteDynamicContent_TA(t *testing.T) {
 }
 
 func TestRemoteDynamicContent_SaveTranslations(t *testing.T) {
-	connect := remoteConnection()
+	connect, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
+	if err != nil {
+		t.Fatalf("NewClient() error = %v", err)
+	}
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
 	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
 
-	err := connect.Dynamic().SaveTranslations([]source.Object{
+	err = connect.Dynamic().SaveTranslations([]source.Object{
 		{
 			LocaleCode: "en_EU",
 			Key:        "test_test",
@@ -103,12 +91,15 @@ func TestRemoteDynamicContent_SaveTranslations(t *testing.T) {
 }
 
 func TestRemoteDynamicContent_SaveTranslation(t *testing.T) {
-	connect := remoteConnection()
+	connect, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
+	if err != nil {
+		t.Fatalf("NewClient() error = %v", err)
+	}
 
 	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
 	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
 
-	err := connect.Dynamic().SaveTranslation("en_EU", "test_test_2", "Testing dynamic content 2")
+	err = connect.Dynamic().SaveTranslation("en_EU", "test_test_2", "Testing dynamic content 2")
 	if err != nil {
 		t.Errorf("Failed to save translation: %v", err)
 		return

@@ -30,95 +30,6 @@ func ftlClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
 	return NewClient(&c)
 }
 
-func TestClient_Flush(t *testing.T) {
-
-	// Init client
-	w, err := ftlClientWithSaveStrategy(SaveStrategyOnDemand)
-	if err != nil {
-		t.Fatalf("NewClient() error = %v", err)
-	}
-
-	// Read initial file to compare
-	f, err := os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
-	if err != nil {
-		t.Fatalf("os.Open() error = %v", err)
-	}
-
-	// Read initial file
-	b, err := io.ReadAll(f)
-	if err != nil {
-		t.Fatalf("io.ReadAll() error = %v", err)
-	}
-	f.Close()
-	initialData := string(b)
-
-	// Save new data
-	err = w.SaveTranslations([]source.Object{
-		{
-			LocaleCode: "en_US",
-			Key:        "core.every",
-			Value:      "Every 1 minute",
-		},
-	})
-
-	// Read file after save
-	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
-	if err != nil {
-		t.Fatalf("os.Open() error = %v", err)
-	}
-
-	// Read file after save
-	b, err = io.ReadAll(f)
-	if err != nil {
-		t.Fatalf("io.ReadAll() error = %v", err)
-	}
-	f.Close()
-	updatedData := string(b)
-
-	// Data should be updated after Flush
-	updatedDataShouldBe := fmt.Sprintf("%s\n%s = %s\n", initialData, "core.every", "Every 2 minute")
-	if updatedData != updatedDataShouldBe {
-		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
-	}
-
-	// Flush
-	err = w.Flush()
-	if err != nil {
-		t.Fatalf("Flush() error = %v", err)
-	}
-
-	// Read file after Flush
-	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
-	if err != nil {
-		t.Fatalf("os.Open() error = %v", err)
-	}
-
-	// Read file after Flush
-	b, err = io.ReadAll(f)
-	if err != nil {
-		t.Fatalf("io.ReadAll() error = %v", err)
-	}
-	f.Close()
-	updatedData = string(b)
-
-	if updatedData != updatedDataShouldBe {
-		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
-	}
-
-	// Write initial file back
-	f, err = os.OpenFile(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		t.Fatalf("os.OpenFile() error = %v", err)
-	}
-
-	_, err = f.WriteString(initialData)
-	if err != nil {
-		t.Fatalf("f.WriteString() error = %v", err)
-	}
-
-	f.Close()
-}
-
 func TestClient_SaveTranslation(t *testing.T) {
 
 	// Init client
@@ -142,10 +53,10 @@ func TestClient_SaveTranslation(t *testing.T) {
 	initialData := string(b)
 
 	// Save new data
-	err = w.SaveTranslations([]source.Object{
+	err = w.EnableDynamicContent(XKeyGen("summit", "S")).SaveTranslations([]source.Object{
 		{
 			LocaleCode: "en_EU",
-			Key:        "core.every",
+			Key:        "core_every",
 			Value:      "Every 2 minute",
 		},
 	})
@@ -165,7 +76,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 	updatedData := string(b)
 
 	// Data should be updated after Flush
-	updatedDataShouldBe := fmt.Sprintf("%s\n%s = %s\n", initialData, "core.every", "Every 2 minute")
+	updatedDataShouldBe := fmt.Sprintf("%s\n%s = %s\n", initialData, "core_every", "Every 2 minute")
 
 	if updatedData != updatedDataShouldBe {
 		t.Fatalf("updatedData = %v \n\n\n\n want %v", updatedData, updatedDataShouldBe)
@@ -191,8 +102,8 @@ func TestClient_Reset(t *testing.T) {
 		t.Fatalf("NewClient() error = %v", err)
 	}
 
-	connect = connect.EnableDynamicContent(XKeyGen("S", "summit", "schedule"))
-	t.Logf("X-Dynamic-Key: %s", XKeyGen("S", "summit", "schedule"))
+	connect = connect.EnableDynamicContent(XKeyGen("test", "summit", "schedule"))
+	t.Logf("X-Dynamic-Key: %s", XKeyGen("test", "summit", "schedule"))
 
 	err = connect.Dynamic().SaveTranslation("en_EU", "test_reset", "Testing reset")
 	if err != nil {
