@@ -255,3 +255,10 @@ cldr-percent-pattern = #,##0%
 cldr-currency-pattern = ¤#,##0.00
 
 cldr-def-currency-code = EUR
+
+
+
+# custom
+
+date-format-datetime = { CLDRDATETIME($date, pattern: "yMdjm") }
+
