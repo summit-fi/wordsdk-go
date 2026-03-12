@@ -1,0 +1,837 @@
+{
+  "suite": "add_sub",
+  "cases": [
+    {
+      "id": "add_year_utc",
+      "description": "UTC add(year:1): 2026-07-20 -> 2027-07-20, wall fields preserved",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "year",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2027-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_month_utc",
+      "description": "UTC add(month:2): Jul 20 -> Sep 20, wall day preserved (no clamping)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-09-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_day_utc",
+      "description": "UTC add(day:10): Jul 20 -> Jul 30, wall hour preserved",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 10
+      },
+      "expected": {
+        "utc": "2026-07-30T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_hour_utc",
+      "description": "UTC add(hour:5): 13:45 -> 18:45 same day, exact elapsed (UTC+5h)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 5
+      },
+      "expected": {
+        "utc": "2026-07-20T18:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_minute_utc",
+      "description": "UTC add(minute:30): 13:45 -> 14:15",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "minute",
+        "amount": 30
+      },
+      "expected": {
+        "utc": "2026-07-20T14:15:30.500Z"
+      }
+    },
+    {
+      "id": "add_second_utc",
+      "description": "UTC add(second:90): 13:45:30 -> 13:47:00 (crosses full minute)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "second",
+        "amount": 90
+      },
+      "expected": {
+        "utc": "2026-07-20T13:47:00.500Z"
+      }
+    },
+    {
+      "id": "add_millisecond_utc",
+      "description": "UTC add(millisecond:600): 13:45:30.500 -> 13:45:31.100 (crosses second)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "millisecond",
+        "amount": 600
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:31.100Z"
+      }
+    },
+    {
+      "id": "sub_month_utc",
+      "description": "UTC sub(month:3): Jul 20 -> Apr 20",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 3
+      },
+      "expected": {
+        "utc": "2026-04-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "sub_day_crossMonth_utc",
+      "description": "UTC sub(day:20): Jul 20 -> Jun 30 - crosses month boundary",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "day",
+        "amount": 20
+      },
+      "expected": {
+        "utc": "2026-06-30T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "sub_hour_crossDay_utc",
+      "description": "UTC sub(hour:14): 13:45 -> previous day 23:45 - crosses midnight",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 14
+      },
+      "expected": {
+        "utc": "2026-07-19T23:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_month_clamp_jan31_nonLeap",
+      "description": "2026-01-31 add(month:1) -> Feb 28 (2026 non-leap; day clamped from 31 to 28)",
+      "input": {
+        "utc": "2026-01-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "add_month_clamp_jan31_leap",
+      "description": "2020-01-31 add(month:1) -> Feb 29 (2020 is leap; Feb 29 exists)",
+      "input": {
+        "utc": "2020-01-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2020-02-29T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "add_month_clamp_oct31",
+      "description": "2026-10-31 add(month:1) -> Nov 30 (November has only 30 days)",
+      "input": {
+        "utc": "2026-10-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-11-30T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "sub_month_clamp_mar31",
+      "description": "2026-03-31 sub(month:1) -> Feb 28 (clamping applies to sub as well)",
+      "input": {
+        "utc": "2026-03-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "add_month6_kyiv_dst_offset_change",
+      "description": "Kyiv Jul 20 (EEST +3) add(month:6) -> Jan 20 wall 16:45 EET (+2); UTC = 14:45Z (1h later than July baseline because +3->+2)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 6
+      },
+      "expected": {
+        "utc": "2027-01-20T14:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_month6_newYork_dst_offset_change",
+      "description": "NY Jul 20 (EDT -4) add(month:6) -> Jan 20 wall 09:45 EST (-5); UTC = 14:45Z (1h later than July because -4->-5)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 6
+      },
+      "expected": {
+        "utc": "2027-01-20T14:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_month6_lordHowe_dst_offset_change",
+      "description": "LordHowe Jul 21 (LHST +10:30) add(month:6) -> Jan 21 wall 00:15 LHDT (+11); UTC = Jan 20 13:15Z (offset changed from +10:30 to +11, 30-min shift)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 6
+      },
+      "expected": {
+        "utc": "2027-01-20T13:15:30.500Z"
+      }
+    },
+    {
+      "id": "add_month6_santiago_dst_offset_change",
+      "description": "Santiago Jul 20 (CLT -4, winter) add(month:6) -> Jan 20 wall 09:45 CLST (-3, summer); UTC = 12:45Z (1h earlier than July because -4->-3)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 6
+      },
+      "expected": {
+        "utc": "2027-01-20T12:45:30.500Z"
+      }
+    },
+    {
+      "id": "add_day1_kyiv_springForward_wallPreserved",
+      "description": "Kyiv Mar 28 22:30 EET (+2) add(day:1) -> Mar 29 22:30 EEST (+3); UTC = Mar 29 19:30Z (only 23h elapsed - spring-forward ate 1h; wall hour 22:30 preserved)",
+      "input": {
+        "utc": "2026-03-28T20:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-29T19:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_kyiv_springForward_elapsedExact",
+      "description": "Kyiv Mar 28 22:30 EET (+2) add(hour:24) -> UTC Mar 29 20:30Z; wall = Mar 29 23:30 EEST (+3) - exactly 24h elapsed, wall hour SHIFTED by +1h",
+      "input": {
+        "utc": "2026-03-28T20:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-03-29T20:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_newYork_fallBack_wallPreserved",
+      "description": "NY Oct 31 22:30 EDT (-4) add(day:1) -> Nov 1 22:30 EST (-5); UTC = Nov 2 03:30Z (25h elapsed - fall-back added 1h; wall hour preserved)",
+      "input": {
+        "utc": "2026-11-01T02:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-11-02T03:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_newYork_fallBack_elapsedExact",
+      "description": "NY Oct 31 22:30 EDT (-4) add(hour:24) -> UTC Nov 2 02:30Z; wall = Nov 1 21:30 EST (-5) - exactly 24h elapsed, wall shifted -1h",
+      "input": {
+        "utc": "2026-11-01T02:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-11-02T02:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_lordHowe_fallBack_wallPreserved",
+      "description": "LordHowe Apr 4 22:30 LHDT (+11) add(day:1) -> Apr 5 22:30 LHST (+10:30); UTC = Apr 5 12:00Z (24h30m elapsed - 30-min fall-back; wall preserved)",
+      "input": {
+        "utc": "2026-04-04T11:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-04-05T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_lordHowe_fallBack_elapsedExact",
+      "description": "LordHowe Apr 4 22:30 LHDT (+11) add(hour:24) -> UTC Apr 5 11:30Z; wall = Apr 5 22:00 LHST (+10:30) - exactly 24h, wall shifted -30min",
+      "input": {
+        "utc": "2026-04-04T11:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-04-05T11:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_kyiv_fallBack_wallPreserved",
+      "description": "Kyiv Oct 24 22:30 EEST (+3) add(day:1) -> Oct 25 22:30 EET (+2); UTC = Oct 25 20:30Z (25h elapsed - fall-back added 1h; wall hour preserved)",
+      "input": {
+        "utc": "2026-10-24T19:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T20:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_kyiv_fallBack_elapsedExact",
+      "description": "Kyiv Oct 24 22:30 EEST (+3) add(hour:24) -> UTC Oct 25 19:30Z; wall = Oct 25 21:30 EET (+2) - exactly 24h elapsed, wall shifted -1h",
+      "input": {
+        "utc": "2026-10-24T19:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-10-25T19:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_newYork_springForward_wallPreserved",
+      "description": "NY Mar 7 22:30 EST (-5) add(day:1) -> Mar 8 22:30 EDT (-4); UTC = Mar 9 02:30Z (23h elapsed - spring-forward ate 1h; wall hour preserved)",
+      "input": {
+        "utc": "2026-03-08T03:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-09T02:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_newYork_springForward_elapsedExact",
+      "description": "NY Mar 7 22:30 EST (-5) add(hour:24) -> UTC Mar 9 03:30Z; wall = Mar 9 23:30 EDT (-4) - exactly 24h elapsed, wall shifted +1h",
+      "input": {
+        "utc": "2026-03-08T03:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-03-09T03:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_santiago_springForward_wallPreserved",
+      "description": "Santiago Sep 5 22:30 CLT (-4) add(day:1) -> Sep 6 22:30 CLST (-3); UTC = Sep 7 01:30Z (23h elapsed - midnight spring-forward ate 1h; wall preserved)",
+      "input": {
+        "utc": "2026-09-06T02:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-09-07T01:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_santiago_springForward_elapsedExact",
+      "description": "Santiago Sep 5 22:30 CLT (-4) add(hour:24) -> UTC Sep 7 02:30Z; wall = Sep 6 23:30 CLST (-3) - exactly 24h elapsed, wall shifted +1h",
+      "input": {
+        "utc": "2026-09-06T02:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-09-07T02:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_day1_santiago_fallBack_wallPreserved",
+      "description": "Santiago Apr 4 22:30 CLST (-3) add(day:1) -> Apr 5 22:30 CLT (-4); UTC = Apr 6 02:30Z (25h elapsed - midnight fall-back added 1h; wall preserved)",
+      "input": {
+        "utc": "2026-04-05T01:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "day",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-04-06T02:30:00.000Z"
+      }
+    },
+    {
+      "id": "add_hour24_santiago_fallBack_elapsedExact",
+      "description": "Santiago Apr 4 22:30 CLST (-3) add(hour:24) -> UTC Apr 6 01:30Z; wall = Apr 5 21:30 CLT (-4) - exactly 24h elapsed, wall shifted -1h",
+      "input": {
+        "utc": "2026-04-05T01:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "hour",
+        "amount": 24
+      },
+      "expected": {
+        "utc": "2026-04-06T01:30:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_jan31_add2m_Etc_UTC",
+      "description": "Jan 31 + 2 months = Mar 31 (direct jump, no Feb 28 clamping) (Etc/UTC)",
+      "input": {
+        "utc": "2026-01-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-03-31T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_feb28_add1m_Etc_UTC",
+      "description": "Feb 28 + 1 month = Mar 28 (Etc/UTC)",
+      "input": {
+        "utc": "2026-02-28T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-28T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_mar31_sub1m_Etc_UTC",
+      "description": "Mar 31 - 1 month = Feb 28 (Etc/UTC)",
+      "input": {
+        "utc": "2026-03-31T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_jan31_add2m_Europe_Kyiv",
+      "description": "Jan 31 + 2 months = Mar 31 (direct jump, no Feb 28 clamping) (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-01-31T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-03-31T09:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_feb28_add1m_Europe_Kyiv",
+      "description": "Feb 28 + 1 month = Mar 28 (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-02-28T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-28T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_mar31_sub1m_Europe_Kyiv",
+      "description": "Mar 31 - 1 month = Feb 28 (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-03-31T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_jan31_add2m_America_New_York",
+      "description": "Jan 31 + 2 months = Mar 31 (direct jump, no Feb 28 clamping) (America/New_York)",
+      "input": {
+        "utc": "2026-01-31T17:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-03-31T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_feb28_add1m_America_New_York",
+      "description": "Feb 28 + 1 month = Mar 28 (America/New_York)",
+      "input": {
+        "utc": "2026-02-28T17:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-28T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_mar31_sub1m_America_New_York",
+      "description": "Mar 31 - 1 month = Feb 28 (America/New_York)",
+      "input": {
+        "utc": "2026-03-31T16:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T17:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_jan31_add2m_Australia_Lord_Howe",
+      "description": "Jan 31 + 2 months = Mar 31 (direct jump, no Feb 28 clamping) (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-01-31T01:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-03-31T01:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_feb28_add1m_Australia_Lord_Howe",
+      "description": "Feb 28 + 1 month = Mar 28 (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-02-28T01:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-28T01:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_mar31_sub1m_Australia_Lord_Howe",
+      "description": "Mar 31 - 1 month = Feb 28 (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-03-31T01:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T01:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_jan31_add2m_America_Santiago",
+      "description": "Jan 31 + 2 months = Mar 31 (direct jump, no Feb 28 clamping) (America/Santiago)",
+      "input": {
+        "utc": "2026-01-31T15:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 2
+      },
+      "expected": {
+        "utc": "2026-03-31T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_feb28_add1m_America_Santiago",
+      "description": "Feb 28 + 1 month = Mar 28 (America/Santiago)",
+      "input": {
+        "utc": "2026-02-28T15:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "add",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-03-28T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_yoyo_mar31_sub1m_America_Santiago",
+      "description": "Mar 31 - 1 month = Feb 28 (America/Santiago)",
+      "input": {
+        "utc": "2026-03-31T15:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "month",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-02-28T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_asterisk_kyiv_sub1h_Etc_UTC",
+      "description": "Subtract 1 elapsed hour. In Kyiv this crosses backward out of asterisk window (Etc/UTC)",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_asterisk_kyiv_sub1h_Europe_Kyiv",
+      "description": "Subtract 1 elapsed hour. In Kyiv this crosses backward out of asterisk window (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_asterisk_kyiv_sub1h_America_New_York",
+      "description": "Subtract 1 elapsed hour. In Kyiv this crosses backward out of asterisk window (America/New_York)",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_asterisk_kyiv_sub1h_Australia_Lord_Howe",
+      "description": "Subtract 1 elapsed hour. In Kyiv this crosses backward out of asterisk window (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    },
+    {
+      "id": "addSub_asterisk_kyiv_sub1h_America_Santiago",
+      "description": "Subtract 1 elapsed hour. In Kyiv this crosses backward out of asterisk window (America/Santiago)",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "sub",
+        "unit": "hour",
+        "amount": 1
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    }
+  ]
+}

@@ -41,6 +41,24 @@ func CLDRDateTimeFunc(positional []Value, named map[string]Value, language cldr.
 	return &StringValue{Value: f.Format(dt.Value)}
 }
 
+func UnifiedTimeFunc(positional []Value, named map[string]Value, language cldr.Language, params ...string) Value {
+	pattern := named["pattern"].String()
+	if pattern == "" {
+		return &StringValue{Value: fmt.Sprintf("error: missing pattern")}
+	}
+
+	f, err := CLDRDateTimeFormatter(language.BCP47(), pattern)
+	if err != nil {
+		return &StringValue{Value: fmt.Sprintf("error: %v", err)}
+	}
+
+	dt, ok := positional[0].(*DateTimeValue)
+	if !ok {
+		return &StringValue{Value: "error: invalid datetime value"}
+	}
+	return &StringValue{Value: f.Format(dt.Value)}
+}
+
 func CLDRDateTimeFormatter(lang language.Tag, template string) (intl.DateTimeFormat, error) {
 	return intl.NewDateTimeFormatLayout(lang, template)
 }

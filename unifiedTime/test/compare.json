@@ -1,0 +1,239 @@
+{
+  "suite": "compare",
+  "cases": [
+    {
+      "id": "compare_a_less_than_b",
+      "description": "A (09:00Z) < B (13:45Z): compareTo sign = -1",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_b_greater_than_a",
+      "description": "B (13:45Z) > A (09:00Z): compareTo sign = 1",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "int": 1
+      }
+    },
+    {
+      "id": "compare_equal_same_object",
+      "description": "A == A: compareTo sign = 0 - same UTC instant",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "compare_equal_different_tz_labels",
+      "description": "Same UTC instant: A in Kyiv (12:00 EEST) vs A in UTC (09:00Z); compareTo sign = 0 - tz label is irrelevant",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "compare_cross_tz_ordering",
+      "description": "UTC A (09:00Z) vs NY B (09:45 EDT = 13:45Z): sign = -1; wall times look close, UTC gap is 4h45m",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_equal_kyiv_vs_lordHowe",
+      "description": "Same UTC instant: Kyiv 12:00 EEST vs LordHowe 19:30 LHST; sign = 0 - wall times 7h30m apart but UTC identical",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "compare_kyiv_before_after_springForward",
+      "description": "Kyiv 02:30 EET < Kyiv 04:30 EEST (spring-forward Mar 29); wall gap = 2h, elapsed = 1h; sign = -1 (UTC ordering)",
+      "input": {
+        "utc": "2026-03-29T00:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-03-29T01:30:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_kyiv_after_before_springForward_reversed",
+      "description": "Kyiv 04:30 EEST > Kyiv 02:30 EET: sign = 1 (reversed operands)",
+      "input": {
+        "utc": "2026-03-29T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-03-29T00:30:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "int": 1
+      }
+    },
+    {
+      "id": "compare_lordHowe_before_after_fallBack",
+      "description": "LordHowe LHDT midnight < LHST 01:00 (fall-back Apr 5); 90min elapsed despite 1h wall gap; sign = -1",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-04-04T14:30:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_ny_before_after_springForward",
+      "description": "NY 01:45 EST < NY 03:15 EDT (spring-forward Mar 8 2026); wall gap = 1:30h, elapsed = 30min; sign = -1",
+      "input": {
+        "utc": "2026-03-08T06:45:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-03-08T07:15:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_ny_after_before_springForward_reversed",
+      "description": "NY 03:15 EDT > NY 01:45 EST: sign = 1 (reversed operands)",
+      "input": {
+        "utc": "2026-03-08T07:15:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-03-08T06:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "int": 1
+      }
+    },
+    {
+      "id": "compare_santiago_before_after_fallBack",
+      "description": "Santiago Apr 5 23:45 CLST (before) < Apr 5 23:15 CLT (after fall-back); wall time went backward but UTC advanced 30min; sign = -1",
+      "input": {
+        "utc": "2026-04-05T02:45:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-04-05T03:15:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "int": -1
+      }
+    },
+    {
+      "id": "compare_santiago_after_before_fallBack_reversed",
+      "description": "Santiago 23:15 CLT > 23:45 CLST: sign = 1 (reversed operands)",
+      "input": {
+        "utc": "2026-04-05T03:15:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "compare",
+        "input2": {
+          "utc": "2026-04-05T02:45:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "int": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "suite": "duration_from_day_start",
+  "cases": [
+    {
+      "id": "dds_A_midDay_Etc/UTC",
+      "description": "durationFromDayStart mid-day in Etc/UTC",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 49530000
+      }
+    },
+    {
+      "id": "dds_A_midDay_Europe/Kyiv",
+      "description": "durationFromDayStart mid-day in Europe/Kyiv",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 60330000
+      }
+    },
+    {
+      "id": "dds_A_midDay_America/New_York",
+      "description": "durationFromDayStart mid-day in America/New_York",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 35130000
+      }
+    },
+    {
+      "id": "dds_A_midDay_Australia/Lord_Howe",
+      "description": "durationFromDayStart mid-day in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 930000
+      }
+    },
+    {
+      "id": "dds_A_midDay_America/Santiago",
+      "description": "durationFromDayStart mid-day in America/Santiago",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 35130000
+      }
+    },
+    {
+      "id": "dds_B_midnight_Etc/UTC",
+      "description": "wall midnight in Etc/UTC -> 0 ms",
+      "input": {
+        "utc": "2026-07-20T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "dds_B_midnight_Europe/Kyiv",
+      "description": "wall midnight in Europe/Kyiv -> 0 ms",
+      "input": {
+        "utc": "2026-07-19T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "dds_B_midnight_America/New_York",
+      "description": "wall midnight in America/New_York -> 0 ms",
+      "input": {
+        "utc": "2026-07-20T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "dds_B_midnight_Australia/Lord_Howe",
+      "description": "wall midnight in Australia/Lord_Howe -> 0 ms",
+      "input": {
+        "utc": "2026-07-20T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "dds_B_midnight_America/Santiago",
+      "description": "wall midnight in America/Santiago -> 0 ms",
+      "input": {
+        "utc": "2026-07-20T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "dds_C_endOfDay_Etc/UTC",
+      "description": "23:59:59.999 in Etc/UTC -> 86399999ms",
+      "input": {
+        "utc": "2026-07-20T23:59:59.999Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 86399999
+      }
+    },
+    {
+      "id": "dds_C_endOfDay_Europe/Kyiv",
+      "description": "23:59:59.999 in Europe/Kyiv -> 86399999ms",
+      "input": {
+        "utc": "2026-07-20T20:59:59.999Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 86399999
+      }
+    },
+    {
+      "id": "dds_C_endOfDay_America/New_York",
+      "description": "23:59:59.999 in America/New_York -> 86399999ms",
+      "input": {
+        "utc": "2026-07-21T03:59:59.999Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 86399999
+      }
+    },
+    {
+      "id": "dds_C_endOfDay_Australia/Lord_Howe",
+      "description": "23:59:59.999 in Australia/Lord_Howe -> 86399999ms",
+      "input": {
+        "utc": "2026-07-21T13:29:59.999Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 86399999
+      }
+    },
+    {
+      "id": "dds_C_endOfDay_America/Santiago",
+      "description": "23:59:59.999 in America/Santiago -> 86399999ms",
+      "input": {
+        "utc": "2026-07-21T03:59:59.999Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 86399999
+      }
+    },
+    {
+      "id": "dds_D_springDay_Europe/Kyiv",
+      "description": "durationFromDayStart on Europe/Kyiv spring-forward day",
+      "input": {
+        "utc": "2026-03-29T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 43200000
+      }
+    },
+    {
+      "id": "dds_D_springDay_America/New_York",
+      "description": "durationFromDayStart on America/New_York spring-forward day",
+      "input": {
+        "utc": "2026-03-08T14:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 32400000
+      }
+    },
+    {
+      "id": "dds_D_springDay_Australia/Lord_Howe",
+      "description": "durationFromDayStart on Australia/Lord_Howe spring-forward day",
+      "input": {
+        "utc": "2026-10-04T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 81000000
+      }
+    },
+    {
+      "id": "dds_D_springDay_America/Santiago",
+      "description": "durationFromDayStart on America/Santiago spring-forward day",
+      "input": {
+        "utc": "2026-09-07T14:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 39600000
+      }
+    },
+    {
+      "id": "dds_E_fallDay_Europe/Kyiv",
+      "description": "durationFromDayStart on Europe/Kyiv fall-back day",
+      "input": {
+        "utc": "2026-10-25T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 46800000
+      }
+    },
+    {
+      "id": "dds_E_fallDay_America/New_York",
+      "description": "durationFromDayStart on America/New_York fall-back day",
+      "input": {
+        "utc": "2026-11-01T14:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 36000000
+      }
+    },
+    {
+      "id": "dds_E_fallDay_Australia/Lord_Howe",
+      "description": "durationFromDayStart on Australia/Lord_Howe fall-back day",
+      "input": {
+        "utc": "2026-04-04T22:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 32400000
+      }
+    },
+    {
+      "id": "dds_E_fallDay_America/Santiago",
+      "description": "durationFromDayStart on America/Santiago fall-back day",
+      "input": {
+        "utc": "2026-04-05T14:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 36000000
+      }
+    },
+    {
+      "id": "dds_F_lhMidnight",
+      "description": "LordHowe wall midnight (UTC+10:30): durationFromDayStart = 0",
+      "input": {
+        "utc": "2026-07-20T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "durationFromDayStart"
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    }
+  ]
+}

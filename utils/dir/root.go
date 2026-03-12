@@ -1,4 +1,4 @@
-package word
+package dir
 
 import (
 	"os"

@@ -1,0 +1,530 @@
+{
+  "suite": "parse_time_string_for_date",
+  "cases": [
+    {
+      "id": "ptsfd_A_sameDay_Europe/Kyiv",
+      "description": "plain \"18:00\" same-day in Europe/Kyiv",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "18:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_A_sameDay_America/New_York",
+      "description": "plain \"11:00\" same-day in America/New_York",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "11:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_A_sameDay_Australia/Lord_Howe",
+      "description": "plain \"02:00\" same-day in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T15:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_A_sameDay_America/Santiago",
+      "description": "plain \"11:00\" same-day in America/Santiago",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "11:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_B_overnight_Europe/Kyiv",
+      "description": "\"01:00\" overnight in Europe/Kyiv (01<wall 16 -> +1 day)",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T22:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_B_overnight_America/New_York",
+      "description": "\"01:00\" overnight in America/New_York (01<wall 9 -> +1 day)",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-07-21T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_B_overnight_America/Santiago",
+      "description": "\"01:00\" overnight in America/Santiago (01<wall 9 -> +1 day)",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-07-21T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_B_overnight_lhSpecial",
+      "description": "LordHowe wall=00:15 (wallH=0), ask \"23:00\": 23 > 0 -> same day (past midnight already)",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "23:00"
+      },
+      "expected": {
+        "utc": "2026-07-21T12:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_C_asterisk_noDST_Europe/Kyiv",
+      "description": "asterisk \"19:00*\" non-DST day in Europe/Kyiv -> same as plain",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "19:00*"
+      },
+      "expected": {
+        "utc": "2026-07-20T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_C_asterisk_noDST_America/New_York",
+      "description": "asterisk \"12:00*\" non-DST day in America/New_York -> same as plain",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "12:00*"
+      },
+      "expected": {
+        "utc": "2026-07-20T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_C_asterisk_noDST_Australia/Lord_Howe",
+      "description": "asterisk \"03:00*\" non-DST day in Australia/Lord_Howe -> same as plain",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "03:00*"
+      },
+      "expected": {
+        "utc": "2026-07-20T16:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_C_asterisk_noDST_America/Santiago",
+      "description": "asterisk \"12:00*\" non-DST day in America/Santiago -> same as plain",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "12:00*"
+      },
+      "expected": {
+        "utc": "2026-07-20T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_D_midnight_kyiv",
+      "description": "\"00:00\" asked on Kyiv wall midnight -> result = same midnight",
+      "input": {
+        "utc": "2026-07-19T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:00"
+      },
+      "expected": {
+        "utc": "2026-07-19T21:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_E_overnightMidnight_Europe/Kyiv",
+      "description": "\"00:00\" overnight in Europe/Kyiv (wall=13) -> next midnight",
+      "input": {
+        "utc": "2026-07-20T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:00"
+      },
+      "expected": {
+        "utc": "2026-07-20T21:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_E_overnightMidnight_America/New_York",
+      "description": "\"00:00\" overnight in America/New_York (wall=6) -> next midnight",
+      "input": {
+        "utc": "2026-07-20T10:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:00"
+      },
+      "expected": {
+        "utc": "2026-07-21T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_E_overnightMidnight_America/Santiago",
+      "description": "\"00:00\" overnight in America/Santiago (wall=6) -> next midnight",
+      "input": {
+        "utc": "2026-07-20T10:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:00"
+      },
+      "expected": {
+        "utc": "2026-07-21T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_F_asterisk_beforeSpring_Europe/Kyiv",
+      "description": "asterisk \"01:00*\" on Europe/Kyiv spring day: before DST -> +transition",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00*"
+      },
+      "expected": {
+        "utc": "2026-03-28T23:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_G_plain_beforeSpring_Europe/Kyiv",
+      "description": "plain \"01:00\" on Europe/Kyiv spring day (no asterisk -> no change)",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-03-28T23:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_H_asterisk_afterSpring_Europe/Kyiv",
+      "description": "asterisk \"06:00*\" after Europe/Kyiv spring DST -> no advance",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "06:00*"
+      },
+      "expected": {
+        "utc": "2026-03-29T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_F_asterisk_beforeSpring_America/New_York",
+      "description": "asterisk \"01:00*\" on America/New_York spring day: before DST -> +transition",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00*"
+      },
+      "expected": {
+        "utc": "2026-03-08T06:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_G_plain_beforeSpring_America/New_York",
+      "description": "plain \"01:00\" on America/New_York spring day (no asterisk -> no change)",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-03-08T06:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_H_asterisk_afterSpring_America/New_York",
+      "description": "asterisk \"05:00*\" after America/New_York spring DST -> no advance",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "05:00*"
+      },
+      "expected": {
+        "utc": "2026-03-08T09:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_F_asterisk_beforeSpring_Australia/Lord_Howe",
+      "description": "asterisk \"01:30*\" on Australia/Lord_Howe spring day: before DST -> +transition",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:30*"
+      },
+      "expected": {
+        "utc": "2026-10-03T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_G_plain_beforeSpring_Australia/Lord_Howe",
+      "description": "plain \"01:30\" on Australia/Lord_Howe spring day (no asterisk -> no change)",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:30"
+      },
+      "expected": {
+        "utc": "2026-10-03T15:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_H_asterisk_afterSpring_Australia/Lord_Howe",
+      "description": "asterisk \"04:00*\" after Australia/Lord_Howe spring DST -> no advance",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "04:00*"
+      },
+      "expected": {
+        "utc": "2026-10-03T17:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_F_asterisk_santiago_afterSpring",
+      "description": "Santiago: day anchor is already post-midnight DST, asterisk \"01:00*\" -> no advance",
+      "input": {
+        "utc": "2026-09-07T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00*"
+      },
+      "expected": {
+        "utc": "2026-09-07T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_G_plain_santiago_spring",
+      "description": "Santiago: plain \"01:00\" on spring day",
+      "input": {
+        "utc": "2026-09-07T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "01:00"
+      },
+      "expected": {
+        "utc": "2026-09-07T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_asterisk_fallDay_Europe/Kyiv",
+      "description": "asterisk \"02:30*\" on Europe/Kyiv fall-back day: isDstDay=false -> same as plain",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30*"
+      },
+      "expected": {
+        "utc": "2026-10-25T00:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_plain_fallDay_Europe/Kyiv",
+      "description": "plain \"02:30\" on Europe/Kyiv fall-back day",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30"
+      },
+      "expected": {
+        "utc": "2026-10-24T23:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_asterisk_fallDay_America/New_York",
+      "description": "asterisk \"02:30*\" on America/New_York fall-back day: isDstDay=false -> same as plain",
+      "input": {
+        "utc": "2026-11-01T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30*"
+      },
+      "expected": {
+        "utc": "2026-11-01T07:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_plain_fallDay_America/New_York",
+      "description": "plain \"02:30\" on America/New_York fall-back day",
+      "input": {
+        "utc": "2026-11-01T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30"
+      },
+      "expected": {
+        "utc": "2026-11-01T07:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_asterisk_fallDay_Australia/Lord_Howe",
+      "description": "asterisk \"00:30*\" on Australia/Lord_Howe fall-back day: isDstDay=false -> same as plain",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:30*"
+      },
+      "expected": {
+        "utc": "2026-04-04T14:00:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_plain_fallDay_Australia/Lord_Howe",
+      "description": "plain \"00:30\" on Australia/Lord_Howe fall-back day",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "00:30"
+      },
+      "expected": {
+        "utc": "2026-04-04T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_asterisk_fallDay_America/Santiago",
+      "description": "asterisk \"02:30*\" on America/Santiago fall-back day: isDstDay=false -> same as plain",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30*"
+      },
+      "expected": {
+        "utc": "2026-04-05T06:30:00.000Z"
+      }
+    },
+    {
+      "id": "ptsfd_I_plain_fallDay_America/Santiago",
+      "description": "plain \"02:30\" on America/Santiago fall-back day",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parseTimeStringForDate",
+        "time_string": "02:30"
+      },
+      "expected": {
+        "utc": "2026-04-05T06:30:00.000Z"
+      }
+    }
+  ]
+}

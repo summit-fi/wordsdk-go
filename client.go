@@ -3,13 +3,13 @@ package word
 import (
 	"errors"
 	"fmt"
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"net/http"
 	"reflect"
 	"strings"
 	"time"
 
-	"github.com/summit-fi/wordsdk-go/fluent"
-	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/source"
 )
 
@@ -187,6 +187,11 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 
 		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
 			bundle = fluent.NewBundle(cldr.Language(lang))
+			// TODO: let's try to register DATETIME functions, but we need to make sure that they are registered only once per bundle
+			bundle.RegisterFunction("DATETIME",
+				func(positional []fluent.Value, named map[string]fluent.Value, primaryLanguage cldr.Language, params ...string) fluent.Value {
+					return fluent.String("")
+				})
 		}
 
 		for key, sb := range builder {

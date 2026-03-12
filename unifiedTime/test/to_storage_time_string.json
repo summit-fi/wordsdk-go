@@ -1,0 +1,411 @@
+{
+  "suite": "to_storage_time_string",
+  "cases": [
+    {
+      "id": "storage_A_regular_Etc/UTC",
+      "description": "regular time in Etc/UTC -> \"HH:mm\" no asterisk",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "13:45"
+      }
+    },
+    {
+      "id": "storage_A_regular_Europe/Kyiv",
+      "description": "regular time in Europe/Kyiv -> \"HH:mm\" no asterisk",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "16:45"
+      }
+    },
+    {
+      "id": "storage_A_regular_America/New_York",
+      "description": "regular time in America/New_York -> \"HH:mm\" no asterisk",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "09:45"
+      }
+    },
+    {
+      "id": "storage_A_regular_Australia/Lord_Howe",
+      "description": "regular time in Australia/Lord_Howe -> \"HH:mm\" no asterisk",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:15"
+      }
+    },
+    {
+      "id": "storage_A_regular_America/Santiago",
+      "description": "regular time in America/Santiago -> \"HH:mm\" no asterisk",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "09:45"
+      }
+    },
+    {
+      "id": "storage_B_padding_Etc/UTC",
+      "description": "single-digit h/m in Etc/UTC -> \"0H:0m\" padding",
+      "input": {
+        "utc": "2026-02-24T05:05:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "05:05"
+      }
+    },
+    {
+      "id": "storage_B_padding_Europe/Kyiv",
+      "description": "single-digit h/m in Europe/Kyiv -> \"0H:0m\" padding",
+      "input": {
+        "utc": "2026-02-24T05:05:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "07:05"
+      }
+    },
+    {
+      "id": "storage_B_padding_America/New_York",
+      "description": "single-digit h/m in America/New_York -> \"0H:0m\" padding",
+      "input": {
+        "utc": "2026-02-24T05:05:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:05"
+      }
+    },
+    {
+      "id": "storage_B_padding_Australia/Lord_Howe",
+      "description": "single-digit h/m in Australia/Lord_Howe -> \"0H:0m\" padding",
+      "input": {
+        "utc": "2026-02-24T05:05:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "16:05"
+      }
+    },
+    {
+      "id": "storage_B_padding_America/Santiago",
+      "description": "single-digit h/m in America/Santiago -> \"0H:0m\" padding",
+      "input": {
+        "utc": "2026-02-24T05:05:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "02:05"
+      }
+    },
+    {
+      "id": "storage_C_midnight_Etc/UTC",
+      "description": "wall midnight in Etc/UTC -> \"00:00\"",
+      "input": {
+        "utc": "2026-07-20T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    },
+    {
+      "id": "storage_C_midnight_Europe/Kyiv",
+      "description": "wall midnight in Europe/Kyiv -> \"00:00\"",
+      "input": {
+        "utc": "2026-07-19T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    },
+    {
+      "id": "storage_C_midnight_America/New_York",
+      "description": "wall midnight in America/New_York -> \"00:00\"",
+      "input": {
+        "utc": "2026-07-20T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    },
+    {
+      "id": "storage_C_midnight_Australia/Lord_Howe",
+      "description": "wall midnight in Australia/Lord_Howe -> \"00:00\"",
+      "input": {
+        "utc": "2026-07-20T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    },
+    {
+      "id": "storage_C_midnight_America/Santiago",
+      "description": "wall midnight in America/Santiago -> \"00:00\"",
+      "input": {
+        "utc": "2026-07-20T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_Europe/Kyiv",
+      "description": "Kyiv T01:30Z Oct 25 = 03:30 EET post-fallback -> \"03:30*\"",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "03:30*"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_edge_Europe/Kyiv",
+      "description": "Kyiv T01:00Z Oct 25 = 03:00 EET window start -> \"03:00*\"",
+      "input": {
+        "utc": "2026-10-25T01:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "03:00*"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_America/New_York",
+      "description": "NY T06:30Z Nov 1 = 01:30 EST post-fallback -> \"01:30*\"",
+      "input": {
+        "utc": "2026-11-01T06:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "01:30*"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_last_America/New_York",
+      "description": "NY T06:59Z Nov 1 = 01:59 EST last minute -> \"01:59*\"",
+      "input": {
+        "utc": "2026-11-01T06:59:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "01:59*"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_Australia/Lord_Howe",
+      "description": "LordHowe T15:15Z Apr 4 = 01:45 LHST 30-min window -> \"01:45*\"",
+      "input": {
+        "utc": "2026-04-04T15:15:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "01:45*"
+      }
+    },
+    {
+      "id": "storage_D_asterisk_America/Santiago",
+      "description": "Santiago T03:30Z Apr 6 = 23:30 CLT post-fallback -> \"23:30*\"",
+      "input": {
+        "utc": "2026-04-06T03:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "23:30"
+      }
+    },
+    {
+      "id": "storage_E_beforeFallback_Europe/Kyiv",
+      "description": "Kyiv T00:59Z = 03:59 EEST just before fall-back -> \"03:59\" no *",
+      "input": {
+        "utc": "2026-10-25T00:59:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "03:59"
+      }
+    },
+    {
+      "id": "storage_E_beforeFallback_America/New_York",
+      "description": "NY T05:59Z = 01:59 EDT just before fall-back -> \"01:59\" no *",
+      "input": {
+        "utc": "2026-11-01T05:59:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "01:59"
+      }
+    },
+    {
+      "id": "storage_E_beforeFallback_Australia/Lord_Howe",
+      "description": "LordHowe T14:59Z = 01:59 LHDT just before 30-min fall-back -> \"01:59\" no *",
+      "input": {
+        "utc": "2026-04-04T14:59:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "01:59"
+      }
+    },
+    {
+      "id": "storage_E_beforeFallback_America/Santiago",
+      "description": "Santiago T02:59Z = 23:59 CLST just before midnight fall-back -> \"23:59\" no *",
+      "input": {
+        "utc": "2026-04-06T02:59:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "22:59"
+      }
+    },
+    {
+      "id": "storage_F_afterFallback_Europe/Kyiv",
+      "description": "Kyiv T02:00Z = 04:00 EET after fall-back window -> \"04:00\" no *",
+      "input": {
+        "utc": "2026-10-25T02:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "04:00"
+      }
+    },
+    {
+      "id": "storage_F_afterFallback_America/New_York",
+      "description": "NY T07:00Z = 02:00 EST after fall-back window -> \"02:00\" no *",
+      "input": {
+        "utc": "2026-11-01T07:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "02:00"
+      }
+    },
+    {
+      "id": "storage_F_afterFallback_Australia/Lord_Howe",
+      "description": "LordHowe T15:30Z = 02:00 LHST after fall-back window -> \"02:00\" no *",
+      "input": {
+        "utc": "2026-04-04T15:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "02:00"
+      }
+    },
+    {
+      "id": "storage_F_afterFallback_America/Santiago",
+      "description": "Santiago T04:00Z = 00:00 CLT after midnight fall-back window -> \"00:00\" no *",
+      "input": {
+        "utc": "2026-04-06T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toStorageTimeString"
+      },
+      "expected": {
+        "string": "00:00"
+      }
+    }
+  ]
+}

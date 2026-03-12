@@ -3,12 +3,12 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	word "github.com/summit-fi/wordsdk-go/utils/dir"
 	"os"
 	"path/filepath"
 	"strconv"
 	"testing"
 
-	word "github.com/summit-fi/wordsdk-go"
 	"github.com/summit-fi/wordsdk-go/fluent"
 	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 )

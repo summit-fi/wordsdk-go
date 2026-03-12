@@ -1,0 +1,529 @@
+{
+  "suite": "factories",
+  "cases": [
+    {
+      "id": "factories_fromMs_epoch0_Etc/UTC",
+      "description": "fromMillisecondsSinceEpoch(0, tz=Etc/UTC) -> UTC 1970-01-01T00:00:00.000Z (epoch zero)",
+      "input": {
+        "utc": "1970-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 0
+      },
+      "expected": {
+        "utc": "1970-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_epoch0_Europe/Kyiv",
+      "description": "fromMillisecondsSinceEpoch(0, tz=Europe/Kyiv) -> UTC 1970-01-01T00:00:00.000Z (epoch zero)",
+      "input": {
+        "utc": "1970-01-01T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 0
+      },
+      "expected": {
+        "utc": "1970-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_epoch0_America/New_York",
+      "description": "fromMillisecondsSinceEpoch(0, tz=America/New_York) -> UTC 1970-01-01T00:00:00.000Z (epoch zero)",
+      "input": {
+        "utc": "1970-01-01T00:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 0
+      },
+      "expected": {
+        "utc": "1970-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_epoch0_Australia/Lord_Howe",
+      "description": "fromMillisecondsSinceEpoch(0, tz=Australia/Lord_Howe) -> UTC 1970-01-01T00:00:00.000Z (epoch zero)",
+      "input": {
+        "utc": "1970-01-01T00:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 0
+      },
+      "expected": {
+        "utc": "1970-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_epoch0_America/Santiago",
+      "description": "fromMillisecondsSinceEpoch(0, tz=America/Santiago) -> UTC 1970-01-01T00:00:00.000Z (epoch zero)",
+      "input": {
+        "utc": "1970-01-01T00:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 0
+      },
+      "expected": {
+        "utc": "1970-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_2026jan_Etc/UTC",
+      "description": "fromMillisecondsSinceEpoch(1769454000000, tz=Etc/UTC) -> UTC 2026-01-26T19:00:00.000Z",
+      "input": {
+        "utc": "2026-01-26T19:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 1769454000000
+      },
+      "expected": {
+        "utc": "2026-01-26T19:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_2026jan_Europe/Kyiv",
+      "description": "fromMillisecondsSinceEpoch(1769454000000, tz=Europe/Kyiv) -> UTC 2026-01-26T19:00:00.000Z",
+      "input": {
+        "utc": "2026-01-26T19:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 1769454000000
+      },
+      "expected": {
+        "utc": "2026-01-26T19:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_2026jan_America/New_York",
+      "description": "fromMillisecondsSinceEpoch(1769454000000, tz=America/New_York) -> UTC 2026-01-26T19:00:00.000Z",
+      "input": {
+        "utc": "2026-01-26T19:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 1769454000000
+      },
+      "expected": {
+        "utc": "2026-01-26T19:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_2026jan_Australia/Lord_Howe",
+      "description": "fromMillisecondsSinceEpoch(1769454000000, tz=Australia/Lord_Howe) -> UTC 2026-01-26T19:00:00.000Z",
+      "input": {
+        "utc": "2026-01-26T19:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 1769454000000
+      },
+      "expected": {
+        "utc": "2026-01-26T19:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromMs_2026jan_America/Santiago",
+      "description": "fromMillisecondsSinceEpoch(1769454000000, tz=America/Santiago) -> UTC 2026-01-26T19:00:00.000Z",
+      "input": {
+        "utc": "2026-01-26T19:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "fromMillisecondsSinceEpoch",
+        "ms": 1769454000000
+      },
+      "expected": {
+        "utc": "2026-01-26T19:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_toIso8601_zSuffix_Etc/UTC",
+      "description": "toIso8601String() in tz=Etc/UTC always ends with Z; wall Jun 15 14:00 -> UTC 2026-06-15T14:00:00.000Z",
+      "input": {
+        "utc": "2026-06-15T14:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-06-15T14:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_toIso8601_zSuffix_Europe/Kyiv",
+      "description": "toIso8601String() in tz=Europe/Kyiv always ends with Z; wall Jun 15 14:00 -> UTC 2026-06-15T11:00:00.000Z",
+      "input": {
+        "utc": "2026-06-15T11:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-06-15T11:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_toIso8601_zSuffix_America/New_York",
+      "description": "toIso8601String() in tz=America/New_York always ends with Z; wall Jun 15 14:00 -> UTC 2026-06-15T18:00:00.000Z",
+      "input": {
+        "utc": "2026-06-15T18:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-06-15T18:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_toIso8601_zSuffix_Australia/Lord_Howe",
+      "description": "toIso8601String() in tz=Australia/Lord_Howe always ends with Z; wall Jun 15 14:00 -> UTC 2026-06-15T03:30:00.000Z",
+      "input": {
+        "utc": "2026-06-15T03:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-06-15T03:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_toIso8601_zSuffix_America/Santiago",
+      "description": "toIso8601String() in tz=America/Santiago always ends with Z; wall Jun 15 14:00 -> UTC 2026-06-15T18:00:00.000Z",
+      "input": {
+        "utc": "2026-06-15T18:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-06-15T18:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_offsetPlus2_Europe/Kyiv",
+      "description": "parse(\"...+02:00\", tz=Kyiv) -> correct UTC moment",
+      "input": {
+        "utc": "2026-01-15T12:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "2026-01-15T14:30:00+02:00"
+      },
+      "expected": {
+        "utc": "2026-01-15T12:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_offsetMinus4_America/New_York",
+      "description": "parse(\"...-04:00\", tz=NY) -> correct UTC moment (EDT)",
+      "input": {
+        "utc": "2026-06-15T18:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "2026-06-15T14:30:00-04:00"
+      },
+      "expected": {
+        "utc": "2026-06-15T18:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_offsetPlus10_30_Australia/Lord_Howe",
+      "description": "parse(\"...+10:30\", tz=Lord_Howe) -> correct UTC moment (LHST)",
+      "input": {
+        "utc": "2026-01-15T04:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "2026-01-15T14:30:00+10:30"
+      },
+      "expected": {
+        "utc": "2026-01-15T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_offsetMinus3_America/Santiago",
+      "description": "parse(\"...-03:00\", tz=Santiago) -> correct UTC moment (CLST)",
+      "input": {
+        "utc": "2026-01-15T17:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "2026-01-15T14:30:00-03:00"
+      },
+      "expected": {
+        "utc": "2026-01-15T17:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_utcZ_string",
+      "description": "parse(\"...Z\") -> valid",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "2026-01-15T12:00:00.000Z"
+      },
+      "expected": {
+        "utc": "2026-01-15T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_parse_invalid_throws",
+      "description": "parse(\"not-a-date\") must throw",
+      "input": {
+        "utc": "2026-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "parse",
+        "input_string": "not-a-date"
+      },
+      "expected": {
+        "throws": true
+      }
+    },
+    {
+      "id": "factories_fromDynamic_utcString_ok",
+      "description": "fromDynamic(UTC string) -> ok",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "fromDynamic",
+        "input_string": "2026-01-15T12:00:00.000Z"
+      },
+      "expected": {
+        "utc": "2026-01-15T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_fromDynamic_localString_throws",
+      "description": "fromDynamic(\"2026-01-15T14:00:00\" bare local string)-> ArgumentError",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "fromDynamic",
+        "input_string": "2026-01-15T14:00:00"
+      },
+      "expected": {
+        "throws": true
+      }
+    },
+    {
+      "id": "factories_fromDynamic_null_throws",
+      "description": "fromDynamic(null) -> ArgumentError",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "fromDynamic"
+      },
+      "expected": {
+        "throws": true
+      }
+    },
+    {
+      "id": "factories_tryParse_valid_nonNull",
+      "description": "tryParse(valid string) -> non-null result",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "tryParse",
+        "input_string": "2026-01-15T12:00:00.000Z"
+      },
+      "expected": {
+        "utc": "2026-01-15T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_tryParse_invalid_null",
+      "description": "tryParse(garbage) -> null (no throw)",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "tryParse",
+        "input_string": "garbage"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "factories_tryParse_null_input_null",
+      "description": "tryParse(null) -> null (no throw)",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "tryParse"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "factories_ctor_Etc/UTC_20260224T1530",
+      "description": "UnifiedTime(Etc/UTC, 2026-2-24 15:30:45.123) wall-clock -> UTC 2026-02-24T15:30:45.123Z",
+      "input": {
+        "utc": "2026-02-24T15:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T15:30:45.123Z"
+      }
+    },
+    {
+      "id": "factories_ctor_Europe/Kyiv_20260224T1530",
+      "description": "UnifiedTime(Europe/Kyiv, 2026-2-24 15:30:45.123) wall-clock -> UTC 2026-02-24T13:30:45.123Z",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T13:30:45.123Z"
+      }
+    },
+    {
+      "id": "factories_ctor_America/New_York_20260224T1530",
+      "description": "UnifiedTime(America/New_York, 2026-2-24 15:30:45.123) wall-clock -> UTC 2026-02-24T20:30:45.123Z",
+      "input": {
+        "utc": "2026-02-24T20:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T20:30:45.123Z"
+      }
+    },
+    {
+      "id": "factories_ctor_Australia/Lord_Howe_20260224T1530",
+      "description": "UnifiedTime(Australia/Lord_Howe, 2026-2-24 15:30:45.123) wall-clock -> UTC 2026-02-24T04:30:45.123Z",
+      "input": {
+        "utc": "2026-02-24T04:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T04:30:45.123Z"
+      }
+    },
+    {
+      "id": "factories_ctor_America/Santiago_20260224T1530",
+      "description": "UnifiedTime(America/Santiago, 2026-2-24 15:30:45.123) wall-clock -> UTC 2026-02-24T18:30:45.123Z",
+      "input": {
+        "utc": "2026-02-24T18:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T18:30:45.123Z"
+      }
+    },
+    {
+      "id": "factories_ctor_Etc/UTC_20260224T1330",
+      "description": "UnifiedTime(Etc/UTC, 2026-2-24 13:30:0.0) wall-clock -> UTC 2026-02-24T13:30:00.000Z",
+      "input": {
+        "utc": "2026-02-24T13:30:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_ctor_Australia/Lord_Howe_20260224T1330",
+      "description": "UnifiedTime(Australia/Lord_Howe, 2026-2-24 13:30:0.0) wall-clock -> UTC 2026-02-24T02:30:00.000Z",
+      "input": {
+        "utc": "2026-02-24T02:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-02-24T02:30:00.000Z"
+      }
+    },
+    {
+      "id": "factories_ctor_America/Santiago_20260115T1000",
+      "description": "UnifiedTime(America/Santiago, 2026-1-15 10:0:0.0) wall-clock -> UTC 2026-01-15T13:00:00.000Z",
+      "input": {
+        "utc": "2026-01-15T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-01-15T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "factories_ctor_America/Santiago_20260715T1000",
+      "description": "UnifiedTime(America/Santiago, 2026-7-15 10:0:0.0) wall-clock -> UTC 2026-07-15T14:00:00.000Z",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "toIso8601String"
+      },
+      "expected": {
+        "utc": "2026-07-15T14:00:00.000Z"
+      }
+    }
+  ]
+}

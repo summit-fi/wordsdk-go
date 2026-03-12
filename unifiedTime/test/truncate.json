@@ -1,0 +1,665 @@
+{
+  "suite": "truncate",
+  "cases": [
+    {
+      "id": "truncate_toDay_utc",
+      "description": "UTC wall Jul 20 13:45 -> toDay -> Jul 20 00:00 UTC+0; UTC = 2026-07-20T00:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-07-20T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_kyiv",
+      "description": "Kyiv wall Jul 20 16:45 EEST (+3) -> toDay -> Jul 20 00:00 EEST; UTC = Jul 19 21:00Z - UTC date rolls BACK to previous day",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-07-19T21:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_newYork",
+      "description": "NY wall Jul 20 09:45 EDT (-4) -> toDay -> Jul 20 00:00 EDT; UTC = Jul 20 04:00Z (negative offset keeps UTC on same date)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-07-20T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_lordHowe",
+      "description": "LordHowe wall is Jul 21 00:15 LHST (+10:30, base already crossed midnight) -> toDay -> Jul 21 00:00 LHST; UTC = Jul 20 13:30Z (truncates the wall day, not the UTC day; 30-min offset verified)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_santiago",
+      "description": "Santiago wall Jul 20 09:45 CLT (-4, southern winter) -> toDay -> Jul 20 00:00 CLT; UTC = Jul 20 04:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-07-20T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMonth_utc",
+      "description": "UTC wall Jul 20 -> toMonth -> Jul 1 00:00 UTC+0; UTC = 2026-07-01T00:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMonth"
+      },
+      "expected": {
+        "utc": "2026-07-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMonth_kyiv",
+      "description": "Kyiv wall Jul 20 EEST (+3) -> toMonth -> Jul 1 00:00 EEST; UTC = Jun 30 21:00Z - UTC month rolls to JUNE",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMonth"
+      },
+      "expected": {
+        "utc": "2026-06-30T21:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMonth_newYork",
+      "description": "NY wall Jul 20 EDT (-4) -> toMonth -> Jul 1 00:00 EDT; UTC = 2026-07-01T04:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMonth"
+      },
+      "expected": {
+        "utc": "2026-07-01T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMonth_lordHowe",
+      "description": "LordHowe wall Jul 21 LHST (+10:30) -> toMonth -> Jul 1 00:00 LHST; UTC = Jun 30 13:30Z - UTC month rolls to JUNE; 30-min offset verified",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMonth"
+      },
+      "expected": {
+        "utc": "2026-06-30T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMonth_santiago",
+      "description": "Santiago wall Jul 20 CLT (-4, winter) -> toMonth -> Jul 1 00:00 CLT; UTC = 2026-07-01T04:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMonth"
+      },
+      "expected": {
+        "utc": "2026-07-01T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toYear_utc",
+      "description": "UTC wall Jul 20 -> toYear -> Jan 1 00:00 UTC+0; UTC = 2026-01-01T00:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toYear"
+      },
+      "expected": {
+        "utc": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toYear_kyiv",
+      "description": "Kyiv wall Jul (EEST +3) -> toYear -> Jan 1 00:00 EET (+2, winter offset!); UTC = 2025-12-31T22:00Z - UTC year rolls to 2025",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toYear"
+      },
+      "expected": {
+        "utc": "2025-12-31T22:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toYear_newYork",
+      "description": "NY wall Jul (EDT -4) -> toYear -> Jan 1 00:00 EST (-5, winter offset!); UTC = 2026-01-01T05:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toYear"
+      },
+      "expected": {
+        "utc": "2026-01-01T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toYear_lordHowe",
+      "description": "LordHowe wall Jul (LHST +10:30) -> toYear -> Jan 1 00:00 LHDT (+11, summer offset!); UTC = 2025-12-31T13:00Z - UTC year rolls to 2025",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toYear"
+      },
+      "expected": {
+        "utc": "2025-12-31T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toYear_santiago",
+      "description": "Santiago wall Jul (CLT -4, winter) -> toYear -> Jan 1 00:00 CLST (-3, summer offset!); UTC = 2026-01-01T03:00Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toYear"
+      },
+      "expected": {
+        "utc": "2026-01-01T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_utc",
+      "description": "UTC wall 13:45:30.500 -> toHour -> 13:00:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_kyiv",
+      "description": "Kyiv wall 16:45 EEST (+3) -> toHour -> 16:00 EEST; UTC = 13:00Z (same as UTC baseline - offset correctly re-applied)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_lordHowe",
+      "description": "LordHowe wall Jul 21 00:15 LHST (+10:30) -> toHour -> Jul 21 00:00 LHST; UTC = Jul 20 13:30Z (30-min offset verified - not 13:00 or 14:00)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_newYork",
+      "description": "NY wall Jul 20 09:45 EDT (-4) -> toHour -> 09:00 EDT; UTC = 13:00Z (same as UTC baseline; -4 offset re-applied correctly)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_santiago",
+      "description": "Santiago wall Jul 20 09:45 CLT (-4, SH winter) -> toHour -> 09:00 CLT; UTC = 13:00Z (CLT = UTC-4, same result as NY EDT baseline)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMinute_utc",
+      "description": "UTC wall 13:45:30.500 -> toMinute -> 13:45:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMinute"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMinute_kyiv",
+      "description": "Kyiv wall 16:45:30.500 EEST (+3) -> toMinute -> 16:45:00 EEST; UTC = 13:45:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMinute"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMinute_newYork",
+      "description": "NY wall 09:45:30.500 EDT (-4) -> toMinute -> 09:45:00 EDT; UTC = 13:45:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMinute"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMinute_lordHowe",
+      "description": "LordHowe wall Jul 21 00:15:30.500 LHST (+10:30) -> toMinute -> 00:15:00 LHST; UTC = Jul 20 13:45:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMinute"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMinute_santiago",
+      "description": "Santiago wall 09:45:30.500 CLT (-4) -> toMinute -> 09:45:00 CLT; UTC = 13:45:00.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMinute"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toSecond_utc",
+      "description": "UTC wall 13:45:30.500 -> toSecond -> 13:45:30.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toSecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.000Z"
+      }
+    },
+    {
+      "id": "truncate_toSecond_kyiv",
+      "description": "Kyiv -> toSecond; UTC = 13:45:30.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toSecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.000Z"
+      }
+    },
+    {
+      "id": "truncate_toSecond_newYork",
+      "description": "NY -> toSecond; UTC = 13:45:30.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toSecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.000Z"
+      }
+    },
+    {
+      "id": "truncate_toSecond_lordHowe",
+      "description": "LordHowe -> toSecond; UTC = Jul 20 13:45:30.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toSecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.000Z"
+      }
+    },
+    {
+      "id": "truncate_toSecond_santiago",
+      "description": "Santiago -> toSecond; UTC = 13:45:30.000Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toSecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.000Z"
+      }
+    },
+    {
+      "id": "truncate_toMillisecond_utc",
+      "description": "UTC wall 13:45:30.500 -> toMillisecond -> same (microseconds already 0); verifies method does not alter millisecond or any coarser field",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMillisecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "truncate_toMillisecond_kyiv",
+      "description": "Kyiv -> toMillisecond -> same ms, UTC = 13:45:30.500Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMillisecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "truncate_toMillisecond_newYork",
+      "description": "NY -> toMillisecond -> same ms, UTC = 13:45:30.500Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMillisecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "truncate_toMillisecond_lordHowe",
+      "description": "LordHowe -> toMillisecond -> same ms, UTC = Jul 20 13:45:30.500Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMillisecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "truncate_toMillisecond_santiago",
+      "description": "Santiago -> toMillisecond -> same ms, UTC = 13:45:30.500Z",
+      "input": {
+        "utc": "2026-07-20T13:45:30.500Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toMillisecond"
+      },
+      "expected": {
+        "utc": "2026-07-20T13:45:30.500Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_kyiv_springForward",
+      "description": "Kyiv Mar 29 10:00 EEST (+3, after spring-forward) -> toDay -> Mar 29 00:00 EET (+2, midnight is before transition); UTC = Mar 28 22:00Z",
+      "input": {
+        "utc": "2026-03-29T07:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-03-28T22:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_newYork_springForward",
+      "description": "NY Mar 8 10:00 EDT (-4, after spring-forward) -> toDay -> Mar 8 00:00 EST (-5, midnight is before the 02:00 EST transition); UTC = Mar 8 05:00Z",
+      "input": {
+        "utc": "2026-03-08T14:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-03-08T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toHour_kyiv_springForward",
+      "description": "Kyiv Mar 29 04:30 EEST (+3, after spring-forward) -> toHour -> 04:00 EEST (+3); UTC = 01:00Z (new EEST offset applied to truncated hour)",
+      "input": {
+        "utc": "2026-03-29T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toHour"
+      },
+      "expected": {
+        "utc": "2026-03-29T01:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_kyiv_fallBack",
+      "description": "Kyiv Oct 25 10:00 EET (+2, after fall-back) -> toDay -> Oct 25 00:00 EEST (+3, midnight is before 04:00 EEST transition); UTC = Oct 24 21:00Z",
+      "input": {
+        "utc": "2026-10-25T08:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-10-24T21:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_newYork_fallBack",
+      "description": "NY Nov 1 14:00 EST (-5, after fall-back) -> toDay -> Nov 1 00:00 EDT (-4, midnight is before 02:00 EDT transition); UTC = Nov 1 04:00Z",
+      "input": {
+        "utc": "2026-11-01T19:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-11-01T04:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_lordHowe_springForward",
+      "description": "LordHowe Oct 4 22:00 LHDT (+11, after spring-forward) -> toDay -> Oct 4 00:00 LHST (+10:30, midnight before spring at 02:00 LHST); UTC = Oct 3 13:30Z",
+      "input": {
+        "utc": "2026-10-04T11:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-10-03T13:30:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_lordHowe_fallBack",
+      "description": "LordHowe Apr 5 12:00 LHST (+10:30, after fall-back) -> toDay -> Apr 5 00:00 LHDT (+11, midnight before 02:00 LHDT transition); UTC = Apr 4 13:00Z",
+      "input": {
+        "utc": "2026-04-05T01:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-04-04T13:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_santiago_springForward",
+      "description": "Santiago Sep 7 12:00 CLST (-3, spring was Sep 6 at UTC 04:00Z) -> toDay -> Sep 7 00:00 CLST (-3, well after spring transition); UTC = Sep 7 03:00Z",
+      "input": {
+        "utc": "2026-09-07T15:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-09-07T03:00:00.000Z"
+      }
+    },
+    {
+      "id": "truncate_toDay_santiago_fallBack",
+      "description": "Santiago Apr 6 12:00 CLT (-4, after midnight fall-back) -> toDay -> Apr 6 00:00 CLT (-4, post-fall-back era); UTC = Apr 6 04:00Z",
+      "input": {
+        "utc": "2026-04-06T16:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "truncate",
+        "unit": "toDay"
+      },
+      "expected": {
+        "utc": "2026-04-06T04:00:00.000Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2420 @@
+{
+  "suite": "is_time_in_range",
+  "cases": [
+    {
+      "id": "itr_closed_atStart_Etc/UTC",
+      "description": "[s,e] t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_inside_Etc/UTC",
+      "description": "[s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_atEnd_Etc/UTC",
+      "description": "[s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_before_Etc/UTC",
+      "description": "[s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_after_Etc/UTC",
+      "description": "[s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_atStart_Etc/UTC",
+      "description": "(s,e) t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_inside_Etc/UTC",
+      "description": "(s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_open_atEnd_Etc/UTC",
+      "description": "(s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_before_Etc/UTC",
+      "description": "(s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_after_Etc/UTC",
+      "description": "(s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_atStart_Etc/UTC",
+      "description": "(s,e] t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_inside_Etc/UTC",
+      "description": "(s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_atEnd_Etc/UTC",
+      "description": "(s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_before_Etc/UTC",
+      "description": "(s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_after_Etc/UTC",
+      "description": "(s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_atStart_Etc/UTC",
+      "description": "[s,e) t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_inside_Etc/UTC",
+      "description": "[s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_atEnd_Etc/UTC",
+      "description": "[s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_before_Etc/UTC",
+      "description": "[s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_after_Etc/UTC",
+      "description": "[s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_atStart_Europe/Kyiv",
+      "description": "[s,e] t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_inside_Europe/Kyiv",
+      "description": "[s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_atEnd_Europe/Kyiv",
+      "description": "[s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_before_Europe/Kyiv",
+      "description": "[s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_after_Europe/Kyiv",
+      "description": "[s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_atStart_Europe/Kyiv",
+      "description": "(s,e) t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_inside_Europe/Kyiv",
+      "description": "(s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_open_atEnd_Europe/Kyiv",
+      "description": "(s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_before_Europe/Kyiv",
+      "description": "(s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_after_Europe/Kyiv",
+      "description": "(s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_atStart_Europe/Kyiv",
+      "description": "(s,e] t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_inside_Europe/Kyiv",
+      "description": "(s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_atEnd_Europe/Kyiv",
+      "description": "(s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_before_Europe/Kyiv",
+      "description": "(s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_after_Europe/Kyiv",
+      "description": "(s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_atStart_Europe/Kyiv",
+      "description": "[s,e) t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_inside_Europe/Kyiv",
+      "description": "[s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_atEnd_Europe/Kyiv",
+      "description": "[s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_before_Europe/Kyiv",
+      "description": "[s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_after_Europe/Kyiv",
+      "description": "[s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_atStart_America/New_York",
+      "description": "[s,e] t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_inside_America/New_York",
+      "description": "[s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_atEnd_America/New_York",
+      "description": "[s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_before_America/New_York",
+      "description": "[s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_after_America/New_York",
+      "description": "[s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_atStart_America/New_York",
+      "description": "(s,e) t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_inside_America/New_York",
+      "description": "(s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_open_atEnd_America/New_York",
+      "description": "(s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_before_America/New_York",
+      "description": "(s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_after_America/New_York",
+      "description": "(s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_atStart_America/New_York",
+      "description": "(s,e] t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_inside_America/New_York",
+      "description": "(s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_atEnd_America/New_York",
+      "description": "(s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_before_America/New_York",
+      "description": "(s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_after_America/New_York",
+      "description": "(s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_atStart_America/New_York",
+      "description": "[s,e) t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_inside_America/New_York",
+      "description": "[s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_atEnd_America/New_York",
+      "description": "[s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_before_America/New_York",
+      "description": "[s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_after_America/New_York",
+      "description": "[s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_atStart_Australia/Lord_Howe",
+      "description": "[s,e] t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_inside_Australia/Lord_Howe",
+      "description": "[s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_atEnd_Australia/Lord_Howe",
+      "description": "[s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_before_Australia/Lord_Howe",
+      "description": "[s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_after_Australia/Lord_Howe",
+      "description": "[s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_atStart_Australia/Lord_Howe",
+      "description": "(s,e) t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_inside_Australia/Lord_Howe",
+      "description": "(s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_open_atEnd_Australia/Lord_Howe",
+      "description": "(s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_before_Australia/Lord_Howe",
+      "description": "(s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_after_Australia/Lord_Howe",
+      "description": "(s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_atStart_Australia/Lord_Howe",
+      "description": "(s,e] t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_inside_Australia/Lord_Howe",
+      "description": "(s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_atEnd_Australia/Lord_Howe",
+      "description": "(s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_before_Australia/Lord_Howe",
+      "description": "(s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_after_Australia/Lord_Howe",
+      "description": "(s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_atStart_Australia/Lord_Howe",
+      "description": "[s,e) t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_inside_Australia/Lord_Howe",
+      "description": "[s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_atEnd_Australia/Lord_Howe",
+      "description": "[s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_before_Australia/Lord_Howe",
+      "description": "[s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_after_Australia/Lord_Howe",
+      "description": "[s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_atStart_America/Santiago",
+      "description": "[s,e] t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_inside_America/Santiago",
+      "description": "[s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_atEnd_America/Santiago",
+      "description": "[s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_closed_before_America/Santiago",
+      "description": "[s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_closed_after_America/Santiago",
+      "description": "[s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_atStart_America/Santiago",
+      "description": "(s,e) t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_inside_America/Santiago",
+      "description": "(s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_open_atEnd_America/Santiago",
+      "description": "(s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_before_America/Santiago",
+      "description": "(s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_open_after_America/Santiago",
+      "description": "(s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_atStart_America/Santiago",
+      "description": "(s,e] t=start -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_inside_America/Santiago",
+      "description": "(s,e] t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_atEnd_America/Santiago",
+      "description": "(s,e] t=end -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openStart_before_America/Santiago",
+      "description": "(s,e] t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openStart_after_America/Santiago",
+      "description": "(s,e] t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_atStart_America/Santiago",
+      "description": "[s,e) t=start -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_inside_America/Santiago",
+      "description": "[s,e) t=inside -> true",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_openEnd_atEnd_America/Santiago",
+      "description": "[s,e) t=end -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_before_America/Santiago",
+      "description": "[s,e) t=before -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_openEnd_after_America/Santiago",
+      "description": "[s,e) t=after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_crossTz_closed_inside",
+      "description": "cross-TZ: UTC range [s,e], Kyiv time at same UTC inside -> true (pure UTC compare)",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_crossTz_closed_after",
+      "description": "cross-TZ: UTC range [s,e], Kyiv time at same UTC after -> false",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-07-20T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-20T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "itr_dst_kyiv_spring_atTransition_closed",
+      "description": "Kyiv spring: UTC range [T01:00Z,T02:00Z], time AT transition T01:00Z -> true (elapsed UTC)",
+      "input": {
+        "utc": "2026-03-29T01:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-03-29T01:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-03-29T02:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_dst_kyiv_spring_insideWindow_closed",
+      "description": "Kyiv spring: time T01:30Z (in lost-hour window) is inside [T01:00Z,T02:00Z] -> true",
+      "input": {
+        "utc": "2026-03-29T01:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-03-29T01:30:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-03-29T02:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "itr_dst_ny_fallBack_asteriskInRange",
+      "description": "NY fall: T06:15Z (ambiguous window) is inside [T05:30Z,T06:30Z] -> true (pure UTC)",
+      "input": {
+        "utc": "2026-11-01T05:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTimeInRange",
+        "input2": {
+          "utc": "2026-11-01T06:15:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-11-01T06:30:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    }
+  ]
+}

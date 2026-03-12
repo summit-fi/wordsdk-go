@@ -2,6 +2,7 @@ package word
 
 import (
 	"fmt"
+	"github.com/summit-fi/wordsdk-go/utils/dir"
 	"io"
 	"os"
 	"path/filepath"
@@ -14,10 +15,10 @@ func ftlClientWithSaveStrategy(saveStrategy SaveStrategy) (SDK, error) {
 
 	db := source.NewFtl()
 	err := db.AddLocaleFiles(map[string]string{
-		"uk_UA": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "uk_UA.ftl"),
-		"en_UA": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_UA.ftl"),
-		"es_CO": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "es_CO.ftl"),
-		"en_EU": filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"),
+		"uk_UA": filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "uk_UA.ftl"),
+		"en_UA": filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "en_UA.ftl"),
+		"es_CO": filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "es_CO.ftl"),
+		"en_EU": filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"),
 	})
 	if err != nil {
 		return nil, err
@@ -39,7 +40,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 	}
 
 	// Read initial file to compare
-	f, err := os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
+	f, err := os.Open(filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -62,7 +63,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 	})
 
 	// Read file after save
-	f, err = os.Open(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
+	f, err = os.Open(filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"))
 	if err != nil {
 		t.Fatalf("os.Open() error = %v", err)
 	}
@@ -83,7 +84,7 @@ func TestClient_SaveTranslation(t *testing.T) {
 	}
 
 	// Write initial file back
-	f, err = os.OpenFile(filepath.Join(Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err = os.OpenFile(filepath.Join(dir.Root(), "test", "fixtures", "custom", "custom_data", "en_EU.ftl"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		t.Fatalf("os.OpenFile() error = %v", err)
 	}
