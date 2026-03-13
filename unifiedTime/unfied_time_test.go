@@ -54,6 +54,10 @@ func TestUnifiedTimeTestSuite(t *testing.T) {
 }
 
 func (s *UTimeTestSuite) Test() {
+	if len(s.Suites) == 0 {
+		s.FailNow("no test suites found", "no test suites were loaded in setup")
+		return
+	}
 	for _, ts := range s.Suites {
 		ts := ts
 		s.Run(fmt.Sprintf("Suite: %s", ts.Suite), func() {
