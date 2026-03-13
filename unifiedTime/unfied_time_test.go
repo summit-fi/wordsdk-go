@@ -581,7 +581,7 @@ func (s *UTimeTestSuite) formatUT(tc test.UTimeCase) {
 	assert.NoError(s.T(), err, "parse input UTC")
 
 	bundle := fluent.NewBundle(cldr.Language(tc.Op.Locale))
-	msg := fmt.Sprintf("%s = { UT_DATETIME(%s, date) }", "ut_dt", tc.Op.DatePattern)
+	msg := fmt.Sprintf("%s = { UT_DATETIME($date, pattern: \"%s\") }", "ut_dt", tc.Op.DatePattern)
 	resource, errs := fluent.NewResource(msg)
 	if len(errs) > 0 {
 		s.FailNow(fmt.Sprintf("failed to create resource: %v", errs[0]))
@@ -593,8 +593,7 @@ func (s *UTimeTestSuite) formatUT(tc test.UTimeCase) {
 	bundle.RegisterFunction("UT_DATETIME", f.UT_DATETIME)
 
 	result, ferrs, err := bundle.FormatMessage("ut_dt",
-		fluent.WithVariable("pattern", tc.Op.DatePattern),
-		fluent.WithVariable("date", utime))
+		fluent.WithVariable("date", utime.Time))
 	if err != nil {
 		s.FailNow(fmt.Sprintf("failed to format message: %v", err))
 	}

@@ -71,14 +71,6 @@ func (resolver *resolver) resolveExpression(expression ast.Node) Value {
 }
 
 func (resolver *resolver) resolveMessageReference(ref *ast.MessageReference) Value {
-	if _, ok := resolver.activeMessages[ref.ID.Name]; ok {
-		resolver.errors = append(resolver.errors, fmt.Errorf("cyclic reference detected: %s", ref.ID.Name))
-		return &NoValue{value: ref.ID.Name}
-
-	}
-
-	resolver.activeMessages[ref.ID.Name] = struct{}{}
-	defer delete(resolver.activeMessages, ref.ID.Name)
 
 	message := resolver.bundle.messages.Get(ref.ID.Name)
 	if message == nil {

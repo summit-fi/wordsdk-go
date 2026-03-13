@@ -38,17 +38,19 @@ func (u UnifiedTimeFormatFunctions) UT_DATETIME(positional []fluent.Value, named
 	if len(named) == 0 || named["pattern"] == nil {
 		return &fluent.StringValue{Value: "error: missing pattern"}
 	}
+
 	pattern := named["pattern"].String()
-	date := named["date"].String()
-	t, err := UnifiedTime{}.Parse(date, nil)
-	if err != nil {
-		return &fluent.StringValue{Value: "error: " + err.Error()}
-	}
+
 	f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), pattern)
 	if err != nil {
 		return &fluent.StringValue{Value: "error: " + err.Error()}
 	}
-	return &fluent.StringValue{Value: f.Format(t.Time)}
+	dt, ok := positional[0].(*fluent.DateTimeValue)
+	if !ok {
+		return &fluent.StringValue{Value: "error: invalid datetime value"}
+	}
+
+	return &fluent.StringValue{Value: f.Format(dt.Value)}
 
 }
 
