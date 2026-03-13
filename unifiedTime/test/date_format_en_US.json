@@ -35539,7 +35539,7 @@
     },
     {
       "id": "df_en_US_j_2221",
-      "description": "en_US j ms=1735689600000 → \"12 AM\"",
+      "description": "en_US j ms=1735689600000 → \"12 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35550,12 +35550,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "12 AM"
+        "string": "12 AM"
       }
     },
     {
       "id": "df_en_US_j_2222",
-      "description": "en_US j ms=1735693200000 → \"1 AM\"",
+      "description": "en_US j ms=1735693200000 → \"1 AM\"",
       "input": {
         "utc": "2025-01-01T01:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35566,12 +35566,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "1 AM"
+        "string": "1 AM"
       }
     },
     {
       "id": "df_en_US_j_2223",
-      "description": "en_US j ms=1735696800000 → \"2 AM\"",
+      "description": "en_US j ms=1735696800000 → \"2 AM\"",
       "input": {
         "utc": "2025-01-01T02:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35582,12 +35582,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "2 AM"
+        "string": "2 AM"
       }
     },
     {
       "id": "df_en_US_j_2224",
-      "description": "en_US j ms=1735700400000 → \"3 AM\"",
+      "description": "en_US j ms=1735700400000 → \"3 AM\"",
       "input": {
         "utc": "2025-01-01T03:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35598,12 +35598,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "3 AM"
+        "string": "3 AM"
       }
     },
     {
       "id": "df_en_US_j_2225",
-      "description": "en_US j ms=1735704000000 → \"4 AM\"",
+      "description": "en_US j ms=1735704000000 → \"4 AM\"",
       "input": {
         "utc": "2025-01-01T04:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35614,12 +35614,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "4 AM"
+        "string": "4 AM"
       }
     },
     {
       "id": "df_en_US_j_2226",
-      "description": "en_US j ms=1735707600000 → \"5 AM\"",
+      "description": "en_US j ms=1735707600000 → \"5 AM\"",
       "input": {
         "utc": "2025-01-01T05:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35630,12 +35630,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "5 AM"
+        "string": "5 AM"
       }
     },
     {
       "id": "df_en_US_j_2227",
-      "description": "en_US j ms=1735711200000 → \"6 AM\"",
+      "description": "en_US j ms=1735711200000 → \"6 AM\"",
       "input": {
         "utc": "2025-01-01T06:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35646,12 +35646,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "6 AM"
+        "string": "6 AM"
       }
     },
     {
       "id": "df_en_US_j_2228",
-      "description": "en_US j ms=1735714800000 → \"7 AM\"",
+      "description": "en_US j ms=1735714800000 → \"7 AM\"",
       "input": {
         "utc": "2025-01-01T07:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35662,12 +35662,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "7 AM"
+        "string": "7 AM"
       }
     },
     {
       "id": "df_en_US_j_2229",
-      "description": "en_US j ms=1735718400000 → \"8 AM\"",
+      "description": "en_US j ms=1735718400000 → \"8 AM\"",
       "input": {
         "utc": "2025-01-01T08:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35678,12 +35678,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "8 AM"
+        "string": "8 AM"
       }
     },
     {
       "id": "df_en_US_j_2230",
-      "description": "en_US j ms=1735722000000 → \"9 AM\"",
+      "description": "en_US j ms=1735722000000 → \"9 AM\"",
       "input": {
         "utc": "2025-01-01T09:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35694,12 +35694,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "9 AM"
+        "string": "9 AM"
       }
     },
     {
       "id": "df_en_US_j_2231",
-      "description": "en_US j ms=1735725600000 → \"10 AM\"",
+      "description": "en_US j ms=1735725600000 → \"10 AM\"",
       "input": {
         "utc": "2025-01-01T10:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35710,12 +35710,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "10 AM"
+        "string": "10 AM"
       }
     },
     {
       "id": "df_en_US_j_2232",
-      "description": "en_US j ms=1735729200000 → \"11 AM\"",
+      "description": "en_US j ms=1735729200000 → \"11 AM\"",
       "input": {
         "utc": "2025-01-01T11:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35726,12 +35726,12 @@
         "date_pattern": "j"
       },
       "expected": {
-        "string": "11 AM"
+        "string": "11 AM"
       }
     },
     {
       "id": "df_en_US_jm_2233",
-      "description": "en_US jm ms=1735689600000 → \"12:00 AM\"",
+      "description": "en_US jm ms=1735689600000 → \"12:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35742,12 +35742,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:00 AM"
+        "string": "12:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2234",
-      "description": "en_US jm ms=1735693200000 → \"1:00 AM\"",
+      "description": "en_US jm ms=1735693200000 → \"1:00 AM\"",
       "input": {
         "utc": "2025-01-01T01:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35758,12 +35758,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "1:00 AM"
+        "string": "1:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2235",
-      "description": "en_US jm ms=1735696800000 → \"2:00 AM\"",
+      "description": "en_US jm ms=1735696800000 → \"2:00 AM\"",
       "input": {
         "utc": "2025-01-01T02:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35774,12 +35774,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "2:00 AM"
+        "string": "2:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2236",
-      "description": "en_US jm ms=1735700400000 → \"3:00 AM\"",
+      "description": "en_US jm ms=1735700400000 → \"3:00 AM\"",
       "input": {
         "utc": "2025-01-01T03:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35790,12 +35790,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "3:00 AM"
+        "string": "3:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2237",
-      "description": "en_US jm ms=1735704000000 → \"4:00 AM\"",
+      "description": "en_US jm ms=1735704000000 → \"4:00 AM\"",
       "input": {
         "utc": "2025-01-01T04:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35806,12 +35806,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "4:00 AM"
+        "string": "4:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2238",
-      "description": "en_US jm ms=1735707600000 → \"5:00 AM\"",
+      "description": "en_US jm ms=1735707600000 → \"5:00 AM\"",
       "input": {
         "utc": "2025-01-01T05:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35822,12 +35822,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "5:00 AM"
+        "string": "5:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2239",
-      "description": "en_US jm ms=1735711200000 → \"6:00 AM\"",
+      "description": "en_US jm ms=1735711200000 → \"6:00 AM\"",
       "input": {
         "utc": "2025-01-01T06:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35838,12 +35838,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "6:00 AM"
+        "string": "6:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2240",
-      "description": "en_US jm ms=1735714800000 → \"7:00 AM\"",
+      "description": "en_US jm ms=1735714800000 → \"7:00 AM\"",
       "input": {
         "utc": "2025-01-01T07:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35854,12 +35854,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "7:00 AM"
+        "string": "7:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2241",
-      "description": "en_US jm ms=1735718400000 → \"8:00 AM\"",
+      "description": "en_US jm ms=1735718400000 → \"8:00 AM\"",
       "input": {
         "utc": "2025-01-01T08:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35870,12 +35870,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "8:00 AM"
+        "string": "8:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2242",
-      "description": "en_US jm ms=1735722000000 → \"9:00 AM\"",
+      "description": "en_US jm ms=1735722000000 → \"9:00 AM\"",
       "input": {
         "utc": "2025-01-01T09:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35886,12 +35886,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "9:00 AM"
+        "string": "9:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2243",
-      "description": "en_US jm ms=1735725600000 → \"10:00 AM\"",
+      "description": "en_US jm ms=1735725600000 → \"10:00 AM\"",
       "input": {
         "utc": "2025-01-01T10:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35902,12 +35902,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "10:00 AM"
+        "string": "10:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2244",
-      "description": "en_US jm ms=1735729200000 → \"11:00 AM\"",
+      "description": "en_US jm ms=1735729200000 → \"11:00 AM\"",
       "input": {
         "utc": "2025-01-01T11:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35918,12 +35918,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "11:00 AM"
+        "string": "11:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2245",
-      "description": "en_US jm ms=1735689600000 → \"12:00 AM\"",
+      "description": "en_US jm ms=1735689600000 → \"12:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -35934,12 +35934,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:00 AM"
+        "string": "12:00 AM"
       }
     },
     {
       "id": "df_en_US_jm_2246",
-      "description": "en_US jm ms=1735689660000 → \"12:01 AM\"",
+      "description": "en_US jm ms=1735689660000 → \"12:01 AM\"",
       "input": {
         "utc": "2025-01-01T00:01:00.000Z",
         "tz": "Etc/UTC"
@@ -35950,12 +35950,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:01 AM"
+        "string": "12:01 AM"
       }
     },
     {
       "id": "df_en_US_jm_2247",
-      "description": "en_US jm ms=1735689720000 → \"12:02 AM\"",
+      "description": "en_US jm ms=1735689720000 → \"12:02 AM\"",
       "input": {
         "utc": "2025-01-01T00:02:00.000Z",
         "tz": "Etc/UTC"
@@ -35966,12 +35966,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:02 AM"
+        "string": "12:02 AM"
       }
     },
     {
       "id": "df_en_US_jm_2248",
-      "description": "en_US jm ms=1735689780000 → \"12:03 AM\"",
+      "description": "en_US jm ms=1735689780000 → \"12:03 AM\"",
       "input": {
         "utc": "2025-01-01T00:03:00.000Z",
         "tz": "Etc/UTC"
@@ -35982,12 +35982,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:03 AM"
+        "string": "12:03 AM"
       }
     },
     {
       "id": "df_en_US_jm_2249",
-      "description": "en_US jm ms=1735689840000 → \"12:04 AM\"",
+      "description": "en_US jm ms=1735689840000 → \"12:04 AM\"",
       "input": {
         "utc": "2025-01-01T00:04:00.000Z",
         "tz": "Etc/UTC"
@@ -35998,12 +35998,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:04 AM"
+        "string": "12:04 AM"
       }
     },
     {
       "id": "df_en_US_jm_2250",
-      "description": "en_US jm ms=1735689900000 → \"12:05 AM\"",
+      "description": "en_US jm ms=1735689900000 → \"12:05 AM\"",
       "input": {
         "utc": "2025-01-01T00:05:00.000Z",
         "tz": "Etc/UTC"
@@ -36014,12 +36014,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:05 AM"
+        "string": "12:05 AM"
       }
     },
     {
       "id": "df_en_US_jm_2251",
-      "description": "en_US jm ms=1735689960000 → \"12:06 AM\"",
+      "description": "en_US jm ms=1735689960000 → \"12:06 AM\"",
       "input": {
         "utc": "2025-01-01T00:06:00.000Z",
         "tz": "Etc/UTC"
@@ -36030,12 +36030,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:06 AM"
+        "string": "12:06 AM"
       }
     },
     {
       "id": "df_en_US_jm_2252",
-      "description": "en_US jm ms=1735690020000 → \"12:07 AM\"",
+      "description": "en_US jm ms=1735690020000 → \"12:07 AM\"",
       "input": {
         "utc": "2025-01-01T00:07:00.000Z",
         "tz": "Etc/UTC"
@@ -36046,12 +36046,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:07 AM"
+        "string": "12:07 AM"
       }
     },
     {
       "id": "df_en_US_jm_2253",
-      "description": "en_US jm ms=1735690080000 → \"12:08 AM\"",
+      "description": "en_US jm ms=1735690080000 → \"12:08 AM\"",
       "input": {
         "utc": "2025-01-01T00:08:00.000Z",
         "tz": "Etc/UTC"
@@ -36062,12 +36062,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:08 AM"
+        "string": "12:08 AM"
       }
     },
     {
       "id": "df_en_US_jm_2254",
-      "description": "en_US jm ms=1735690140000 → \"12:09 AM\"",
+      "description": "en_US jm ms=1735690140000 → \"12:09 AM\"",
       "input": {
         "utc": "2025-01-01T00:09:00.000Z",
         "tz": "Etc/UTC"
@@ -36078,12 +36078,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:09 AM"
+        "string": "12:09 AM"
       }
     },
     {
       "id": "df_en_US_jm_2255",
-      "description": "en_US jm ms=1735690200000 → \"12:10 AM\"",
+      "description": "en_US jm ms=1735690200000 → \"12:10 AM\"",
       "input": {
         "utc": "2025-01-01T00:10:00.000Z",
         "tz": "Etc/UTC"
@@ -36094,12 +36094,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:10 AM"
+        "string": "12:10 AM"
       }
     },
     {
       "id": "df_en_US_jm_2256",
-      "description": "en_US jm ms=1735690260000 → \"12:11 AM\"",
+      "description": "en_US jm ms=1735690260000 → \"12:11 AM\"",
       "input": {
         "utc": "2025-01-01T00:11:00.000Z",
         "tz": "Etc/UTC"
@@ -36110,12 +36110,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:11 AM"
+        "string": "12:11 AM"
       }
     },
     {
       "id": "df_en_US_jm_2257",
-      "description": "en_US jm ms=1735690320000 → \"12:12 AM\"",
+      "description": "en_US jm ms=1735690320000 → \"12:12 AM\"",
       "input": {
         "utc": "2025-01-01T00:12:00.000Z",
         "tz": "Etc/UTC"
@@ -36126,12 +36126,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:12 AM"
+        "string": "12:12 AM"
       }
     },
     {
       "id": "df_en_US_jm_2258",
-      "description": "en_US jm ms=1735690380000 → \"12:13 AM\"",
+      "description": "en_US jm ms=1735690380000 → \"12:13 AM\"",
       "input": {
         "utc": "2025-01-01T00:13:00.000Z",
         "tz": "Etc/UTC"
@@ -36142,12 +36142,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:13 AM"
+        "string": "12:13 AM"
       }
     },
     {
       "id": "df_en_US_jm_2259",
-      "description": "en_US jm ms=1735690440000 → \"12:14 AM\"",
+      "description": "en_US jm ms=1735690440000 → \"12:14 AM\"",
       "input": {
         "utc": "2025-01-01T00:14:00.000Z",
         "tz": "Etc/UTC"
@@ -36158,12 +36158,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:14 AM"
+        "string": "12:14 AM"
       }
     },
     {
       "id": "df_en_US_jm_2260",
-      "description": "en_US jm ms=1735690500000 → \"12:15 AM\"",
+      "description": "en_US jm ms=1735690500000 → \"12:15 AM\"",
       "input": {
         "utc": "2025-01-01T00:15:00.000Z",
         "tz": "Etc/UTC"
@@ -36174,12 +36174,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:15 AM"
+        "string": "12:15 AM"
       }
     },
     {
       "id": "df_en_US_jm_2261",
-      "description": "en_US jm ms=1735690560000 → \"12:16 AM\"",
+      "description": "en_US jm ms=1735690560000 → \"12:16 AM\"",
       "input": {
         "utc": "2025-01-01T00:16:00.000Z",
         "tz": "Etc/UTC"
@@ -36190,12 +36190,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:16 AM"
+        "string": "12:16 AM"
       }
     },
     {
       "id": "df_en_US_jm_2262",
-      "description": "en_US jm ms=1735690620000 → \"12:17 AM\"",
+      "description": "en_US jm ms=1735690620000 → \"12:17 AM\"",
       "input": {
         "utc": "2025-01-01T00:17:00.000Z",
         "tz": "Etc/UTC"
@@ -36206,12 +36206,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:17 AM"
+        "string": "12:17 AM"
       }
     },
     {
       "id": "df_en_US_jm_2263",
-      "description": "en_US jm ms=1735690680000 → \"12:18 AM\"",
+      "description": "en_US jm ms=1735690680000 → \"12:18 AM\"",
       "input": {
         "utc": "2025-01-01T00:18:00.000Z",
         "tz": "Etc/UTC"
@@ -36222,12 +36222,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:18 AM"
+        "string": "12:18 AM"
       }
     },
     {
       "id": "df_en_US_jm_2264",
-      "description": "en_US jm ms=1735690740000 → \"12:19 AM\"",
+      "description": "en_US jm ms=1735690740000 → \"12:19 AM\"",
       "input": {
         "utc": "2025-01-01T00:19:00.000Z",
         "tz": "Etc/UTC"
@@ -36238,12 +36238,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:19 AM"
+        "string": "12:19 AM"
       }
     },
     {
       "id": "df_en_US_jm_2265",
-      "description": "en_US jm ms=1735690800000 → \"12:20 AM\"",
+      "description": "en_US jm ms=1735690800000 → \"12:20 AM\"",
       "input": {
         "utc": "2025-01-01T00:20:00.000Z",
         "tz": "Etc/UTC"
@@ -36254,12 +36254,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:20 AM"
+        "string": "12:20 AM"
       }
     },
     {
       "id": "df_en_US_jm_2266",
-      "description": "en_US jm ms=1735690860000 → \"12:21 AM\"",
+      "description": "en_US jm ms=1735690860000 → \"12:21 AM\"",
       "input": {
         "utc": "2025-01-01T00:21:00.000Z",
         "tz": "Etc/UTC"
@@ -36270,12 +36270,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:21 AM"
+        "string": "12:21 AM"
       }
     },
     {
       "id": "df_en_US_jm_2267",
-      "description": "en_US jm ms=1735690920000 → \"12:22 AM\"",
+      "description": "en_US jm ms=1735690920000 → \"12:22 AM\"",
       "input": {
         "utc": "2025-01-01T00:22:00.000Z",
         "tz": "Etc/UTC"
@@ -36286,12 +36286,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:22 AM"
+        "string": "12:22 AM"
       }
     },
     {
       "id": "df_en_US_jm_2268",
-      "description": "en_US jm ms=1735690980000 → \"12:23 AM\"",
+      "description": "en_US jm ms=1735690980000 → \"12:23 AM\"",
       "input": {
         "utc": "2025-01-01T00:23:00.000Z",
         "tz": "Etc/UTC"
@@ -36302,12 +36302,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:23 AM"
+        "string": "12:23 AM"
       }
     },
     {
       "id": "df_en_US_jm_2269",
-      "description": "en_US jm ms=1735691040000 → \"12:24 AM\"",
+      "description": "en_US jm ms=1735691040000 → \"12:24 AM\"",
       "input": {
         "utc": "2025-01-01T00:24:00.000Z",
         "tz": "Etc/UTC"
@@ -36318,12 +36318,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:24 AM"
+        "string": "12:24 AM"
       }
     },
     {
       "id": "df_en_US_jm_2270",
-      "description": "en_US jm ms=1735691100000 → \"12:25 AM\"",
+      "description": "en_US jm ms=1735691100000 → \"12:25 AM\"",
       "input": {
         "utc": "2025-01-01T00:25:00.000Z",
         "tz": "Etc/UTC"
@@ -36334,12 +36334,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:25 AM"
+        "string": "12:25 AM"
       }
     },
     {
       "id": "df_en_US_jm_2271",
-      "description": "en_US jm ms=1735691160000 → \"12:26 AM\"",
+      "description": "en_US jm ms=1735691160000 → \"12:26 AM\"",
       "input": {
         "utc": "2025-01-01T00:26:00.000Z",
         "tz": "Etc/UTC"
@@ -36350,12 +36350,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:26 AM"
+        "string": "12:26 AM"
       }
     },
     {
       "id": "df_en_US_jm_2272",
-      "description": "en_US jm ms=1735691220000 → \"12:27 AM\"",
+      "description": "en_US jm ms=1735691220000 → \"12:27 AM\"",
       "input": {
         "utc": "2025-01-01T00:27:00.000Z",
         "tz": "Etc/UTC"
@@ -36366,12 +36366,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:27 AM"
+        "string": "12:27 AM"
       }
     },
     {
       "id": "df_en_US_jm_2273",
-      "description": "en_US jm ms=1735691280000 → \"12:28 AM\"",
+      "description": "en_US jm ms=1735691280000 → \"12:28 AM\"",
       "input": {
         "utc": "2025-01-01T00:28:00.000Z",
         "tz": "Etc/UTC"
@@ -36382,12 +36382,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:28 AM"
+        "string": "12:28 AM"
       }
     },
     {
       "id": "df_en_US_jm_2274",
-      "description": "en_US jm ms=1735691340000 → \"12:29 AM\"",
+      "description": "en_US jm ms=1735691340000 → \"12:29 AM\"",
       "input": {
         "utc": "2025-01-01T00:29:00.000Z",
         "tz": "Etc/UTC"
@@ -36398,12 +36398,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:29 AM"
+        "string": "12:29 AM"
       }
     },
     {
       "id": "df_en_US_jm_2275",
-      "description": "en_US jm ms=1735691400000 → \"12:30 AM\"",
+      "description": "en_US jm ms=1735691400000 → \"12:30 AM\"",
       "input": {
         "utc": "2025-01-01T00:30:00.000Z",
         "tz": "Etc/UTC"
@@ -36414,12 +36414,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:30 AM"
+        "string": "12:30 AM"
       }
     },
     {
       "id": "df_en_US_jm_2276",
-      "description": "en_US jm ms=1735691460000 → \"12:31 AM\"",
+      "description": "en_US jm ms=1735691460000 → \"12:31 AM\"",
       "input": {
         "utc": "2025-01-01T00:31:00.000Z",
         "tz": "Etc/UTC"
@@ -36430,12 +36430,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:31 AM"
+        "string": "12:31 AM"
       }
     },
     {
       "id": "df_en_US_jm_2277",
-      "description": "en_US jm ms=1735691520000 → \"12:32 AM\"",
+      "description": "en_US jm ms=1735691520000 → \"12:32 AM\"",
       "input": {
         "utc": "2025-01-01T00:32:00.000Z",
         "tz": "Etc/UTC"
@@ -36446,12 +36446,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:32 AM"
+        "string": "12:32 AM"
       }
     },
     {
       "id": "df_en_US_jm_2278",
-      "description": "en_US jm ms=1735691580000 → \"12:33 AM\"",
+      "description": "en_US jm ms=1735691580000 → \"12:33 AM\"",
       "input": {
         "utc": "2025-01-01T00:33:00.000Z",
         "tz": "Etc/UTC"
@@ -36462,12 +36462,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:33 AM"
+        "string": "12:33 AM"
       }
     },
     {
       "id": "df_en_US_jm_2279",
-      "description": "en_US jm ms=1735691640000 → \"12:34 AM\"",
+      "description": "en_US jm ms=1735691640000 → \"12:34 AM\"",
       "input": {
         "utc": "2025-01-01T00:34:00.000Z",
         "tz": "Etc/UTC"
@@ -36478,12 +36478,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:34 AM"
+        "string": "12:34 AM"
       }
     },
     {
       "id": "df_en_US_jm_2280",
-      "description": "en_US jm ms=1735691700000 → \"12:35 AM\"",
+      "description": "en_US jm ms=1735691700000 → \"12:35 AM\"",
       "input": {
         "utc": "2025-01-01T00:35:00.000Z",
         "tz": "Etc/UTC"
@@ -36494,12 +36494,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:35 AM"
+        "string": "12:35 AM"
       }
     },
     {
       "id": "df_en_US_jm_2281",
-      "description": "en_US jm ms=1735691760000 → \"12:36 AM\"",
+      "description": "en_US jm ms=1735691760000 → \"12:36 AM\"",
       "input": {
         "utc": "2025-01-01T00:36:00.000Z",
         "tz": "Etc/UTC"
@@ -36510,12 +36510,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:36 AM"
+        "string": "12:36 AM"
       }
     },
     {
       "id": "df_en_US_jm_2282",
-      "description": "en_US jm ms=1735691820000 → \"12:37 AM\"",
+      "description": "en_US jm ms=1735691820000 → \"12:37 AM\"",
       "input": {
         "utc": "2025-01-01T00:37:00.000Z",
         "tz": "Etc/UTC"
@@ -36526,12 +36526,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:37 AM"
+        "string": "12:37 AM"
       }
     },
     {
       "id": "df_en_US_jm_2283",
-      "description": "en_US jm ms=1735691880000 → \"12:38 AM\"",
+      "description": "en_US jm ms=1735691880000 → \"12:38 AM\"",
       "input": {
         "utc": "2025-01-01T00:38:00.000Z",
         "tz": "Etc/UTC"
@@ -36542,12 +36542,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:38 AM"
+        "string": "12:38 AM"
       }
     },
     {
       "id": "df_en_US_jm_2284",
-      "description": "en_US jm ms=1735691940000 → \"12:39 AM\"",
+      "description": "en_US jm ms=1735691940000 → \"12:39 AM\"",
       "input": {
         "utc": "2025-01-01T00:39:00.000Z",
         "tz": "Etc/UTC"
@@ -36558,12 +36558,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:39 AM"
+        "string": "12:39 AM"
       }
     },
     {
       "id": "df_en_US_jm_2285",
-      "description": "en_US jm ms=1735692000000 → \"12:40 AM\"",
+      "description": "en_US jm ms=1735692000000 → \"12:40 AM\"",
       "input": {
         "utc": "2025-01-01T00:40:00.000Z",
         "tz": "Etc/UTC"
@@ -36574,12 +36574,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:40 AM"
+        "string": "12:40 AM"
       }
     },
     {
       "id": "df_en_US_jm_2286",
-      "description": "en_US jm ms=1735692060000 → \"12:41 AM\"",
+      "description": "en_US jm ms=1735692060000 → \"12:41 AM\"",
       "input": {
         "utc": "2025-01-01T00:41:00.000Z",
         "tz": "Etc/UTC"
@@ -36590,12 +36590,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:41 AM"
+        "string": "12:41 AM"
       }
     },
     {
       "id": "df_en_US_jm_2287",
-      "description": "en_US jm ms=1735692120000 → \"12:42 AM\"",
+      "description": "en_US jm ms=1735692120000 → \"12:42 AM\"",
       "input": {
         "utc": "2025-01-01T00:42:00.000Z",
         "tz": "Etc/UTC"
@@ -36606,12 +36606,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:42 AM"
+        "string": "12:42 AM"
       }
     },
     {
       "id": "df_en_US_jm_2288",
-      "description": "en_US jm ms=1735692180000 → \"12:43 AM\"",
+      "description": "en_US jm ms=1735692180000 → \"12:43 AM\"",
       "input": {
         "utc": "2025-01-01T00:43:00.000Z",
         "tz": "Etc/UTC"
@@ -36622,12 +36622,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:43 AM"
+        "string": "12:43 AM"
       }
     },
     {
       "id": "df_en_US_jm_2289",
-      "description": "en_US jm ms=1735692240000 → \"12:44 AM\"",
+      "description": "en_US jm ms=1735692240000 → \"12:44 AM\"",
       "input": {
         "utc": "2025-01-01T00:44:00.000Z",
         "tz": "Etc/UTC"
@@ -36638,12 +36638,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:44 AM"
+        "string": "12:44 AM"
       }
     },
     {
       "id": "df_en_US_jm_2290",
-      "description": "en_US jm ms=1735692300000 → \"12:45 AM\"",
+      "description": "en_US jm ms=1735692300000 → \"12:45 AM\"",
       "input": {
         "utc": "2025-01-01T00:45:00.000Z",
         "tz": "Etc/UTC"
@@ -36654,12 +36654,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:45 AM"
+        "string": "12:45 AM"
       }
     },
     {
       "id": "df_en_US_jm_2291",
-      "description": "en_US jm ms=1735692360000 → \"12:46 AM\"",
+      "description": "en_US jm ms=1735692360000 → \"12:46 AM\"",
       "input": {
         "utc": "2025-01-01T00:46:00.000Z",
         "tz": "Etc/UTC"
@@ -36670,12 +36670,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:46 AM"
+        "string": "12:46 AM"
       }
     },
     {
       "id": "df_en_US_jm_2292",
-      "description": "en_US jm ms=1735692420000 → \"12:47 AM\"",
+      "description": "en_US jm ms=1735692420000 → \"12:47 AM\"",
       "input": {
         "utc": "2025-01-01T00:47:00.000Z",
         "tz": "Etc/UTC"
@@ -36686,12 +36686,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:47 AM"
+        "string": "12:47 AM"
       }
     },
     {
       "id": "df_en_US_jm_2293",
-      "description": "en_US jm ms=1735692480000 → \"12:48 AM\"",
+      "description": "en_US jm ms=1735692480000 → \"12:48 AM\"",
       "input": {
         "utc": "2025-01-01T00:48:00.000Z",
         "tz": "Etc/UTC"
@@ -36702,12 +36702,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:48 AM"
+        "string": "12:48 AM"
       }
     },
     {
       "id": "df_en_US_jm_2294",
-      "description": "en_US jm ms=1735692540000 → \"12:49 AM\"",
+      "description": "en_US jm ms=1735692540000 → \"12:49 AM\"",
       "input": {
         "utc": "2025-01-01T00:49:00.000Z",
         "tz": "Etc/UTC"
@@ -36718,12 +36718,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:49 AM"
+        "string": "12:49 AM"
       }
     },
     {
       "id": "df_en_US_jm_2295",
-      "description": "en_US jm ms=1735692600000 → \"12:50 AM\"",
+      "description": "en_US jm ms=1735692600000 → \"12:50 AM\"",
       "input": {
         "utc": "2025-01-01T00:50:00.000Z",
         "tz": "Etc/UTC"
@@ -36734,12 +36734,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:50 AM"
+        "string": "12:50 AM"
       }
     },
     {
       "id": "df_en_US_jm_2296",
-      "description": "en_US jm ms=1735692660000 → \"12:51 AM\"",
+      "description": "en_US jm ms=1735692660000 → \"12:51 AM\"",
       "input": {
         "utc": "2025-01-01T00:51:00.000Z",
         "tz": "Etc/UTC"
@@ -36750,12 +36750,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:51 AM"
+        "string": "12:51 AM"
       }
     },
     {
       "id": "df_en_US_jm_2297",
-      "description": "en_US jm ms=1735692720000 → \"12:52 AM\"",
+      "description": "en_US jm ms=1735692720000 → \"12:52 AM\"",
       "input": {
         "utc": "2025-01-01T00:52:00.000Z",
         "tz": "Etc/UTC"
@@ -36766,12 +36766,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:52 AM"
+        "string": "12:52 AM"
       }
     },
     {
       "id": "df_en_US_jm_2298",
-      "description": "en_US jm ms=1735692780000 → \"12:53 AM\"",
+      "description": "en_US jm ms=1735692780000 → \"12:53 AM\"",
       "input": {
         "utc": "2025-01-01T00:53:00.000Z",
         "tz": "Etc/UTC"
@@ -36782,12 +36782,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:53 AM"
+        "string": "12:53 AM"
       }
     },
     {
       "id": "df_en_US_jm_2299",
-      "description": "en_US jm ms=1735692840000 → \"12:54 AM\"",
+      "description": "en_US jm ms=1735692840000 → \"12:54 AM\"",
       "input": {
         "utc": "2025-01-01T00:54:00.000Z",
         "tz": "Etc/UTC"
@@ -36798,12 +36798,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:54 AM"
+        "string": "12:54 AM"
       }
     },
     {
       "id": "df_en_US_jm_2300",
-      "description": "en_US jm ms=1735692900000 → \"12:55 AM\"",
+      "description": "en_US jm ms=1735692900000 → \"12:55 AM\"",
       "input": {
         "utc": "2025-01-01T00:55:00.000Z",
         "tz": "Etc/UTC"
@@ -36814,12 +36814,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:55 AM"
+        "string": "12:55 AM"
       }
     },
     {
       "id": "df_en_US_jm_2301",
-      "description": "en_US jm ms=1735692960000 → \"12:56 AM\"",
+      "description": "en_US jm ms=1735692960000 → \"12:56 AM\"",
       "input": {
         "utc": "2025-01-01T00:56:00.000Z",
         "tz": "Etc/UTC"
@@ -36830,12 +36830,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:56 AM"
+        "string": "12:56 AM"
       }
     },
     {
       "id": "df_en_US_jm_2302",
-      "description": "en_US jm ms=1735693020000 → \"12:57 AM\"",
+      "description": "en_US jm ms=1735693020000 → \"12:57 AM\"",
       "input": {
         "utc": "2025-01-01T00:57:00.000Z",
         "tz": "Etc/UTC"
@@ -36846,12 +36846,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:57 AM"
+        "string": "12:57 AM"
       }
     },
     {
       "id": "df_en_US_jm_2303",
-      "description": "en_US jm ms=1735693080000 → \"12:58 AM\"",
+      "description": "en_US jm ms=1735693080000 → \"12:58 AM\"",
       "input": {
         "utc": "2025-01-01T00:58:00.000Z",
         "tz": "Etc/UTC"
@@ -36862,12 +36862,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:58 AM"
+        "string": "12:58 AM"
       }
     },
     {
       "id": "df_en_US_jm_2304",
-      "description": "en_US jm ms=1735693140000 → \"12:59 AM\"",
+      "description": "en_US jm ms=1735693140000 → \"12:59 AM\"",
       "input": {
         "utc": "2025-01-01T00:59:00.000Z",
         "tz": "Etc/UTC"
@@ -36878,12 +36878,12 @@
         "date_pattern": "jm"
       },
       "expected": {
-        "string": "12:59 AM"
+        "string": "12:59 AM"
       }
     },
     {
       "id": "df_en_US_jms_2305",
-      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
+      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36894,12 +36894,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:00 AM"
+        "string": "12:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2306",
-      "description": "en_US jms ms=1735693200000 → \"1:00:00 AM\"",
+      "description": "en_US jms ms=1735693200000 → \"1:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T01:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36910,12 +36910,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "1:00:00 AM"
+        "string": "1:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2307",
-      "description": "en_US jms ms=1735696800000 → \"2:00:00 AM\"",
+      "description": "en_US jms ms=1735696800000 → \"2:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T02:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36926,12 +36926,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "2:00:00 AM"
+        "string": "2:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2308",
-      "description": "en_US jms ms=1735700400000 → \"3:00:00 AM\"",
+      "description": "en_US jms ms=1735700400000 → \"3:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T03:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36942,12 +36942,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "3:00:00 AM"
+        "string": "3:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2309",
-      "description": "en_US jms ms=1735704000000 → \"4:00:00 AM\"",
+      "description": "en_US jms ms=1735704000000 → \"4:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T04:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36958,12 +36958,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "4:00:00 AM"
+        "string": "4:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2310",
-      "description": "en_US jms ms=1735707600000 → \"5:00:00 AM\"",
+      "description": "en_US jms ms=1735707600000 → \"5:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T05:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36974,12 +36974,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "5:00:00 AM"
+        "string": "5:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2311",
-      "description": "en_US jms ms=1735711200000 → \"6:00:00 AM\"",
+      "description": "en_US jms ms=1735711200000 → \"6:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T06:00:00.000Z",
         "tz": "Etc/UTC"
@@ -36990,12 +36990,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "6:00:00 AM"
+        "string": "6:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2312",
-      "description": "en_US jms ms=1735714800000 → \"7:00:00 AM\"",
+      "description": "en_US jms ms=1735714800000 → \"7:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T07:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37006,12 +37006,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "7:00:00 AM"
+        "string": "7:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2313",
-      "description": "en_US jms ms=1735718400000 → \"8:00:00 AM\"",
+      "description": "en_US jms ms=1735718400000 → \"8:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T08:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37022,12 +37022,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "8:00:00 AM"
+        "string": "8:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2314",
-      "description": "en_US jms ms=1735722000000 → \"9:00:00 AM\"",
+      "description": "en_US jms ms=1735722000000 → \"9:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T09:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37038,12 +37038,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "9:00:00 AM"
+        "string": "9:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2315",
-      "description": "en_US jms ms=1735725600000 → \"10:00:00 AM\"",
+      "description": "en_US jms ms=1735725600000 → \"10:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T10:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37054,12 +37054,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "10:00:00 AM"
+        "string": "10:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2316",
-      "description": "en_US jms ms=1735729200000 → \"11:00:00 AM\"",
+      "description": "en_US jms ms=1735729200000 → \"11:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T11:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37070,12 +37070,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "11:00:00 AM"
+        "string": "11:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2317",
-      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
+      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -37086,12 +37086,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:00 AM"
+        "string": "12:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2318",
-      "description": "en_US jms ms=1735689660000 → \"12:01:00 AM\"",
+      "description": "en_US jms ms=1735689660000 → \"12:01:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:01:00.000Z",
         "tz": "Etc/UTC"
@@ -37102,12 +37102,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:01:00 AM"
+        "string": "12:01:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2319",
-      "description": "en_US jms ms=1735689720000 → \"12:02:00 AM\"",
+      "description": "en_US jms ms=1735689720000 → \"12:02:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:02:00.000Z",
         "tz": "Etc/UTC"
@@ -37118,12 +37118,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:02:00 AM"
+        "string": "12:02:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2320",
-      "description": "en_US jms ms=1735689780000 → \"12:03:00 AM\"",
+      "description": "en_US jms ms=1735689780000 → \"12:03:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:03:00.000Z",
         "tz": "Etc/UTC"
@@ -37134,12 +37134,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:03:00 AM"
+        "string": "12:03:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2321",
-      "description": "en_US jms ms=1735689840000 → \"12:04:00 AM\"",
+      "description": "en_US jms ms=1735689840000 → \"12:04:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:04:00.000Z",
         "tz": "Etc/UTC"
@@ -37150,12 +37150,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:04:00 AM"
+        "string": "12:04:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2322",
-      "description": "en_US jms ms=1735689900000 → \"12:05:00 AM\"",
+      "description": "en_US jms ms=1735689900000 → \"12:05:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:05:00.000Z",
         "tz": "Etc/UTC"
@@ -37166,12 +37166,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:05:00 AM"
+        "string": "12:05:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2323",
-      "description": "en_US jms ms=1735689960000 → \"12:06:00 AM\"",
+      "description": "en_US jms ms=1735689960000 → \"12:06:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:06:00.000Z",
         "tz": "Etc/UTC"
@@ -37182,12 +37182,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:06:00 AM"
+        "string": "12:06:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2324",
-      "description": "en_US jms ms=1735690020000 → \"12:07:00 AM\"",
+      "description": "en_US jms ms=1735690020000 → \"12:07:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:07:00.000Z",
         "tz": "Etc/UTC"
@@ -37198,12 +37198,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:07:00 AM"
+        "string": "12:07:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2325",
-      "description": "en_US jms ms=1735690080000 → \"12:08:00 AM\"",
+      "description": "en_US jms ms=1735690080000 → \"12:08:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:08:00.000Z",
         "tz": "Etc/UTC"
@@ -37214,12 +37214,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:08:00 AM"
+        "string": "12:08:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2326",
-      "description": "en_US jms ms=1735690140000 → \"12:09:00 AM\"",
+      "description": "en_US jms ms=1735690140000 → \"12:09:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:09:00.000Z",
         "tz": "Etc/UTC"
@@ -37230,12 +37230,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:09:00 AM"
+        "string": "12:09:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2327",
-      "description": "en_US jms ms=1735690200000 → \"12:10:00 AM\"",
+      "description": "en_US jms ms=1735690200000 → \"12:10:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:10:00.000Z",
         "tz": "Etc/UTC"
@@ -37246,12 +37246,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:10:00 AM"
+        "string": "12:10:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2328",
-      "description": "en_US jms ms=1735690260000 → \"12:11:00 AM\"",
+      "description": "en_US jms ms=1735690260000 → \"12:11:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:11:00.000Z",
         "tz": "Etc/UTC"
@@ -37262,12 +37262,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:11:00 AM"
+        "string": "12:11:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2329",
-      "description": "en_US jms ms=1735690320000 → \"12:12:00 AM\"",
+      "description": "en_US jms ms=1735690320000 → \"12:12:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:12:00.000Z",
         "tz": "Etc/UTC"
@@ -37278,12 +37278,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:12:00 AM"
+        "string": "12:12:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2330",
-      "description": "en_US jms ms=1735690380000 → \"12:13:00 AM\"",
+      "description": "en_US jms ms=1735690380000 → \"12:13:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:13:00.000Z",
         "tz": "Etc/UTC"
@@ -37294,12 +37294,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:13:00 AM"
+        "string": "12:13:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2331",
-      "description": "en_US jms ms=1735690440000 → \"12:14:00 AM\"",
+      "description": "en_US jms ms=1735690440000 → \"12:14:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:14:00.000Z",
         "tz": "Etc/UTC"
@@ -37310,12 +37310,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:14:00 AM"
+        "string": "12:14:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2332",
-      "description": "en_US jms ms=1735690500000 → \"12:15:00 AM\"",
+      "description": "en_US jms ms=1735690500000 → \"12:15:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:15:00.000Z",
         "tz": "Etc/UTC"
@@ -37326,12 +37326,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:15:00 AM"
+        "string": "12:15:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2333",
-      "description": "en_US jms ms=1735690560000 → \"12:16:00 AM\"",
+      "description": "en_US jms ms=1735690560000 → \"12:16:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:16:00.000Z",
         "tz": "Etc/UTC"
@@ -37342,12 +37342,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:16:00 AM"
+        "string": "12:16:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2334",
-      "description": "en_US jms ms=1735690620000 → \"12:17:00 AM\"",
+      "description": "en_US jms ms=1735690620000 → \"12:17:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:17:00.000Z",
         "tz": "Etc/UTC"
@@ -37358,12 +37358,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:17:00 AM"
+        "string": "12:17:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2335",
-      "description": "en_US jms ms=1735690680000 → \"12:18:00 AM\"",
+      "description": "en_US jms ms=1735690680000 → \"12:18:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:18:00.000Z",
         "tz": "Etc/UTC"
@@ -37374,12 +37374,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:18:00 AM"
+        "string": "12:18:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2336",
-      "description": "en_US jms ms=1735690740000 → \"12:19:00 AM\"",
+      "description": "en_US jms ms=1735690740000 → \"12:19:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:19:00.000Z",
         "tz": "Etc/UTC"
@@ -37390,12 +37390,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:19:00 AM"
+        "string": "12:19:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2337",
-      "description": "en_US jms ms=1735690800000 → \"12:20:00 AM\"",
+      "description": "en_US jms ms=1735690800000 → \"12:20:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:20:00.000Z",
         "tz": "Etc/UTC"
@@ -37406,12 +37406,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:20:00 AM"
+        "string": "12:20:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2338",
-      "description": "en_US jms ms=1735690860000 → \"12:21:00 AM\"",
+      "description": "en_US jms ms=1735690860000 → \"12:21:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:21:00.000Z",
         "tz": "Etc/UTC"
@@ -37422,12 +37422,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:21:00 AM"
+        "string": "12:21:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2339",
-      "description": "en_US jms ms=1735690920000 → \"12:22:00 AM\"",
+      "description": "en_US jms ms=1735690920000 → \"12:22:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:22:00.000Z",
         "tz": "Etc/UTC"
@@ -37438,12 +37438,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:22:00 AM"
+        "string": "12:22:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2340",
-      "description": "en_US jms ms=1735690980000 → \"12:23:00 AM\"",
+      "description": "en_US jms ms=1735690980000 → \"12:23:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:23:00.000Z",
         "tz": "Etc/UTC"
@@ -37454,12 +37454,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:23:00 AM"
+        "string": "12:23:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2341",
-      "description": "en_US jms ms=1735691040000 → \"12:24:00 AM\"",
+      "description": "en_US jms ms=1735691040000 → \"12:24:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:24:00.000Z",
         "tz": "Etc/UTC"
@@ -37470,12 +37470,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:24:00 AM"
+        "string": "12:24:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2342",
-      "description": "en_US jms ms=1735691100000 → \"12:25:00 AM\"",
+      "description": "en_US jms ms=1735691100000 → \"12:25:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:25:00.000Z",
         "tz": "Etc/UTC"
@@ -37486,12 +37486,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:25:00 AM"
+        "string": "12:25:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2343",
-      "description": "en_US jms ms=1735691160000 → \"12:26:00 AM\"",
+      "description": "en_US jms ms=1735691160000 → \"12:26:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:26:00.000Z",
         "tz": "Etc/UTC"
@@ -37502,12 +37502,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:26:00 AM"
+        "string": "12:26:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2344",
-      "description": "en_US jms ms=1735691220000 → \"12:27:00 AM\"",
+      "description": "en_US jms ms=1735691220000 → \"12:27:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:27:00.000Z",
         "tz": "Etc/UTC"
@@ -37518,12 +37518,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:27:00 AM"
+        "string": "12:27:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2345",
-      "description": "en_US jms ms=1735691280000 → \"12:28:00 AM\"",
+      "description": "en_US jms ms=1735691280000 → \"12:28:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:28:00.000Z",
         "tz": "Etc/UTC"
@@ -37534,12 +37534,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:28:00 AM"
+        "string": "12:28:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2346",
-      "description": "en_US jms ms=1735691340000 → \"12:29:00 AM\"",
+      "description": "en_US jms ms=1735691340000 → \"12:29:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:29:00.000Z",
         "tz": "Etc/UTC"
@@ -37550,12 +37550,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:29:00 AM"
+        "string": "12:29:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2347",
-      "description": "en_US jms ms=1735691400000 → \"12:30:00 AM\"",
+      "description": "en_US jms ms=1735691400000 → \"12:30:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:30:00.000Z",
         "tz": "Etc/UTC"
@@ -37566,12 +37566,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:30:00 AM"
+        "string": "12:30:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2348",
-      "description": "en_US jms ms=1735691460000 → \"12:31:00 AM\"",
+      "description": "en_US jms ms=1735691460000 → \"12:31:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:31:00.000Z",
         "tz": "Etc/UTC"
@@ -37582,12 +37582,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:31:00 AM"
+        "string": "12:31:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2349",
-      "description": "en_US jms ms=1735691520000 → \"12:32:00 AM\"",
+      "description": "en_US jms ms=1735691520000 → \"12:32:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:32:00.000Z",
         "tz": "Etc/UTC"
@@ -37598,12 +37598,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:32:00 AM"
+        "string": "12:32:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2350",
-      "description": "en_US jms ms=1735691580000 → \"12:33:00 AM\"",
+      "description": "en_US jms ms=1735691580000 → \"12:33:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:33:00.000Z",
         "tz": "Etc/UTC"
@@ -37614,12 +37614,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:33:00 AM"
+        "string": "12:33:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2351",
-      "description": "en_US jms ms=1735691640000 → \"12:34:00 AM\"",
+      "description": "en_US jms ms=1735691640000 → \"12:34:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:34:00.000Z",
         "tz": "Etc/UTC"
@@ -37630,12 +37630,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:34:00 AM"
+        "string": "12:34:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2352",
-      "description": "en_US jms ms=1735691700000 → \"12:35:00 AM\"",
+      "description": "en_US jms ms=1735691700000 → \"12:35:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:35:00.000Z",
         "tz": "Etc/UTC"
@@ -37646,12 +37646,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:35:00 AM"
+        "string": "12:35:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2353",
-      "description": "en_US jms ms=1735691760000 → \"12:36:00 AM\"",
+      "description": "en_US jms ms=1735691760000 → \"12:36:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:36:00.000Z",
         "tz": "Etc/UTC"
@@ -37662,12 +37662,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:36:00 AM"
+        "string": "12:36:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2354",
-      "description": "en_US jms ms=1735691820000 → \"12:37:00 AM\"",
+      "description": "en_US jms ms=1735691820000 → \"12:37:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:37:00.000Z",
         "tz": "Etc/UTC"
@@ -37678,12 +37678,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:37:00 AM"
+        "string": "12:37:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2355",
-      "description": "en_US jms ms=1735691880000 → \"12:38:00 AM\"",
+      "description": "en_US jms ms=1735691880000 → \"12:38:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:38:00.000Z",
         "tz": "Etc/UTC"
@@ -37694,12 +37694,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:38:00 AM"
+        "string": "12:38:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2356",
-      "description": "en_US jms ms=1735691940000 → \"12:39:00 AM\"",
+      "description": "en_US jms ms=1735691940000 → \"12:39:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:39:00.000Z",
         "tz": "Etc/UTC"
@@ -37710,12 +37710,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:39:00 AM"
+        "string": "12:39:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2357",
-      "description": "en_US jms ms=1735692000000 → \"12:40:00 AM\"",
+      "description": "en_US jms ms=1735692000000 → \"12:40:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:40:00.000Z",
         "tz": "Etc/UTC"
@@ -37726,12 +37726,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:40:00 AM"
+        "string": "12:40:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2358",
-      "description": "en_US jms ms=1735692060000 → \"12:41:00 AM\"",
+      "description": "en_US jms ms=1735692060000 → \"12:41:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:41:00.000Z",
         "tz": "Etc/UTC"
@@ -37742,12 +37742,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:41:00 AM"
+        "string": "12:41:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2359",
-      "description": "en_US jms ms=1735692120000 → \"12:42:00 AM\"",
+      "description": "en_US jms ms=1735692120000 → \"12:42:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:42:00.000Z",
         "tz": "Etc/UTC"
@@ -37758,12 +37758,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:42:00 AM"
+        "string": "12:42:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2360",
-      "description": "en_US jms ms=1735692180000 → \"12:43:00 AM\"",
+      "description": "en_US jms ms=1735692180000 → \"12:43:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:43:00.000Z",
         "tz": "Etc/UTC"
@@ -37774,12 +37774,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:43:00 AM"
+        "string": "12:43:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2361",
-      "description": "en_US jms ms=1735692240000 → \"12:44:00 AM\"",
+      "description": "en_US jms ms=1735692240000 → \"12:44:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:44:00.000Z",
         "tz": "Etc/UTC"
@@ -37790,12 +37790,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:44:00 AM"
+        "string": "12:44:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2362",
-      "description": "en_US jms ms=1735692300000 → \"12:45:00 AM\"",
+      "description": "en_US jms ms=1735692300000 → \"12:45:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:45:00.000Z",
         "tz": "Etc/UTC"
@@ -37806,12 +37806,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:45:00 AM"
+        "string": "12:45:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2363",
-      "description": "en_US jms ms=1735692360000 → \"12:46:00 AM\"",
+      "description": "en_US jms ms=1735692360000 → \"12:46:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:46:00.000Z",
         "tz": "Etc/UTC"
@@ -37822,12 +37822,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:46:00 AM"
+        "string": "12:46:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2364",
-      "description": "en_US jms ms=1735692420000 → \"12:47:00 AM\"",
+      "description": "en_US jms ms=1735692420000 → \"12:47:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:47:00.000Z",
         "tz": "Etc/UTC"
@@ -37838,12 +37838,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:47:00 AM"
+        "string": "12:47:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2365",
-      "description": "en_US jms ms=1735692480000 → \"12:48:00 AM\"",
+      "description": "en_US jms ms=1735692480000 → \"12:48:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:48:00.000Z",
         "tz": "Etc/UTC"
@@ -37854,12 +37854,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:48:00 AM"
+        "string": "12:48:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2366",
-      "description": "en_US jms ms=1735692540000 → \"12:49:00 AM\"",
+      "description": "en_US jms ms=1735692540000 → \"12:49:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:49:00.000Z",
         "tz": "Etc/UTC"
@@ -37870,12 +37870,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:49:00 AM"
+        "string": "12:49:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2367",
-      "description": "en_US jms ms=1735692600000 → \"12:50:00 AM\"",
+      "description": "en_US jms ms=1735692600000 → \"12:50:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:50:00.000Z",
         "tz": "Etc/UTC"
@@ -37886,12 +37886,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:50:00 AM"
+        "string": "12:50:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2368",
-      "description": "en_US jms ms=1735692660000 → \"12:51:00 AM\"",
+      "description": "en_US jms ms=1735692660000 → \"12:51:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:51:00.000Z",
         "tz": "Etc/UTC"
@@ -37902,12 +37902,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:51:00 AM"
+        "string": "12:51:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2369",
-      "description": "en_US jms ms=1735692720000 → \"12:52:00 AM\"",
+      "description": "en_US jms ms=1735692720000 → \"12:52:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:52:00.000Z",
         "tz": "Etc/UTC"
@@ -37918,12 +37918,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:52:00 AM"
+        "string": "12:52:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2370",
-      "description": "en_US jms ms=1735692780000 → \"12:53:00 AM\"",
+      "description": "en_US jms ms=1735692780000 → \"12:53:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:53:00.000Z",
         "tz": "Etc/UTC"
@@ -37934,12 +37934,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:53:00 AM"
+        "string": "12:53:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2371",
-      "description": "en_US jms ms=1735692840000 → \"12:54:00 AM\"",
+      "description": "en_US jms ms=1735692840000 → \"12:54:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:54:00.000Z",
         "tz": "Etc/UTC"
@@ -37950,12 +37950,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:54:00 AM"
+        "string": "12:54:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2372",
-      "description": "en_US jms ms=1735692900000 → \"12:55:00 AM\"",
+      "description": "en_US jms ms=1735692900000 → \"12:55:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:55:00.000Z",
         "tz": "Etc/UTC"
@@ -37966,12 +37966,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:55:00 AM"
+        "string": "12:55:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2373",
-      "description": "en_US jms ms=1735692960000 → \"12:56:00 AM\"",
+      "description": "en_US jms ms=1735692960000 → \"12:56:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:56:00.000Z",
         "tz": "Etc/UTC"
@@ -37982,12 +37982,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:56:00 AM"
+        "string": "12:56:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2374",
-      "description": "en_US jms ms=1735693020000 → \"12:57:00 AM\"",
+      "description": "en_US jms ms=1735693020000 → \"12:57:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:57:00.000Z",
         "tz": "Etc/UTC"
@@ -37998,12 +37998,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:57:00 AM"
+        "string": "12:57:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2375",
-      "description": "en_US jms ms=1735693080000 → \"12:58:00 AM\"",
+      "description": "en_US jms ms=1735693080000 → \"12:58:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:58:00.000Z",
         "tz": "Etc/UTC"
@@ -38014,12 +38014,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:58:00 AM"
+        "string": "12:58:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2376",
-      "description": "en_US jms ms=1735693140000 → \"12:59:00 AM\"",
+      "description": "en_US jms ms=1735693140000 → \"12:59:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:59:00.000Z",
         "tz": "Etc/UTC"
@@ -38030,12 +38030,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:59:00 AM"
+        "string": "12:59:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2377",
-      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
+      "description": "en_US jms ms=1735689600000 → \"12:00:00 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:00.000Z",
         "tz": "Etc/UTC"
@@ -38046,12 +38046,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:00 AM"
+        "string": "12:00:00 AM"
       }
     },
     {
       "id": "df_en_US_jms_2378",
-      "description": "en_US jms ms=1735689601000 → \"12:00:01 AM\"",
+      "description": "en_US jms ms=1735689601000 → \"12:00:01 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:01.000Z",
         "tz": "Etc/UTC"
@@ -38062,12 +38062,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:01 AM"
+        "string": "12:00:01 AM"
       }
     },
     {
       "id": "df_en_US_jms_2379",
-      "description": "en_US jms ms=1735689602000 → \"12:00:02 AM\"",
+      "description": "en_US jms ms=1735689602000 → \"12:00:02 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:02.000Z",
         "tz": "Etc/UTC"
@@ -38078,12 +38078,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:02 AM"
+        "string": "12:00:02 AM"
       }
     },
     {
       "id": "df_en_US_jms_2380",
-      "description": "en_US jms ms=1735689603000 → \"12:00:03 AM\"",
+      "description": "en_US jms ms=1735689603000 → \"12:00:03 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:03.000Z",
         "tz": "Etc/UTC"
@@ -38094,12 +38094,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:03 AM"
+        "string": "12:00:03 AM"
       }
     },
     {
       "id": "df_en_US_jms_2381",
-      "description": "en_US jms ms=1735689604000 → \"12:00:04 AM\"",
+      "description": "en_US jms ms=1735689604000 → \"12:00:04 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:04.000Z",
         "tz": "Etc/UTC"
@@ -38110,12 +38110,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:04 AM"
+        "string": "12:00:04 AM"
       }
     },
     {
       "id": "df_en_US_jms_2382",
-      "description": "en_US jms ms=1735689605000 → \"12:00:05 AM\"",
+      "description": "en_US jms ms=1735689605000 → \"12:00:05 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:05.000Z",
         "tz": "Etc/UTC"
@@ -38126,12 +38126,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:05 AM"
+        "string": "12:00:05 AM"
       }
     },
     {
       "id": "df_en_US_jms_2383",
-      "description": "en_US jms ms=1735689606000 → \"12:00:06 AM\"",
+      "description": "en_US jms ms=1735689606000 → \"12:00:06 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:06.000Z",
         "tz": "Etc/UTC"
@@ -38142,12 +38142,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:06 AM"
+        "string": "12:00:06 AM"
       }
     },
     {
       "id": "df_en_US_jms_2384",
-      "description": "en_US jms ms=1735689607000 → \"12:00:07 AM\"",
+      "description": "en_US jms ms=1735689607000 → \"12:00:07 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:07.000Z",
         "tz": "Etc/UTC"
@@ -38158,12 +38158,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:07 AM"
+        "string": "12:00:07 AM"
       }
     },
     {
       "id": "df_en_US_jms_2385",
-      "description": "en_US jms ms=1735689608000 → \"12:00:08 AM\"",
+      "description": "en_US jms ms=1735689608000 → \"12:00:08 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:08.000Z",
         "tz": "Etc/UTC"
@@ -38174,12 +38174,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:08 AM"
+        "string": "12:00:08 AM"
       }
     },
     {
       "id": "df_en_US_jms_2386",
-      "description": "en_US jms ms=1735689609000 → \"12:00:09 AM\"",
+      "description": "en_US jms ms=1735689609000 → \"12:00:09 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:09.000Z",
         "tz": "Etc/UTC"
@@ -38190,12 +38190,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:09 AM"
+        "string": "12:00:09 AM"
       }
     },
     {
       "id": "df_en_US_jms_2387",
-      "description": "en_US jms ms=1735689610000 → \"12:00:10 AM\"",
+      "description": "en_US jms ms=1735689610000 → \"12:00:10 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:10.000Z",
         "tz": "Etc/UTC"
@@ -38206,12 +38206,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:10 AM"
+        "string": "12:00:10 AM"
       }
     },
     {
       "id": "df_en_US_jms_2388",
-      "description": "en_US jms ms=1735689611000 → \"12:00:11 AM\"",
+      "description": "en_US jms ms=1735689611000 → \"12:00:11 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:11.000Z",
         "tz": "Etc/UTC"
@@ -38222,12 +38222,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:11 AM"
+        "string": "12:00:11 AM"
       }
     },
     {
       "id": "df_en_US_jms_2389",
-      "description": "en_US jms ms=1735689612000 → \"12:00:12 AM\"",
+      "description": "en_US jms ms=1735689612000 → \"12:00:12 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:12.000Z",
         "tz": "Etc/UTC"
@@ -38238,12 +38238,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:12 AM"
+        "string": "12:00:12 AM"
       }
     },
     {
       "id": "df_en_US_jms_2390",
-      "description": "en_US jms ms=1735689613000 → \"12:00:13 AM\"",
+      "description": "en_US jms ms=1735689613000 → \"12:00:13 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:13.000Z",
         "tz": "Etc/UTC"
@@ -38254,12 +38254,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:13 AM"
+        "string": "12:00:13 AM"
       }
     },
     {
       "id": "df_en_US_jms_2391",
-      "description": "en_US jms ms=1735689614000 → \"12:00:14 AM\"",
+      "description": "en_US jms ms=1735689614000 → \"12:00:14 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:14.000Z",
         "tz": "Etc/UTC"
@@ -38270,12 +38270,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:14 AM"
+        "string": "12:00:14 AM"
       }
     },
     {
       "id": "df_en_US_jms_2392",
-      "description": "en_US jms ms=1735689615000 → \"12:00:15 AM\"",
+      "description": "en_US jms ms=1735689615000 → \"12:00:15 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:15.000Z",
         "tz": "Etc/UTC"
@@ -38286,12 +38286,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:15 AM"
+        "string": "12:00:15 AM"
       }
     },
     {
       "id": "df_en_US_jms_2393",
-      "description": "en_US jms ms=1735689616000 → \"12:00:16 AM\"",
+      "description": "en_US jms ms=1735689616000 → \"12:00:16 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:16.000Z",
         "tz": "Etc/UTC"
@@ -38302,12 +38302,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:16 AM"
+        "string": "12:00:16 AM"
       }
     },
     {
       "id": "df_en_US_jms_2394",
-      "description": "en_US jms ms=1735689617000 → \"12:00:17 AM\"",
+      "description": "en_US jms ms=1735689617000 → \"12:00:17 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:17.000Z",
         "tz": "Etc/UTC"
@@ -38318,12 +38318,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:17 AM"
+        "string": "12:00:17 AM"
       }
     },
     {
       "id": "df_en_US_jms_2395",
-      "description": "en_US jms ms=1735689618000 → \"12:00:18 AM\"",
+      "description": "en_US jms ms=1735689618000 → \"12:00:18 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:18.000Z",
         "tz": "Etc/UTC"
@@ -38334,12 +38334,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:18 AM"
+        "string": "12:00:18 AM"
       }
     },
     {
       "id": "df_en_US_jms_2396",
-      "description": "en_US jms ms=1735689619000 → \"12:00:19 AM\"",
+      "description": "en_US jms ms=1735689619000 → \"12:00:19 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:19.000Z",
         "tz": "Etc/UTC"
@@ -38350,12 +38350,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:19 AM"
+        "string": "12:00:19 AM"
       }
     },
     {
       "id": "df_en_US_jms_2397",
-      "description": "en_US jms ms=1735689620000 → \"12:00:20 AM\"",
+      "description": "en_US jms ms=1735689620000 → \"12:00:20 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:20.000Z",
         "tz": "Etc/UTC"
@@ -38366,12 +38366,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:20 AM"
+        "string": "12:00:20 AM"
       }
     },
     {
       "id": "df_en_US_jms_2398",
-      "description": "en_US jms ms=1735689621000 → \"12:00:21 AM\"",
+      "description": "en_US jms ms=1735689621000 → \"12:00:21 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:21.000Z",
         "tz": "Etc/UTC"
@@ -38382,12 +38382,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:21 AM"
+        "string": "12:00:21 AM"
       }
     },
     {
       "id": "df_en_US_jms_2399",
-      "description": "en_US jms ms=1735689622000 → \"12:00:22 AM\"",
+      "description": "en_US jms ms=1735689622000 → \"12:00:22 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:22.000Z",
         "tz": "Etc/UTC"
@@ -38398,12 +38398,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:22 AM"
+        "string": "12:00:22 AM"
       }
     },
     {
       "id": "df_en_US_jms_2400",
-      "description": "en_US jms ms=1735689623000 → \"12:00:23 AM\"",
+      "description": "en_US jms ms=1735689623000 → \"12:00:23 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:23.000Z",
         "tz": "Etc/UTC"
@@ -38414,12 +38414,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:23 AM"
+        "string": "12:00:23 AM"
       }
     },
     {
       "id": "df_en_US_jms_2401",
-      "description": "en_US jms ms=1735689624000 → \"12:00:24 AM\"",
+      "description": "en_US jms ms=1735689624000 → \"12:00:24 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:24.000Z",
         "tz": "Etc/UTC"
@@ -38430,12 +38430,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:24 AM"
+        "string": "12:00:24 AM"
       }
     },
     {
       "id": "df_en_US_jms_2402",
-      "description": "en_US jms ms=1735689625000 → \"12:00:25 AM\"",
+      "description": "en_US jms ms=1735689625000 → \"12:00:25 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:25.000Z",
         "tz": "Etc/UTC"
@@ -38446,12 +38446,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:25 AM"
+        "string": "12:00:25 AM"
       }
     },
     {
       "id": "df_en_US_jms_2403",
-      "description": "en_US jms ms=1735689626000 → \"12:00:26 AM\"",
+      "description": "en_US jms ms=1735689626000 → \"12:00:26 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:26.000Z",
         "tz": "Etc/UTC"
@@ -38462,12 +38462,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:26 AM"
+        "string": "12:00:26 AM"
       }
     },
     {
       "id": "df_en_US_jms_2404",
-      "description": "en_US jms ms=1735689627000 → \"12:00:27 AM\"",
+      "description": "en_US jms ms=1735689627000 → \"12:00:27 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:27.000Z",
         "tz": "Etc/UTC"
@@ -38478,12 +38478,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:27 AM"
+        "string": "12:00:27 AM"
       }
     },
     {
       "id": "df_en_US_jms_2405",
-      "description": "en_US jms ms=1735689628000 → \"12:00:28 AM\"",
+      "description": "en_US jms ms=1735689628000 → \"12:00:28 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:28.000Z",
         "tz": "Etc/UTC"
@@ -38494,12 +38494,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:28 AM"
+        "string": "12:00:28 AM"
       }
     },
     {
       "id": "df_en_US_jms_2406",
-      "description": "en_US jms ms=1735689629000 → \"12:00:29 AM\"",
+      "description": "en_US jms ms=1735689629000 → \"12:00:29 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:29.000Z",
         "tz": "Etc/UTC"
@@ -38510,12 +38510,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:29 AM"
+        "string": "12:00:29 AM"
       }
     },
     {
       "id": "df_en_US_jms_2407",
-      "description": "en_US jms ms=1735689630000 → \"12:00:30 AM\"",
+      "description": "en_US jms ms=1735689630000 → \"12:00:30 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:30.000Z",
         "tz": "Etc/UTC"
@@ -38526,12 +38526,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:30 AM"
+        "string": "12:00:30 AM"
       }
     },
     {
       "id": "df_en_US_jms_2408",
-      "description": "en_US jms ms=1735689631000 → \"12:00:31 AM\"",
+      "description": "en_US jms ms=1735689631000 → \"12:00:31 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:31.000Z",
         "tz": "Etc/UTC"
@@ -38542,12 +38542,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:31 AM"
+        "string": "12:00:31 AM"
       }
     },
     {
       "id": "df_en_US_jms_2409",
-      "description": "en_US jms ms=1735689632000 → \"12:00:32 AM\"",
+      "description": "en_US jms ms=1735689632000 → \"12:00:32 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:32.000Z",
         "tz": "Etc/UTC"
@@ -38558,12 +38558,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:32 AM"
+        "string": "12:00:32 AM"
       }
     },
     {
       "id": "df_en_US_jms_2410",
-      "description": "en_US jms ms=1735689633000 → \"12:00:33 AM\"",
+      "description": "en_US jms ms=1735689633000 → \"12:00:33 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:33.000Z",
         "tz": "Etc/UTC"
@@ -38574,12 +38574,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:33 AM"
+        "string": "12:00:33 AM"
       }
     },
     {
       "id": "df_en_US_jms_2411",
-      "description": "en_US jms ms=1735689634000 → \"12:00:34 AM\"",
+      "description": "en_US jms ms=1735689634000 → \"12:00:34 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:34.000Z",
         "tz": "Etc/UTC"
@@ -38590,12 +38590,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:34 AM"
+        "string": "12:00:34 AM"
       }
     },
     {
       "id": "df_en_US_jms_2412",
-      "description": "en_US jms ms=1735689635000 → \"12:00:35 AM\"",
+      "description": "en_US jms ms=1735689635000 → \"12:00:35 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:35.000Z",
         "tz": "Etc/UTC"
@@ -38606,12 +38606,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:35 AM"
+        "string": "12:00:35 AM"
       }
     },
     {
       "id": "df_en_US_jms_2413",
-      "description": "en_US jms ms=1735689636000 → \"12:00:36 AM\"",
+      "description": "en_US jms ms=1735689636000 → \"12:00:36 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:36.000Z",
         "tz": "Etc/UTC"
@@ -38622,12 +38622,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:36 AM"
+        "string": "12:00:36 AM"
       }
     },
     {
       "id": "df_en_US_jms_2414",
-      "description": "en_US jms ms=1735689637000 → \"12:00:37 AM\"",
+      "description": "en_US jms ms=1735689637000 → \"12:00:37 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:37.000Z",
         "tz": "Etc/UTC"
@@ -38638,12 +38638,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:37 AM"
+        "string": "12:00:37 AM"
       }
     },
     {
       "id": "df_en_US_jms_2415",
-      "description": "en_US jms ms=1735689638000 → \"12:00:38 AM\"",
+      "description": "en_US jms ms=1735689638000 → \"12:00:38 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:38.000Z",
         "tz": "Etc/UTC"
@@ -38654,12 +38654,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:38 AM"
+        "string": "12:00:38 AM"
       }
     },
     {
       "id": "df_en_US_jms_2416",
-      "description": "en_US jms ms=1735689639000 → \"12:00:39 AM\"",
+      "description": "en_US jms ms=1735689639000 → \"12:00:39 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:39.000Z",
         "tz": "Etc/UTC"
@@ -38670,12 +38670,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:39 AM"
+        "string": "12:00:39 AM"
       }
     },
     {
       "id": "df_en_US_jms_2417",
-      "description": "en_US jms ms=1735689640000 → \"12:00:40 AM\"",
+      "description": "en_US jms ms=1735689640000 → \"12:00:40 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:40.000Z",
         "tz": "Etc/UTC"
@@ -38686,12 +38686,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:40 AM"
+        "string": "12:00:40 AM"
       }
     },
     {
       "id": "df_en_US_jms_2418",
-      "description": "en_US jms ms=1735689641000 → \"12:00:41 AM\"",
+      "description": "en_US jms ms=1735689641000 → \"12:00:41 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:41.000Z",
         "tz": "Etc/UTC"
@@ -38702,12 +38702,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:41 AM"
+        "string": "12:00:41 AM"
       }
     },
     {
       "id": "df_en_US_jms_2419",
-      "description": "en_US jms ms=1735689642000 → \"12:00:42 AM\"",
+      "description": "en_US jms ms=1735689642000 → \"12:00:42 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:42.000Z",
         "tz": "Etc/UTC"
@@ -38718,12 +38718,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:42 AM"
+        "string": "12:00:42 AM"
       }
     },
     {
       "id": "df_en_US_jms_2420",
-      "description": "en_US jms ms=1735689643000 → \"12:00:43 AM\"",
+      "description": "en_US jms ms=1735689643000 → \"12:00:43 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:43.000Z",
         "tz": "Etc/UTC"
@@ -38734,12 +38734,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:43 AM"
+        "string": "12:00:43 AM"
       }
     },
     {
       "id": "df_en_US_jms_2421",
-      "description": "en_US jms ms=1735689644000 → \"12:00:44 AM\"",
+      "description": "en_US jms ms=1735689644000 → \"12:00:44 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:44.000Z",
         "tz": "Etc/UTC"
@@ -38750,12 +38750,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:44 AM"
+        "string": "12:00:44 AM"
       }
     },
     {
       "id": "df_en_US_jms_2422",
-      "description": "en_US jms ms=1735689645000 → \"12:00:45 AM\"",
+      "description": "en_US jms ms=1735689645000 → \"12:00:45 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:45.000Z",
         "tz": "Etc/UTC"
@@ -38766,12 +38766,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:45 AM"
+        "string": "12:00:45 AM"
       }
     },
     {
       "id": "df_en_US_jms_2423",
-      "description": "en_US jms ms=1735689646000 → \"12:00:46 AM\"",
+      "description": "en_US jms ms=1735689646000 → \"12:00:46 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:46.000Z",
         "tz": "Etc/UTC"
@@ -38782,12 +38782,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:46 AM"
+        "string": "12:00:46 AM"
       }
     },
     {
       "id": "df_en_US_jms_2424",
-      "description": "en_US jms ms=1735689647000 → \"12:00:47 AM\"",
+      "description": "en_US jms ms=1735689647000 → \"12:00:47 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:47.000Z",
         "tz": "Etc/UTC"
@@ -38798,12 +38798,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:47 AM"
+        "string": "12:00:47 AM"
       }
     },
     {
       "id": "df_en_US_jms_2425",
-      "description": "en_US jms ms=1735689648000 → \"12:00:48 AM\"",
+      "description": "en_US jms ms=1735689648000 → \"12:00:48 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:48.000Z",
         "tz": "Etc/UTC"
@@ -38814,12 +38814,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:48 AM"
+        "string": "12:00:48 AM"
       }
     },
     {
       "id": "df_en_US_jms_2426",
-      "description": "en_US jms ms=1735689649000 → \"12:00:49 AM\"",
+      "description": "en_US jms ms=1735689649000 → \"12:00:49 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:49.000Z",
         "tz": "Etc/UTC"
@@ -38830,12 +38830,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:49 AM"
+        "string": "12:00:49 AM"
       }
     },
     {
       "id": "df_en_US_jms_2427",
-      "description": "en_US jms ms=1735689650000 → \"12:00:50 AM\"",
+      "description": "en_US jms ms=1735689650000 → \"12:00:50 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:50.000Z",
         "tz": "Etc/UTC"
@@ -38846,12 +38846,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:50 AM"
+        "string": "12:00:50 AM"
       }
     },
     {
       "id": "df_en_US_jms_2428",
-      "description": "en_US jms ms=1735689651000 → \"12:00:51 AM\"",
+      "description": "en_US jms ms=1735689651000 → \"12:00:51 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:51.000Z",
         "tz": "Etc/UTC"
@@ -38862,12 +38862,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:51 AM"
+        "string": "12:00:51 AM"
       }
     },
     {
       "id": "df_en_US_jms_2429",
-      "description": "en_US jms ms=1735689652000 → \"12:00:52 AM\"",
+      "description": "en_US jms ms=1735689652000 → \"12:00:52 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:52.000Z",
         "tz": "Etc/UTC"
@@ -38878,12 +38878,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:52 AM"
+        "string": "12:00:52 AM"
       }
     },
     {
       "id": "df_en_US_jms_2430",
-      "description": "en_US jms ms=1735689653000 → \"12:00:53 AM\"",
+      "description": "en_US jms ms=1735689653000 → \"12:00:53 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:53.000Z",
         "tz": "Etc/UTC"
@@ -38894,12 +38894,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:53 AM"
+        "string": "12:00:53 AM"
       }
     },
     {
       "id": "df_en_US_jms_2431",
-      "description": "en_US jms ms=1735689654000 → \"12:00:54 AM\"",
+      "description": "en_US jms ms=1735689654000 → \"12:00:54 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:54.000Z",
         "tz": "Etc/UTC"
@@ -38910,12 +38910,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:54 AM"
+        "string": "12:00:54 AM"
       }
     },
     {
       "id": "df_en_US_jms_2432",
-      "description": "en_US jms ms=1735689655000 → \"12:00:55 AM\"",
+      "description": "en_US jms ms=1735689655000 → \"12:00:55 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:55.000Z",
         "tz": "Etc/UTC"
@@ -38926,12 +38926,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:55 AM"
+        "string": "12:00:55 AM"
       }
     },
     {
       "id": "df_en_US_jms_2433",
-      "description": "en_US jms ms=1735689656000 → \"12:00:56 AM\"",
+      "description": "en_US jms ms=1735689656000 → \"12:00:56 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:56.000Z",
         "tz": "Etc/UTC"
@@ -38942,12 +38942,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:56 AM"
+        "string": "12:00:56 AM"
       }
     },
     {
       "id": "df_en_US_jms_2434",
-      "description": "en_US jms ms=1735689657000 → \"12:00:57 AM\"",
+      "description": "en_US jms ms=1735689657000 → \"12:00:57 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:57.000Z",
         "tz": "Etc/UTC"
@@ -38958,12 +38958,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:57 AM"
+        "string": "12:00:57 AM"
       }
     },
     {
       "id": "df_en_US_jms_2435",
-      "description": "en_US jms ms=1735689658000 → \"12:00:58 AM\"",
+      "description": "en_US jms ms=1735689658000 → \"12:00:58 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:58.000Z",
         "tz": "Etc/UTC"
@@ -38974,12 +38974,12 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:58 AM"
+        "string": "12:00:58 AM"
       }
     },
     {
       "id": "df_en_US_jms_2436",
-      "description": "en_US jms ms=1735689659000 → \"12:00:59 AM\"",
+      "description": "en_US jms ms=1735689659000 → \"12:00:59 AM\"",
       "input": {
         "utc": "2025-01-01T00:00:59.000Z",
         "tz": "Etc/UTC"
@@ -38990,7 +38990,7 @@
         "date_pattern": "jms"
       },
       "expected": {
-        "string": "12:00:59 AM"
+        "string": "12:00:59 AM"
       }
     },
     {
