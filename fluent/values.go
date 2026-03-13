@@ -11,6 +11,7 @@ type Function func(positional []Value, named map[string]Value, primaryLanguage c
 // It represents either a string, a number or a date time.
 type Value interface {
 	String() string
+	//Time() time.Time
 }
 
 // StringValue wraps a string in order to comply with the Value API

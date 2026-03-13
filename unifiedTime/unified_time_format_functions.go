@@ -10,7 +10,7 @@ type UnifiedTimeFormatFunctions struct {
 }
 
 const (
-	PatternMMMMEEEEd  = "MMMMEEEEd "
+	PatternMMMMEEEEd  = "MMMMEEEEd"
 	PatternyMMMMEEEEd = "yMMMMEEEEd"
 	PatternMMMd       = "MMMd"
 	PatternyMMMd      = "yMMMd"
@@ -35,16 +35,44 @@ const (
 )
 
 func (u UnifiedTimeFormatFunctions) UT_DATETIME(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
+	if len(named) == 0 || named["pattern"] == nil {
+		return &fluent.StringValue{Value: "error: missing pattern"}
+	}
 	pattern := named["pattern"].String()
+	date := named["date"].String()
+	t, err := UnifiedTime{}.Parse(date, nil)
+	if err != nil {
+		return &fluent.StringValue{Value: "error: " + err.Error()}
+	}
 	f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), pattern)
 	if err != nil {
 		return &fluent.StringValue{Value: "error: " + err.Error()}
 	}
-	return &fluent.StringValue{Value: f.Format(u.time.Time)}
+	return &fluent.StringValue{Value: f.Format(t.Time)}
 
 }
 
-func (u UnifiedTimeFormatFunctions) MMMd(t UnifiedTime) fluent.Function {
+func (u UnifiedTimeFormatFunctions) UT_MMMMEEEEd(t UnifiedTime) fluent.Function {
+	return func(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
+		f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), PatternMMMMEEEEd)
+		if err != nil {
+			return &fluent.StringValue{Value: "error: " + err.Error()}
+		}
+		return &fluent.StringValue{Value: f.Format(t.Time)}
+	}
+}
+
+func (u UnifiedTimeFormatFunctions) UT_yMMMMEEEEd(t UnifiedTime) fluent.Function {
+	return func(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
+		f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), PatternyMMMMEEEEd)
+		if err != nil {
+			return &fluent.StringValue{Value: "error: " + err.Error()}
+		}
+		return &fluent.StringValue{Value: f.Format(t.Time)}
+	}
+}
+
+func (u UnifiedTimeFormatFunctions) UT_MMMd(t UnifiedTime) fluent.Function {
 	return func(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
 		f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), PatternMMMd)
 		if err != nil {
@@ -64,4 +92,22 @@ func (u UnifiedTimeFormatFunctions) UT_yMMMd(t UnifiedTime) fluent.Function {
 	}
 }
 
-//func (u UnifiedTimeFormatFunctions) UT_jm(t UnifiedTime) string    { return t.Format("15:04") }
+func (u UnifiedTimeFormatFunctions) UT_jm(t UnifiedTime) fluent.Function {
+	return func(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
+		f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), Patternjm)
+		if err != nil {
+			return &fluent.StringValue{Value: "error: " + err.Error()}
+		}
+		return &fluent.StringValue{Value: f.Format(t.Time)}
+	}
+}
+
+func (u UnifiedTimeFormatFunctions) UT_HHmm(t UnifiedTime) fluent.Function {
+	return func(positional []fluent.Value, named map[string]fluent.Value, language cldr.Language, params ...string) fluent.Value {
+		f, err := fluent.CLDRDateTimeFormatter(language.BCP47(), PatternHHmm)
+		if err != nil {
+			return &fluent.StringValue{Value: "error: " + err.Error()}
+		}
+		return &fluent.StringValue{Value: f.Format(t.Time)}
+	}
+}

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"github.com/summit-fi/wordsdk-go/unifiedTime/test"
 	"github.com/summit-fi/wordsdk-go/utils/dir"
 	"github.com/summit-fi/wordsdk-go/utils/ternary"
@@ -113,6 +115,8 @@ func (s *UTimeTestSuite) runCase(tc test.UTimeCase) {
 		s.runIsTimeInRange(tc)
 	case "parseTimeStringForDate":
 		s.runParseTime(tc)
+	case "formatUT":
+		s.formatUT(tc)
 	default:
 		s.Failf("unknown op", "unsupported op type: %s", tc.Op.Type)
 	}
@@ -563,4 +567,42 @@ func (s *UTimeTestSuite) runParseTime(tc test.UTimeCase) {
 		expectedFormat(tc, result),
 	)
 
+}
+
+func (s *UTimeTestSuite) formatUT(tc test.UTimeCase) {
+	loc := loadLocation(s, tc.Input.TZ)
+
+	var t1 UnifiedTime
+	utime, err := t1.Parse(tc.Input.UTC, loc)
+	assert.NoError(s.T(), err, "parse input UTC")
+
+	bundle := fluent.NewBundle(cldr.Language(tc.Op.Locale))
+	msg := fmt.Sprintf("%s = { UT_DATETIME(%s, date) }", "ut_dt", tc.Op.DatePattern)
+	resource, errs := fluent.NewResource(msg)
+	if len(errs) > 0 {
+		s.FailNow(fmt.Sprintf("failed to create resource: %v", errs[0]))
+	}
+
+	bundle.AddResource(resource)
+
+	f := UnifiedTimeFormatFunctions{}
+	bundle.RegisterFunction("UT_DATETIME", f.UT_DATETIME)
+
+	result, ferrs, err := bundle.FormatMessage("ut_dt",
+		fluent.WithVariable("pattern", tc.Op.DatePattern),
+		fluent.WithVariable("date", utime))
+	if err != nil {
+		s.FailNow(fmt.Sprintf("failed to format message: %v", err))
+	}
+
+	if len(ferrs) > 0 {
+		s.Fail(fmt.Sprintf("failed to format message with errors: %v", ferrs))
+		return
+	}
+
+	s.Equal(
+		tc.Expected.String,
+		result,
+		expectedFormat(tc, result),
+	)
 }

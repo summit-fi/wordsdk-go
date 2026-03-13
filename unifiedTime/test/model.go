@@ -66,6 +66,10 @@ type uTimeTestOperation struct {
 
 	// TimePeriod name for getTimeTransitions, e.g. "day", "week", "month", "year"
 	Period string `json:"period,omitempty"`
+
+	Locale string `json:"locale,omitempty"`
+
+	DatePattern string `json:"date_pattern,omitempty"`
 }
 
 type uTimeTestExpected struct {

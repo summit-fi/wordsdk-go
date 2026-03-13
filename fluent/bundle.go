@@ -13,8 +13,8 @@ import (
 // It provides the main API to format messages.
 type Bundle struct {
 	locales   []cldr.Language
-	messages  Map[string, *ast.Message]
-	terms     Map[string, *ast.Term]
+	messages  *Map[string, *ast.Message]
+	terms     *Map[string, *ast.Term]
 	functions map[string]Function
 }
 
@@ -26,10 +26,13 @@ func NewBundle(primaryLocale cldr.Language, fallbackLocales ...cldr.Language) *B
 		locales = append(locales, fallback)
 	}
 
+	msgs := NewMap[string, *ast.Message]()
+	terms := NewMap[string, *ast.Term]()
+
 	return &Bundle{
 		locales:  locales,
-		messages: NewMap[string, *ast.Message](),
-		terms:    NewMap[string, *ast.Term](),
+		messages: &msgs,
+		terms:    &terms,
 	}
 }
 
@@ -86,6 +89,7 @@ func (bundle *Bundle) RetrieveMessages() map[string]string {
 		params:          nil,
 		variables:       variables,
 		functions:       functions,
+		activeMessages:  make(map[string]struct{}),
 		errors:          []error{},
 	}
 
@@ -282,6 +286,7 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 		variables:       variables,
 		functions:       functions,
 		errors:          []error{},
+		activeMessages:  make(map[string]struct{}),
 	}
 	result := res.resolvePattern(msg.Value).String()
 	if strings.TrimSpace(result) == "" || result == " " {

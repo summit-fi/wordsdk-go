@@ -16,6 +16,7 @@ func TestUnifiedTimeFunctions(t *testing.T) {
 		time        UnifiedTime
 		expected    string
 	}{
+
 		{
 			name:        "Test UT_MMMD",
 			fnName:      "UT_MMMD",
@@ -30,7 +31,7 @@ func TestUnifiedTimeFunctions(t *testing.T) {
 			messageID:   "ymmmd",
 			resourceFTL: "ymmmd = { UT_YMMMD($date) }",
 			time:        UnifiedTime{Time: time.Date(2024, time.June, 15, 0, 0, 0, 0, time.UTC)},
-			expected:    "2024 Jun15",
+			expected:    "Jun 15, 2024",
 		},
 	}
 
@@ -46,7 +47,7 @@ func TestUnifiedTimeFunctions(t *testing.T) {
 
 		switch c.fnName {
 		case "UT_MMMD":
-			bundle.RegisterFunction("UT_MMMD", f.MMMd(c.time))
+			bundle.RegisterFunction("UT_MMMD", f.UT_MMMd(c.time))
 		case "UT_YMMMD":
 			bundle.RegisterFunction("UT_YMMMD", f.UT_yMMMd(c.time))
 		}
