@@ -20,6 +20,7 @@ import (
 type UTimeTestSuite struct {
 	suite.Suite
 	Suites []test.UTimeTest `json:"suites"`
+	bundle fluent.Map[cldr.Language, *fluent.Bundle]
 }
 
 const utimeTestsDir = "unifiedTime/test"
@@ -29,6 +30,8 @@ func (s *UTimeTestSuite) SetupSuite() {
 	if err != nil {
 		s.FailNow(fmt.Sprintf("Failed to read test files: %v", err))
 	}
+
+	s.bundle = fluent.NewMap[cldr.Language, *fluent.Bundle]()
 
 	for _, file := range files {
 		if file.IsDir() || filepath.Ext(file.Name()) != ".json" {
@@ -44,6 +47,30 @@ func (s *UTimeTestSuite) SetupSuite() {
 		if err != nil {
 			s.FailNow(fmt.Sprintf("Failed to decode test file %s: %v", file.Name(), err))
 		}
+
+		for _, tc := range testSuite.Cases {
+			if tc.Op.Type != "formatUT" {
+				continue
+			}
+
+			lang := cldr.Language(tc.Op.Locale)
+			bundle, ok := s.bundle.Exist(lang)
+			if !ok {
+				bundle = fluent.NewBundle(lang)
+				bundle.RegisterFunction("UT_DATETIME", UnifiedTimeFormatFunctions{}.UT_DATETIME)
+				s.bundle.Set(lang, bundle)
+			}
+
+			resource, err := fluent.NewResource(
+				fmt.Sprintf("%s = { UT_DATETIME($date, pattern: \"%s\") }", tc.Id, tc.Op.DatePattern),
+			)
+			if err != nil {
+				s.Fail(fmt.Sprintf("Failed to create resource for test case %s: %v", tc.Id, err))
+				return
+			}
+			bundle.AddResource(resource)
+		}
+
 		s.Suites = append(s.Suites, testSuite)
 	}
 
@@ -580,19 +607,9 @@ func (s *UTimeTestSuite) formatUT(tc test.UTimeCase) {
 	utime, err := t1.Parse(tc.Input.UTC, loc)
 	assert.NoError(s.T(), err, "parse input UTC")
 
-	bundle := fluent.NewBundle(cldr.Language(tc.Op.Locale))
-	msg := fmt.Sprintf("%s = { UT_DATETIME($date, pattern: \"%s\") }", "ut_dt", tc.Op.DatePattern)
-	resource, errs := fluent.NewResource(msg)
-	if len(errs) > 0 {
-		s.FailNow(fmt.Sprintf("failed to create resource: %v", errs[0]))
-	}
+	bundle := s.bundle.Get(cldr.Language(tc.Op.Locale))
 
-	bundle.AddResource(resource)
-
-	f := UnifiedTimeFormatFunctions{}
-	bundle.RegisterFunction("UT_DATETIME", f.UT_DATETIME)
-
-	result, ferrs, err := bundle.FormatMessage("ut_dt",
+	result, ferrs, err := bundle.FormatMessage(tc.Id,
 		fluent.WithVariable("date", utime.Time))
 	if err != nil {
 		s.FailNow(fmt.Sprintf("failed to format message: %v", err))
