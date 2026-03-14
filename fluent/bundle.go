@@ -254,7 +254,6 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 	}
 
 	functions["NUMBER"] = NumberFunc
-	functions["CLDRDATETIME"] = CLDRDateTimeFunc
 	functions["DATETIME"] = DATETIME
 
 	functions["MMMMEEEED"] = MMMMEEEED

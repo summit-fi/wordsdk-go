@@ -2,7 +2,12 @@
 
 Go SDK and command-line interface for the Word translation service.
 
-## Installation
+
+ - How to use the SDK in your Go project -> [wordsdk-go](./wordsdk.md)
+ - How to use the DateTime function in Fluent -> [fluent/datetime.md](./fluent/datetime.md)
+ - How to use the Number & Currency functions in Fluent -> [fluent/number.md](./fluent/number.md)
+
+## Installation CLI
 
 Install the CLI with:
 

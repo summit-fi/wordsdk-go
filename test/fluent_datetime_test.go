@@ -9,13 +9,13 @@ import (
 )
 
 func TestCLDRDateTimeFormatter(t *testing.T) {
-	ftl := `yMMMMd = full: { CLDRDATETIME($date, pattern: "yMMMMd") }
-Hms = duration: { CLDRDATETIME($date, pattern: "Hms") }
-yMd = short: { CLDRDATETIME($date, pattern: "yMd") }
-Hm = time short: { CLDRDATETIME($date, pattern: "Hm") }
-yMMMM = year month: { CLDRDATETIME($date, pattern: "yMMMM") }
-Ehms = weekday and time: { CLDRDATETIME($date, pattern: "Ehms") }
-htrbfgsdnr = error-date: { CLDRDATETIME($date, pattern: "htrbfgsdnr") }
+	ftl := `yMMMMd = full: { DATETIME($date, pattern: "yMMMMd") }
+Hms = duration: { DATETIME($date, pattern: "Hms") }
+yMd = short: { DATETIME($date, pattern: "yMd") }
+Hm = time short: { DATETIME($date, pattern: "Hm") }
+yMMMM = year month: { DATETIME($date, pattern: "yMMMM") }
+Ehms = weekday and time: { DATETIME($date, pattern: "Ehms") }
+htrbfgsdnr = error-date: { DATETIME($date, pattern: "htrbfgsdnr") }
 `
 
 	tests := []struct {
