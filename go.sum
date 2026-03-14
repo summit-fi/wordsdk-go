@@ -2,6 +2,8 @@ github.com/boltegg/intl v0.0.0-20250808155525-55e9e24f1b15 h1:FXZIZBtPxcnD5xYYR1
 github.com/boltegg/intl v0.0.0-20250808155525-55e9e24f1b15/go.mod h1:bmlhkYjRKwNReZr3dlM2oEROfJI94XALp1VtFWSk/ak=
 github.com/boltegg/intl v0.0.0-20251211162628-0423fa4808a4 h1:1qkg5UgagyopJYOWpKTsTLp+9r0opkBi55mGwDpMyIk=
 github.com/boltegg/intl v0.0.0-20251211162628-0423fa4808a4/go.mod h1:bmlhkYjRKwNReZr3dlM2oEROfJI94XALp1VtFWSk/ak=
+github.com/boltegg/intl v0.0.0-20260314145440-a9402bea3264 h1:XIZPbNbfdsia0Q1U+ExwBw1K+DqMo0AI8o73j7H18eg=
+github.com/boltegg/intl v0.0.0-20260314145440-a9402bea3264/go.mod h1:bmlhkYjRKwNReZr3dlM2oEROfJI94XALp1VtFWSk/ak=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

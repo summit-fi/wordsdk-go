@@ -3,7 +3,7 @@ module github.com/summit-fi/wordsdk-go
 go 1.23.0
 
 require (
-	github.com/boltegg/intl v0.0.0-20251211162628-0423fa4808a4
+	github.com/boltegg/intl v0.0.0-20260314145440-a9402bea3264
 	golang.org/x/text v0.28.0
 	gopkg.in/yaml.v3 v3.0.1
 )

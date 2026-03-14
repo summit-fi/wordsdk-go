@@ -254,8 +254,31 @@ func assembleContexts(options ...*FormatContext) (map[string]Value, map[string]F
 	}
 
 	functions["NUMBER"] = NumberFunc
-	functions["DATETIME"] = DateTimeFunc
 	functions["CLDRDATETIME"] = CLDRDateTimeFunc
+	functions["DATETIME"] = DATETIME
+
+	functions["MMMMEEEED"] = MMMMEEEED
+	functions["YMMMMEEEED"] = YMMMMEEEED
+	functions["YMMMD"] = YMMMd
+	functions["MMMD"] = MMMd
+	functions["JM"] = JM
+	functions["HHMM"] = HHMM
+	functions["MMMED"] = MMMED
+	functions["YMMMED"] = YMMMED
+	functions["JMS"] = JMS
+	functions["YMD"] = YMD
+	functions["E"] = E
+	functions["MMM"] = MMM
+	functions["MD"] = Md
+	functions["YM"] = YM
+	functions["Y"] = Y
+	functions["EEEEE"] = EEEEE
+	functions["LLL"] = LLL
+	functions["YMMMM"] = YMMMM
+	functions["MMMMD"] = MMMMD
+	functions["YMMMMD"] = YMMMMD
+	functions["EEE_D"] = EEE_D
+	functions["YMMM"] = YMMM
 
 	return variables, functions
 }

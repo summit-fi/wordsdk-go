@@ -57,7 +57,6 @@ func (s *UTimeTestSuite) SetupSuite() {
 			bundle, ok := s.bundle.Exist(lang)
 			if !ok {
 				bundle = fluent.NewBundle(lang)
-				bundle.RegisterFunction("UT_DATETIME", UnifiedTimeFormatFunctions{}.UT_DATETIME)
 				s.bundle.Set(lang, bundle)
 			}
 
