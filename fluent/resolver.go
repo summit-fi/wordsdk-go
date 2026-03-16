@@ -43,6 +43,9 @@ func (resolver *resolver) resolveExpression(expression ast.Node) Value {
 		return &StringValue{Value: e.Value}
 
 	case *ast.NumberLiteral:
+		if strings.Contains(e.Value, ".") {
+			return &StringValue{Value: e.Value}
+		}
 		parsed, err := strconv.ParseFloat(e.Value, 64)
 		if err != nil {
 			resolver.errors = append(resolver.errors, err)
