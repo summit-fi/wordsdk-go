@@ -83,16 +83,16 @@ func (u UnifiedTime) String() string {
 // ToISO8601UTCString returns the ISO 8601 string representation of this UnifiedTime in UTC timezone,
 // including milliseconds and timezone offset (e.g., "2024-07-25T12:00:00.000Z").
 func (u UnifiedTime) ToISO8601UTCString() string {
-	t := u.ToUTC().Time
+	t := u.UTC().Time
 	return t.Format("2006-01-02T15:04:05.000Z07:00")
 }
 
-func (u UnifiedTime) ToUTC() UnifiedTime {
+func (u UnifiedTime) UTC() UnifiedTime {
 	t := u.Time.In(time.UTC)
 	return UnifiedTime{Time: t}
 }
 
-func (u UnifiedTime) ToLocation(loc *time.Location) UnifiedTime {
+func (u UnifiedTime) In(loc *time.Location) UnifiedTime {
 	if loc == nil {
 		loc = time.Local
 	}
