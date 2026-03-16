@@ -92,6 +92,13 @@ func (u UnifiedTime) ToUTC() UnifiedTime {
 	return UnifiedTime{Time: t}
 }
 
+func (u UnifiedTime) ToLocation(loc *time.Location) UnifiedTime {
+	if loc == nil {
+		loc = time.Local
+	}
+	return UnifiedTime{Time: u.Time.In(loc)}
+}
+
 func (u UnifiedTime) Add(unit TimeUnit, amount int) UnifiedTime {
 	switch unit {
 	case TimeUnitYear:
