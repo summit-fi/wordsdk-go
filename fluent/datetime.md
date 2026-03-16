@@ -27,7 +27,18 @@ msg := sdk.TA("es_CO", "order-date", map[string]any{
 
 Date formatting locale is taken from bundle language (for example `es_CO`, `en_US`) via `cldr.Language.BCP47()` in `fluent/cldr/language.go`.
 
-### Pattern/skeleton:
+### Skeleton patterns rules are based on [CLDR patterns](https://unicode-org.github.io/icu/userguide/format_parse)
+
+- `y` -> year (numeric), [ 'y' = numeric, 'yy' = zero-padded, 'yyy' = numeric, 'yyyy' = zero-padded ],
+- `M` -> month (numeric or text), [ 'M' = numeric, 'MM' = zero-padded, 'MMM' = abbreviated text, 'MMMM' = full text ],
+- `d` -> day of month (numeric), [ 'd' = numeric, 'dd' = zero-padded ],
+- `H` -> hour (24h), [ 'H' = numeric, 'HH' = zero-padded ],
+- `h` -> hour (12h), [ 'h' = numeric, 'hh' = zero-padded ],
+- `m` -> minute, [ 'm' = numeric, 'mm' = zero-padded ],
+- `s` -> second, [ 's' = numeric, 'ss' = zero-padded ],
+- `E` -> weekday (text) ['E' = abbreviated, 'EEEE' = full, 'EEEEE' = narrow],
+
+### Pattern/skeleton examples:
 
 - `yMMMMd` -> full date
 - `Hms` -> time with seconds (24h)
