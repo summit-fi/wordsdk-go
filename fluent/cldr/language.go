@@ -60,6 +60,9 @@ func (l Language) GetNumberRules() Numbers {
 func (l Language) OrdinalRules(num int) string {
 	switch l {
 	case LanguageEnUS, LanguageEnEu, LanguageEnUa, LanguageEnCo:
+		if num == 1 {
+			return "1"
+		}
 		if num%10 == 1 && num%100 != 11 {
 			return "one"
 		}

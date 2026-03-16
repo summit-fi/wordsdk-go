@@ -372,7 +372,7 @@ func TestOrdinalNumberWithSelect(t *testing.T) {
 		position int
 		expected string
 	}{
-		//{1, "You finished first!"},
+		{1, "You finished first!"},
 		{2, "You finished 2nd"},
 		{3, "You finished 3rd"},
 		{4, "You finished 4th"},

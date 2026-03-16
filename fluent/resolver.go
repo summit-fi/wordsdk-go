@@ -227,6 +227,10 @@ func (resolver *resolver) matchesVariant(selector, variant Value) bool {
 		if varStr, ok := variant.(*StringValue); ok {
 			return selStr.Value == varStr.Value
 		}
+		// Handling specific case where selector is a string and variant is a number, which is common in pluralization rules
+		if varInt, ok := variant.(*NumberValue); ok {
+			return selStr.Value == strconv.FormatFloat(float64(varInt.Value), 'f', -1, 32)
+		}
 	}
 
 	if selNum, ok := selector.(*NumberValue); ok {
