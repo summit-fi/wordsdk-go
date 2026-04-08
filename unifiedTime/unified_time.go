@@ -49,7 +49,7 @@ func (u *UnifiedTime) UnmarshalGQL(v interface{}) error {
 	//}
 	//
 
-	date, err := time.Parse("2006-01-02T15:04:05.000Z", str)
+	date, err := time.Parse("2006-01-02T15:04:05.999999999Z07:00", str)
 
 	if err != nil {
 		return err
@@ -59,7 +59,7 @@ func (u *UnifiedTime) UnmarshalGQL(v interface{}) error {
 }
 
 func (u UnifiedTime) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + u.Time.In(time.UTC).Format("2006-01-02T15:04:05.000Z") + `"`), nil
+	return []byte(`"` + u.Time.In(time.UTC).Format("2006-01-02T15:04:05.999999999Z07:00") + `"`), nil
 }
 
 func (u *UnifiedTime) UnmarshalJSON(data []byte) error {
@@ -67,7 +67,7 @@ func (u *UnifiedTime) UnmarshalJSON(data []byte) error {
 		return errors.New("invalid size of TimeUTC field")
 	}
 
-	date, err := time.ParseInLocation("2006-01-02T15:04:05.000Z", string(data[1:len(data)-1]), time.UTC)
+	date, err := time.ParseInLocation("2006-01-02T15:04:05.999999999Z07:00", string(data[1:len(data)-1]), time.UTC)
 	if err != nil {
 		return err
 	}
