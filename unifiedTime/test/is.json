@@ -1,0 +1,905 @@
+{
+  "suite": "is",
+  "cases": [
+    {
+      "id": "is_before_true",
+      "description": "A < B: is$(before) = true; timezone labels are irrelevant (UTC comparison only)",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "before",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_before_false_reversed",
+      "description": "B > A: is$(before) = false - reversed operands",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "before",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_before_false_equal",
+      "description": "A == A: is$(before) = false - equal moment",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "before",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_after_true",
+      "description": "B > A: is$(after) = true",
+      "input": {
+        "utc": "2026-07-20T13:45:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "after",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_identical_same_instant_different_tz",
+      "description": "Same UTC instant in Kyiv and UTC: is$(identical) = true; tz label is irrelevant for identity",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "identical",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_identical_false",
+      "description": "A != B: is$(identical) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "identical",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_before_null_other_false",
+      "description": "other = null: is$(before) = false; null safety contract",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "before"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_identical_null_other_false",
+      "description": "other = null: is$(identical) = false; null safety contract",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "identical"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToDay_true_same_tz",
+      "description": "Kyiv A (12:00 EEST) and B (16:45 EEST): same wall Jul 20 -> sameToDay = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToDay_false_same_instant_different_tz",
+      "description": "Same UTC instant (A) in Kyiv and LordHowe: wall dates are both Jul 20 but truncated UTC midnights differ (+3 vs +10:30), so sameToDay = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToDay_false_same_walldate_different_tz",
+      "description": "Kyiv Jul 20 and NY Jul 20: same wall-date label but different TZ midnight UTC, so sameToDay = false (Kyiv midnight = Jul 19 21:00Z; NY midnight = Jul 20 04:00Z)",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToMonth_true_same_tz",
+      "description": "Kyiv A and B both in July (EEST): sameToMonth = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToMonth",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_false_cross_year",
+      "description": "UTC 2025-12-31 vs 2026-01-01: sameToYear = false",
+      "input": {
+        "utc": "2025-12-31T23:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-01-01T01:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToHour_false",
+      "description": "UTC 09:00 vs 13:45: sameToHour = false (different wall hours)",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToHour_true_same_tz",
+      "description": "Kyiv 12:00 and 12:55 EEST: sameToHour = true (same wall hour)",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T09:55:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2020_true",
+      "description": "2020 is a leap year: is$(leapYear) = true",
+      "input": {
+        "utc": "2020-06-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2020_true_kyiv",
+      "description": "2020 in Kyiv (wall Jun 15): is$(leapYear) = true",
+      "input": {
+        "utc": "2020-06-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2020_true_newYork",
+      "description": "2020 in NY (wall Jun 15): is$(leapYear) = true",
+      "input": {
+        "utc": "2020-06-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2020_true_lordHowe",
+      "description": "2020 in LordHowe (wall Jun 15): is$(leapYear) = true",
+      "input": {
+        "utc": "2020-06-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2020_true_santiago",
+      "description": "2020 in Santiago (wall Jun 15): is$(leapYear) = true",
+      "input": {
+        "utc": "2020-06-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_leapYear_2026_false",
+      "description": "2026 is not a leap year: is$(leapYear) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_leapYear_2026_false_kyiv",
+      "description": "Kyiv Jul 20 2026 (EEST): is$(leapYear) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_leapYear_2026_false_newYork",
+      "description": "NY Jul 20 2026 (EDT): is$(leapYear) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_leapYear_2026_false_lordHowe",
+      "description": "LordHowe Jul 21 2026 (LHST): is$(leapYear) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_leapYear_2026_false_santiago",
+      "description": "Santiago Jul 20 2026 (CLT): is$(leapYear) = false",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "leapYear"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_inWeekend_saturday_true",
+      "description": "2026-02-21 (Saturday UTC): is$(inWeekend) = true",
+      "input": {
+        "utc": "2026-02-21T10:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_monday_false",
+      "description": "2026-02-24 (Monday UTC): is$(inWeekend) = false",
+      "input": {
+        "utc": "2026-02-24T10:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_inWeekend_kyiv_sat_utc_fri_diverge",
+      "description": "Kyiv 2026-01-24 01:00 EET = UTC 2026-01-23 23:00 (Friday); same instant, Kyiv wall is Saturday (inWeekend=true), UTC wall is Friday (inWeekend=false)",
+      "input": {
+        "utc": "2026-01-23T23:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_utc_fri_for_kyiv_sat_moment",
+      "description": "Same instant as above but with UTC tz label: wall is Friday, inWeekend = false (proves wall-day, not UTC-day governs the result)",
+      "input": {
+        "utc": "2026-01-23T23:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_sameToDay_true_utc",
+      "description": "UTC A (09:00Z) and B (13:45Z): same wall Jul 20 UTC -> sameToDay = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToDay_true_newYork",
+      "description": "NY aNY (05:00 EDT) and bNY (09:45 EDT): same wall Jul 20 EDT -> sameToDay = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToDay_true_lordHowe",
+      "description": "LH aLH (19:30 LHST Jul 20) and aLH2 (19:50 LHST Jul 20): same wall day -> sameToDay = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T09:20:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToDay_true_santiago",
+      "description": "Santiago aSantiago (05:00 CLT) and bSantiago (09:45 CLT): same wall Jul 20 -> sameToDay = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToDay",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToHour_true_utc",
+      "description": "UTC 09:00Z and 09:30Z: same wall hour 9 -> sameToHour = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T09:30:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToHour_true_newYork",
+      "description": "NY aNY (05:00 EDT) and sameHourNY2 (05:30 EDT): same wall hour 5 -> sameToHour = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T09:30:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToHour_true_lordHowe",
+      "description": "LH aLH (19:30 LHST) and aLH2 (19:50 LHST): same wall hour 19 -> sameToHour = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T09:20:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToHour_true_santiago",
+      "description": "Santiago aSantiago (05:00 CLT) and sameHourSantiago2 (05:30 CLT): same wall hour 5 -> sameToHour = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToHour",
+        "input2": {
+          "utc": "2026-07-20T09:30:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToMonth_true_utc",
+      "description": "UTC A (Jul 20 09:00Z) and B (Jul 20 13:45Z): same wall month July -> sameToMonth = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToMonth",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToMonth_true_newYork",
+      "description": "NY aNY (Jul 20 EDT) and bNY (Jul 20 EDT): same wall month July -> sameToMonth = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToMonth",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToMonth_true_lordHowe",
+      "description": "LH aLH (Jul 20 LHST) and bLH msB (Jul 21 LHST): both wall-month July -> sameToMonth = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToMonth",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToMonth_true_santiago",
+      "description": "Santiago aSantiago and bSantiago: both Jul 20 CLT -> sameToMonth = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToMonth",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_true_utc",
+      "description": "UTC A and B: same year 2026 -> sameToYear = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_true_kyiv",
+      "description": "Kyiv aKyiv and bKyiv: both 2026 -> sameToYear = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_true_newYork",
+      "description": "NY aNY and bNY: both 2026 -> sameToYear = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_true_lordHowe",
+      "description": "LH aLH and aLH2: both 2026 -> sameToYear = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-07-20T09:20:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_sameToYear_true_santiago",
+      "description": "Santiago aSantiago and bSantiago: both 2026 -> sameToYear = true",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "sameToYear",
+        "input2": {
+          "utc": "2026-07-20T13:45:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_saturday_newYork",
+      "description": "NY 2026-02-21 05:00 EST (Saturday): inWeekend = true",
+      "input": {
+        "utc": "2026-02-21T10:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_monday_newYork",
+      "description": "NY 2026-02-24 05:00 EST (Monday): inWeekend = false",
+      "input": {
+        "utc": "2026-02-24T10:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_inWeekend_saturday_lordHowe",
+      "description": "LH 2026-02-21 20:30 LHDT (Saturday): inWeekend = true",
+      "input": {
+        "utc": "2026-02-21T10:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_monday_lordHowe",
+      "description": "LH 2026-02-24 20:30 LHDT (Monday): inWeekend = false",
+      "input": {
+        "utc": "2026-02-24T10:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "is_inWeekend_saturday_santiago",
+      "description": "Santiago 2026-02-21 07:00 CLST (Saturday): inWeekend = true",
+      "input": {
+        "utc": "2026-02-21T10:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "is_inWeekend_monday_santiago",
+      "description": "Santiago 2026-02-24 07:00 CLST (Monday): inWeekend = false",
+      "input": {
+        "utc": "2026-02-24T10:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isRelation",
+        "match": "inWeekend"
+      },
+      "expected": {
+        "bool": false
+      }
+    }
+  ]
+}

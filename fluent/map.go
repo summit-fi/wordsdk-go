@@ -1,4 +1,4 @@
-package word
+package fluent
 
 import "sync"
 
@@ -34,6 +34,16 @@ func (m *Map[K, V]) GetAll() []K {
 		keys = append(keys, k)
 	}
 	return keys
+}
+
+func (m *Map[K, V]) RetrieveAll() map[K]V {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	result := make(map[K]V, len(m.m))
+	for k, v := range m.m {
+		result[k] = v
+	}
+	return result
 }
 
 func (m *Map[K, V]) Set(key K, value V) {

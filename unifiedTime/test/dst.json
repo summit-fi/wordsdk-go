@@ -1,0 +1,630 @@
+{
+  "suite": "dst",
+  "cases": [
+    {
+      "id": "dst_isTransition_utc_never",
+      "description": "Etc/UTC has no DST: isTransitionTime always false",
+      "input": {
+        "utc": "2026-02-25T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_spring_at",
+      "description": "Kyiv 2026-03-29T01:00Z: spring-forward 03:00 EET->04:00 EEST -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-03-29T01:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_spring_before",
+      "description": "Kyiv 2026-03-29T00:00Z: 1h before spring-forward -> false",
+      "input": {
+        "utc": "2026-03-29T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_spring_after",
+      "description": "Kyiv 2026-03-29T02:00Z: 1h after transition window -> false",
+      "input": {
+        "utc": "2026-03-29T02:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_fall_at",
+      "description": "Kyiv 2026-10-25T01:00Z: fall-back 04:00 EEST->03:00 EET -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-10-25T01:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_fall_before",
+      "description": "Kyiv 2026-10-25T00:00Z: 1h before fall-back -> false",
+      "input": {
+        "utc": "2026-10-25T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_kyiv_fall_after",
+      "description": "Kyiv 2026-10-25T02:00Z: 1h after transition window -> false",
+      "input": {
+        "utc": "2026-10-25T02:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_spring_at",
+      "description": "NY 2026-03-08T07:00Z: spring-forward 02:00 EST->03:00 EDT -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-03-08T07:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_spring_before",
+      "description": "NY 2026-03-08T06:00Z: 1h before spring-forward -> false",
+      "input": {
+        "utc": "2026-03-08T06:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_spring_after",
+      "description": "NY 2026-03-08T08:00Z: 1h after transition window -> false",
+      "input": {
+        "utc": "2026-03-08T08:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_fall_at",
+      "description": "NY 2026-11-01T06:00Z: fall-back 02:00 EDT->01:00 EST -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-11-01T06:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_fall_before",
+      "description": "NY 2026-11-01T05:00Z: 1h before fall-back -> false",
+      "input": {
+        "utc": "2026-11-01T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_newYork_fall_after",
+      "description": "NY 2026-11-01T07:00Z: 1h after transition window -> false",
+      "input": {
+        "utc": "2026-11-01T07:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_spring_at",
+      "description": "LordHowe UTC 2026-10-03T15:30Z: spring 02:00 LHST->02:30 LHDT (+30min) -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-10-03T15:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_spring_before",
+      "description": "LordHowe UTC 2026-10-03T14:30Z: 1h before spring-forward -> false",
+      "input": {
+        "utc": "2026-10-03T14:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_spring_after",
+      "description": "LordHowe UTC 2026-10-03T16:00Z: outside 30-min transition window -> false",
+      "input": {
+        "utc": "2026-10-03T16:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_fall_at",
+      "description": "LordHowe UTC 2026-04-04T15:00Z: fall 02:00 LHDT->01:30 LHST (-30min) -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-04-04T15:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_fall_before",
+      "description": "LordHowe UTC 2026-04-04T14:00Z: 1h before fall-back -> false",
+      "input": {
+        "utc": "2026-04-04T14:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_lordHowe_fall_after",
+      "description": "LordHowe UTC 2026-04-04T15:30Z: outside 30-min transition window -> false",
+      "input": {
+        "utc": "2026-04-04T15:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_spring_at",
+      "description": "Santiago spring-forward (CLT->CLST) at TZ-database moment -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-09-06T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_spring_before",
+      "description": "Santiago 1h before spring-forward -> false",
+      "input": {
+        "utc": "2026-09-06T03:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_spring_after",
+      "description": "Santiago after spring-forward window -> false",
+      "input": {
+        "utc": "2026-09-06T05:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_fall_at",
+      "description": "Santiago fall-back (CLST->CLT) at TZ-database moment -> isTransitionTime=true",
+      "input": {
+        "utc": "2026-04-05T03:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_fall_before",
+      "description": "Santiago 1h before fall-back -> false",
+      "input": {
+        "utc": "2026-04-05T02:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isTransition_santiago_fall_after",
+      "description": "Santiago after fall-back window -> false",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isTransition"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_utc_never",
+      "description": "Etc/UTC has no fold: isAsteriskTime always false",
+      "input": {
+        "utc": "2026-02-25T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_kyiv_spring_noFold",
+      "description": "Kyiv spring-forward has no fold: isAsteriskTime=false at 01:30Z",
+      "input": {
+        "utc": "2026-03-29T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_kyiv_fall_inFold",
+      "description": "Kyiv 2026-10-25T01:30Z: inside fold window (03:30 EET, 2nd pass) -> isAsteriskTime=true",
+      "input": {
+        "utc": "2026-10-25T01:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isAsterisk_kyiv_fall_outsideFold",
+      "description": "Kyiv 2026-10-25T02:00Z: outside fold window -> isAsteriskTime=false",
+      "input": {
+        "utc": "2026-10-25T02:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_newYork_fall_inFold",
+      "description": "NY 2026-11-01T06:30Z: inside fold window (01:30 EST, 2nd pass) -> isAsteriskTime=true",
+      "input": {
+        "utc": "2026-11-01T06:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isAsterisk_newYork_fall_outsideFold",
+      "description": "NY 2026-11-01T07:00Z: outside fold window -> isAsteriskTime=false",
+      "input": {
+        "utc": "2026-11-01T07:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_lordHowe_fall_inFold",
+      "description": "LordHowe UTC 2026-04-04T15:15Z: inside 30-min fold (01:45 LHST, 2nd pass) -> isAsteriskTime=true",
+      "input": {
+        "utc": "2026-04-04T15:15:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isAsterisk_lordHowe_fall_outsideFold",
+      "description": "LordHowe UTC 2026-04-04T15:30Z: outside 30-min fold -> isAsteriskTime=false",
+      "input": {
+        "utc": "2026-04-04T15:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_isAsterisk_santiago_fall_inFold",
+      "description": "Santiago fall-back fold mid-point (2nd pass of ambiguous wall hour) -> isAsteriskTime=true",
+      "input": {
+        "utc": "2026-04-05T03:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "dst_isAsterisk_santiago_fall_outsideFold",
+      "description": "Santiago after fall-back window boundary -> isAsteriskTime=false",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isAsterisk"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "dst_offset_utc",
+      "description": "Etc/UTC offset is always 0 ms",
+      "input": {
+        "utc": "2026-06-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "dst_offset_kyiv_winter",
+      "description": "Kyiv Jan 2026 (EET): UTC+2 = +7200000 ms",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 7200000
+      }
+    },
+    {
+      "id": "dst_offset_kyiv_summer",
+      "description": "Kyiv Jun 2026 (EEST): UTC+3 = +10800000 ms",
+      "input": {
+        "utc": "2026-06-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 10800000
+      }
+    },
+    {
+      "id": "dst_offset_newYork_winter",
+      "description": "NY Jan 2026 (EST): UTC-5 = -18000000 ms",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -18000000
+      }
+    },
+    {
+      "id": "dst_offset_newYork_summer",
+      "description": "NY Jun 2026 (EDT): UTC-4 = -14400000 ms",
+      "input": {
+        "utc": "2026-06-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -14400000
+      }
+    },
+    {
+      "id": "dst_offset_lordHowe_winter",
+      "description": "Lord Howe Jul 2026 (LHST): UTC+10:30 = +37800000 ms",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 37800000
+      }
+    },
+    {
+      "id": "dst_offset_lordHowe_summer",
+      "description": "Lord Howe Jan 2026 (LHDT): UTC+11 = +39600000 ms",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 39600000
+      }
+    },
+    {
+      "id": "dst_offset_santiago_winter",
+      "description": "Santiago Jul 2026 (CLT): UTC-4 = -14400000 ms",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -14400000
+      }
+    },
+    {
+      "id": "dst_offset_santiago_summer",
+      "description": "Santiago Jan 2026 (CLST): UTC-3 = -10800000 ms",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -10800000
+      }
+    }
+  ]
+}

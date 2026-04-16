@@ -1,0 +1,508 @@
+{
+  "suite": "get_time_transitions",
+  "cases": [
+    {
+      "id": "gtt_A_day_noTransition_Europe/Kyiv",
+      "description": "period=day Jul 20 in Europe/Kyiv: no DST -> dst=null, est=null",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_A_day_noTransition_America/New_York",
+      "description": "period=day Jul 20 in America/New_York: no DST -> dst=null, est=null",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_A_day_noTransition_Australia/Lord_Howe",
+      "description": "period=day Jul 20 in Australia/Lord_Howe: no DST -> dst=null, est=null",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_A_day_noTransition_America/Santiago",
+      "description": "period=day Jul 20 in America/Santiago: no DST -> dst=null, est=null",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_B_day_spring_Europe/Kyiv",
+      "description": "period=day spring-forward day in Europe/Kyiv -> dst found",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "est_utc": "2026-03-29T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_B_day_spring_America/New_York",
+      "description": "period=day spring-forward day in America/New_York -> dst found",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "est_utc": "2026-03-08T07:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_B_day_spring_Australia/Lord_Howe",
+      "description": "period=day spring-forward day in Australia/Lord_Howe -> dst found",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "est_utc": "2026-10-03T15:30:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_B_day_spring_America/Santiago",
+      "description": "period=day spring-forward day in America/Santiago -> dst found",
+      "input": {
+        "utc": "2026-09-07T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_C_day_fall_Europe/Kyiv",
+      "description": "period=day fall-back day in Europe/Kyiv -> est found",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "dst_utc": "2026-10-25T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_C_day_fall_America/New_York",
+      "description": "period=day fall-back day in America/New_York -> est found",
+      "input": {
+        "utc": "2026-11-01T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "dst_utc": "2026-11-01T06:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_C_day_fall_Australia/Lord_Howe",
+      "description": "period=day fall-back day in Australia/Lord_Howe -> est found",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "dst_utc": "2026-04-04T15:00:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_C_day_fall_America/Santiago",
+      "description": "period=day fall-back day in America/Santiago -> est found",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "day"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_D_month_spring_Europe/Kyiv",
+      "description": "period=month March 2026 Kyiv: dst in month",
+      "input": {
+        "utc": "2026-03-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "est_utc": "2026-03-29T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_D_month_spring_America/New_York",
+      "description": "period=month March 2026 NY: dst in month",
+      "input": {
+        "utc": "2026-03-04T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "est_utc": "2026-03-08T07:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_D_month_spring_Australia/Lord_Howe",
+      "description": "period=month October 2026 LordHowe: dst (spring) in month",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "est_utc": "2026-10-03T15:30:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_D_month_spring_America/Santiago",
+      "description": "period=month September 2026 Santiago: dst (spring) in month",
+      "input": {
+        "utc": "2026-09-07T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_E_month_noTransition_Europe/Kyiv",
+      "description": "period=month July 2026 Europe/Kyiv: no transition",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_E_month_noTransition_America/New_York",
+      "description": "period=month July 2026 America/New_York: no transition",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_E_month_noTransition_Australia/Lord_Howe",
+      "description": "period=month July 2026 Australia/Lord_Howe: no transition",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_E_month_noTransition_America/Santiago",
+      "description": "period=month July 2026 America/Santiago: no transition",
+      "input": {
+        "utc": "2026-07-20T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "month"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_F_week_spring_Europe/Kyiv",
+      "description": "period=week containing Kyiv spring Mar 29",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "est_utc": "2026-03-29T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_F_week_spring_America/New_York",
+      "description": "period=week containing NY spring Mar 8",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "est_utc": "2026-03-08T07:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_F_week_spring_Australia/Lord_Howe",
+      "description": "period=week containing LordHowe spring Oct 4",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "est_utc": "2026-10-03T15:30:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_F_week_spring_America/Santiago",
+      "description": "period=week containing Santiago spring Sep 7",
+      "input": {
+        "utc": "2026-09-07T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_G_week_fall_Europe/Kyiv",
+      "description": "period=week containing Kyiv fall Oct 25",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "dst_utc": "2026-10-25T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_G_week_fall_America/New_York",
+      "description": "period=week containing NY fall Nov 1",
+      "input": {
+        "utc": "2026-11-01T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "dst_utc": "2026-11-01T06:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_G_week_fall_Australia/Lord_Howe",
+      "description": "period=week containing LordHowe fall Apr 5",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "dst_utc": "2026-04-04T15:00:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_G_week_fall_America/Santiago",
+      "description": "period=week containing Santiago fall Apr 6",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "week"
+      },
+      "expected": {
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_H_year_Europe/Kyiv",
+      "description": "period=year 2026 in Europe/Kyiv: full scan",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "year"
+      },
+      "expected": {
+        "dst_utc": "2026-10-25T01:00:00.000Z",
+        "est_utc": "2026-03-29T01:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_H_year_America/New_York",
+      "description": "period=year 2026 in America/New_York: full scan",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "year"
+      },
+      "expected": {
+        "dst_utc": "2026-11-01T06:00:00.000Z",
+        "est_utc": "2026-03-08T07:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    },
+    {
+      "id": "gtt_H_year_Australia/Lord_Howe",
+      "description": "period=year 2026 in Australia/Lord_Howe: full scan",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "year"
+      },
+      "expected": {
+        "dst_utc": "2026-04-04T15:00:00.000Z",
+        "est_utc": "2026-10-03T15:30:00.000Z",
+        "transition_duration_ms": 1800000
+      }
+    },
+    {
+      "id": "gtt_H_year_America/Santiago",
+      "description": "period=year 2026 in America/Santiago: full scan",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "getTimeTransitions",
+        "period": "year"
+      },
+      "expected": {
+        "dst_utc": "2026-04-05T03:00:00.000Z",
+        "est_utc": "2026-09-06T04:00:00.000Z",
+        "transition_duration_ms": 3600000
+      }
+    }
+  ]
+}

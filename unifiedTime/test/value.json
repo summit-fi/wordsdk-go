@@ -1,0 +1,1025 @@
+{
+  "suite": "value",
+  "cases": [
+    {
+      "id": "value_year_Etc/UTC",
+      "description": "year=2026 in Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "year"
+      },
+      "expected": {
+        "int": 2026
+      }
+    },
+    {
+      "id": "value_year_Europe/Kyiv",
+      "description": "year=2026 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "year"
+      },
+      "expected": {
+        "int": 2026
+      }
+    },
+    {
+      "id": "value_year_America/New_York",
+      "description": "year=2026 in America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "year"
+      },
+      "expected": {
+        "int": 2026
+      }
+    },
+    {
+      "id": "value_year_America/Santiago",
+      "description": "year=2026 in America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "year"
+      },
+      "expected": {
+        "int": 2026
+      }
+    },
+    {
+      "id": "value_year_Australia/Lord_Howe",
+      "description": "year=2026 in Australia/Lord_Howe (midnight-cross still same year)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "year"
+      },
+      "expected": {
+        "int": 2026
+      }
+    },
+    {
+      "id": "value_month_Etc/UTC",
+      "description": "month=2 in Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "month"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_month_Europe/Kyiv",
+      "description": "month=2 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "month"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_month_America/New_York",
+      "description": "month=2 in America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "month"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_month_America/Santiago",
+      "description": "month=2 in America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "month"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_month_Australia/Lord_Howe",
+      "description": "month=2 in Australia/Lord_Howe (rolled to Feb 25)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "month"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_day_Etc/UTC",
+      "description": "day=24 in UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "day"
+      },
+      "expected": {
+        "int": 24
+      }
+    },
+    {
+      "id": "value_day_Europe/Kyiv",
+      "description": "day=24 in Kyiv (UTC+2, Feb=winter)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "day"
+      },
+      "expected": {
+        "int": 24
+      }
+    },
+    {
+      "id": "value_day_America/New_York",
+      "description": "day=24 in New York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "day"
+      },
+      "expected": {
+        "int": 24
+      }
+    },
+    {
+      "id": "value_day_Australia/Lord_Howe",
+      "description": "day=25 in Lord Howe (UTC 13:30 + UTC+11 = next day)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "day"
+      },
+      "expected": {
+        "int": 25
+      }
+    },
+    {
+      "id": "value_day_America/Santiago",
+      "description": "day=24 in Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "day"
+      },
+      "expected": {
+        "int": 24
+      }
+    },
+    {
+      "id": "value_hour_Etc/UTC",
+      "description": "hour=13 in UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "hour"
+      },
+      "expected": {
+        "int": 13
+      }
+    },
+    {
+      "id": "value_hour_Europe/Kyiv",
+      "description": "hour=15 in Kyiv (UTC+2, Feb=winter)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "hour"
+      },
+      "expected": {
+        "int": 15
+      }
+    },
+    {
+      "id": "value_hour_America/New_York",
+      "description": "hour=8 in NY (UTC-5)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "hour"
+      },
+      "expected": {
+        "int": 8
+      }
+    },
+    {
+      "id": "value_hour_Australia/Lord_Howe",
+      "description": "hour=0 in Lord Howe (UTC+11, cross-midnight)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "hour"
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "value_hour_America/Santiago",
+      "description": "hour=10 in Santiago (UTC-3)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "hour"
+      },
+      "expected": {
+        "int": 10
+      }
+    },
+    {
+      "id": "value_minute_Etc/UTC",
+      "description": "minute=30 in Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "minute"
+      },
+      "expected": {
+        "int": 30
+      }
+    },
+    {
+      "id": "value_minute_Europe/Kyiv",
+      "description": "minute=30 in Europe/Kyiv (offset does not affect minute)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "minute"
+      },
+      "expected": {
+        "int": 30
+      }
+    },
+    {
+      "id": "value_minute_America/New_York",
+      "description": "minute=30 in America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "minute"
+      },
+      "expected": {
+        "int": 30
+      }
+    },
+    {
+      "id": "value_minute_Australia/Lord_Howe",
+      "description": "minute=30 in Australia/Lord_Howe (cross-midnight, still same minute)",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "minute"
+      },
+      "expected": {
+        "int": 30
+      }
+    },
+    {
+      "id": "value_minute_America/Santiago",
+      "description": "minute=30 in America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "minute"
+      },
+      "expected": {
+        "int": 30
+      }
+    },
+    {
+      "id": "value_second_Etc/UTC",
+      "description": "second=45 in Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "second"
+      },
+      "expected": {
+        "int": 45
+      }
+    },
+    {
+      "id": "value_second_Europe/Kyiv",
+      "description": "second=45 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "second"
+      },
+      "expected": {
+        "int": 45
+      }
+    },
+    {
+      "id": "value_second_America/New_York",
+      "description": "second=45 in America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "second"
+      },
+      "expected": {
+        "int": 45
+      }
+    },
+    {
+      "id": "value_second_Australia/Lord_Howe",
+      "description": "second=45 in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "second"
+      },
+      "expected": {
+        "int": 45
+      }
+    },
+    {
+      "id": "value_second_America/Santiago",
+      "description": "second=45 in America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "second"
+      },
+      "expected": {
+        "int": 45
+      }
+    },
+    {
+      "id": "value_millisecond_Etc/UTC",
+      "description": "millisecond=123 in Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecond"
+      },
+      "expected": {
+        "int": 123
+      }
+    },
+    {
+      "id": "value_millisecond_Europe/Kyiv",
+      "description": "millisecond=123 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecond"
+      },
+      "expected": {
+        "int": 123
+      }
+    },
+    {
+      "id": "value_millisecond_America/New_York",
+      "description": "millisecond=123 in America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecond"
+      },
+      "expected": {
+        "int": 123
+      }
+    },
+    {
+      "id": "value_millisecond_Australia/Lord_Howe",
+      "description": "millisecond=123 in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecond"
+      },
+      "expected": {
+        "int": 123
+      }
+    },
+    {
+      "id": "value_millisecond_America/Santiago",
+      "description": "millisecond=123 in America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecond"
+      },
+      "expected": {
+        "int": 123
+      }
+    },
+    {
+      "id": "value_weekday_tue_Etc/UTC",
+      "description": "Tue Feb 24 -> weekday=2",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_weekday_tue_Europe/Kyiv",
+      "description": "Tue Feb 24 -> weekday=2",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_weekday_tue_America/New_York",
+      "description": "Tue Feb 24 -> weekday=2",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_weekday_tue_America/Santiago",
+      "description": "Tue Feb 24 -> weekday=2",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 2
+      }
+    },
+    {
+      "id": "value_weekday_wed_Australia/Lord_Howe",
+      "description": "UTC Tue crosses midnight in Lord Howe -> Wed=weekday=3",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 3
+      }
+    },
+    {
+      "id": "value_weekday_sat_Etc/UTC",
+      "description": "Sat Feb 21 -> weekday=6",
+      "input": {
+        "utc": "2026-02-21T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 6
+      }
+    },
+    {
+      "id": "value_weekday_sun_Etc/UTC",
+      "description": "Sun Feb 22 -> weekday=7",
+      "input": {
+        "utc": "2026-02-22T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekday"
+      },
+      "expected": {
+        "int": 7
+      }
+    },
+    {
+      "id": "value_weekOfYear_2016jan1_fri_is_w53",
+      "description": "2016-01-01 (Fri) -> ISO week 53 of 2015",
+      "input": {
+        "utc": "2016-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 53
+      }
+    },
+    {
+      "id": "value_weekOfYear_2015jan1_thu_is_w1",
+      "description": "2015-01-01 (Thu) -> ISO week 1 (Jan 4 always in w1)",
+      "input": {
+        "utc": "2015-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 1
+      }
+    },
+    {
+      "id": "value_weekOfYear_2020dec31_thu_is_w53",
+      "description": "2020-12-31 (Thu) -> ISO week 53 (2020 starts Wed, has 53 weeks)",
+      "input": {
+        "utc": "2020-12-31T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 53
+      }
+    },
+    {
+      "id": "value_weekOfYear_2021jan1_fri_is_w53",
+      "description": "2021-01-01 (Fri) -> ISO week 53 (belongs to 2020)",
+      "input": {
+        "utc": "2021-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 53
+      }
+    },
+    {
+      "id": "value_weekOfYear_2026feb24_is_w9",
+      "description": "2026-02-24 -> ISO week 9",
+      "input": {
+        "utc": "2026-02-24T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 9
+      }
+    },
+    {
+      "id": "value_weekOfYear_lordHowe_feb25_is_w9",
+      "description": "LordHowe wall Feb 25 (UTC Feb 24 13:30Z crossed midnight) -> still week 9",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "weekOfYear"
+      },
+      "expected": {
+        "int": 9
+      }
+    },
+    {
+      "id": "value_ordinalDate_feb29_leap",
+      "description": "2020-02-29 ordinal=60 (leap year)",
+      "input": {
+        "utc": "2020-02-29T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "ordinalDate"
+      },
+      "expected": {
+        "int": 60
+      }
+    },
+    {
+      "id": "value_ordinalDate_mar1_nonLeap",
+      "description": "2021-03-01 ordinal=60 (no Feb 29 in non-leap)",
+      "input": {
+        "utc": "2021-03-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "ordinalDate"
+      },
+      "expected": {
+        "int": 60
+      }
+    },
+    {
+      "id": "value_ordinalDate_dec31_nonLeap",
+      "description": "2026-12-31 ordinal=365 (non-leap year)",
+      "input": {
+        "utc": "2026-12-31T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "ordinalDate"
+      },
+      "expected": {
+        "int": 365
+      }
+    },
+    {
+      "id": "value_ordinalDate_jan1",
+      "description": "2026-01-01 ordinal=1",
+      "input": {
+        "utc": "2026-01-01T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "ordinalDate"
+      },
+      "expected": {
+        "int": 1
+      }
+    },
+    {
+      "id": "value_ordinalDate_lordHowe_feb25",
+      "description": "LordHowe wall Feb 25 (UTC cross-midnight) -> ordinal=56",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "ordinalDate"
+      },
+      "expected": {
+        "int": 56
+      }
+    },
+    {
+      "id": "value_msEpoch_Etc/UTC",
+      "description": "millisecondsSinceEpoch same in all tz: Etc/UTC",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecondsSinceEpoch"
+      },
+      "expected": {
+        "int": 1771939845123
+      }
+    },
+    {
+      "id": "value_msEpoch_Europe/Kyiv",
+      "description": "millisecondsSinceEpoch same in all tz: Europe/Kyiv",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecondsSinceEpoch"
+      },
+      "expected": {
+        "int": 1771939845123
+      }
+    },
+    {
+      "id": "value_msEpoch_America/New_York",
+      "description": "millisecondsSinceEpoch same in all tz: America/New_York",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecondsSinceEpoch"
+      },
+      "expected": {
+        "int": 1771939845123
+      }
+    },
+    {
+      "id": "value_msEpoch_Australia/Lord_Howe",
+      "description": "millisecondsSinceEpoch same in all tz: Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecondsSinceEpoch"
+      },
+      "expected": {
+        "int": 1771939845123
+      }
+    },
+    {
+      "id": "value_msEpoch_America/Santiago",
+      "description": "millisecondsSinceEpoch same in all tz: America/Santiago",
+      "input": {
+        "utc": "2026-02-24T13:30:45.123Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "millisecondsSinceEpoch"
+      },
+      "expected": {
+        "int": 1771939845123
+      }
+    },
+    {
+      "id": "value_tzOffset_Etc/UTC_winter",
+      "description": "timeZoneOffset in Etc/UTC_winter: 0",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "value_tzOffset_Etc/UTC_summer",
+      "description": "timeZoneOffset in Etc/UTC_summer: 0",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 0
+      }
+    },
+    {
+      "id": "value_tzOffset_Europe/Kyiv_winter",
+      "description": "timeZoneOffset in Europe/Kyiv_winter: 2h",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 7200000
+      }
+    },
+    {
+      "id": "value_tzOffset_Europe/Kyiv_summer",
+      "description": "timeZoneOffset in Europe/Kyiv_summer: 3h",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 10800000
+      }
+    },
+    {
+      "id": "value_tzOffset_America/New_York_winter",
+      "description": "timeZoneOffset in America/New_York_winter: -5h",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -18000000
+      }
+    },
+    {
+      "id": "value_tzOffset_America/New_York_summer",
+      "description": "timeZoneOffset in America/New_York_summer: -4h",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -14400000
+      }
+    },
+    {
+      "id": "value_tzOffset_Australia/Lord_Howe_jan",
+      "description": "timeZoneOffset in Australia/Lord_Howe Jan (LHDT, SH summer): +11h",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 39600000
+      }
+    },
+    {
+      "id": "value_tzOffset_Australia/Lord_Howe_jul",
+      "description": "timeZoneOffset in Australia/Lord_Howe Jul (LHST, SH winter): +10:30h",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": 37800000
+      }
+    },
+    {
+      "id": "value_tzOffset_America/Santiago_jan",
+      "description": "timeZoneOffset in America/Santiago Jan (CLST, SH summer): -3h",
+      "input": {
+        "utc": "2026-01-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -10800000
+      }
+    },
+    {
+      "id": "value_tzOffset_America/Santiago_jul",
+      "description": "timeZoneOffset in America/Santiago Jul (CLT, SH winter): -4h",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "value",
+        "unit": "timeZoneOffsetMilliseconds"
+      },
+      "expected": {
+        "int": -14400000
+      }
+    }
+  ]
+}

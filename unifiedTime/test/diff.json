@@ -1,0 +1,365 @@
+{
+  "suite": "diff",
+  "cases": [
+    {
+      "id": "diff_3h15m_utc",
+      "description": "UTC: y - x = 3h15m = 11700000ms (baseline, no DST)",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T12:15:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "duration_ms": -11700000
+      }
+    },
+    {
+      "id": "diff_3h15m_kyiv",
+      "description": "Kyiv summer (EEST +3): same UTC window, diff = 11700000ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T12:15:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "duration_ms": -11700000
+      }
+    },
+    {
+      "id": "diff_3h15m_newYork",
+      "description": "New York summer (EDT -4): same UTC window, diff = 11700000ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T12:15:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "duration_ms": -11700000
+      }
+    },
+    {
+      "id": "diff_3h15m_lordHowe",
+      "description": "LordHowe winter (LHST +10:30): same UTC window, diff = 11700000ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T12:15:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "duration_ms": -11700000
+      }
+    },
+    {
+      "id": "diff_3h15m_santiago",
+      "description": "Santiago winter (CLT -4): same UTC window, diff = 11700000ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T12:15:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "duration_ms": -11700000
+      }
+    },
+    {
+      "id": "diff_negative_utc",
+      "description": "UTC: y.diff(x) = -11700000ms - diff is signed (later minus earlier = negative)",
+      "input": {
+        "utc": "2026-07-20T12:15:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "duration_ms": 11700000
+      }
+    },
+    {
+      "id": "diff_zero_same_instant",
+      "description": "Same instant: diff = 0ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_zero_same_instant_different_tz",
+      "description": "Kyiv and LordHowe, same UTC instant: diff = 0ms despite 7h30m wall gap",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_negative_kyiv",
+      "description": "Kyiv: y.diff(x) = +11700000ms - reversed operands, same UTC window",
+      "input": {
+        "utc": "2026-07-20T12:15:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "duration_ms": 11700000
+      }
+    },
+    {
+      "id": "diff_negative_newYork",
+      "description": "NY: y.diff(x) = +11700000ms",
+      "input": {
+        "utc": "2026-07-20T12:15:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "duration_ms": 11700000
+      }
+    },
+    {
+      "id": "diff_negative_lordHowe",
+      "description": "LordHowe: y.diff(x) = +11700000ms",
+      "input": {
+        "utc": "2026-07-20T12:15:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "duration_ms": 11700000
+      }
+    },
+    {
+      "id": "diff_negative_santiago",
+      "description": "Santiago: y.diff(x) = +11700000ms",
+      "input": {
+        "utc": "2026-07-20T12:15:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "duration_ms": 11700000
+      }
+    },
+    {
+      "id": "diff_zero_kyiv",
+      "description": "Kyiv: x.diff(x) = 0ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_zero_newYork",
+      "description": "NY: x.diff(x) = 0ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_zero_lordHowe",
+      "description": "LordHowe: x.diff(x) = 0ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_zero_santiago",
+      "description": "Santiago: x.diff(x) = 0ms",
+      "input": {
+        "utc": "2026-07-20T09:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-07-20T09:00:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "duration_ms": 0
+      }
+    },
+    {
+      "id": "diff_kyiv_springForward_elapsed_1h",
+      "description": "Kyiv 02:30 EET -> 04:30 EEST (spring-forward Mar 29): wall gap = 2h but elapsed = 1h = 3600000ms",
+      "input": {
+        "utc": "2026-03-29T00:30:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-03-29T01:30:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "duration_ms": -3600000
+      }
+    },
+    {
+      "id": "diff_newYork_springForward_elapsed_1h",
+      "description": "NY 01:30 EST -> 03:30 EDT (spring-forward Mar 8): wall gap = 2h but elapsed = 1h = 3600000ms",
+      "input": {
+        "utc": "2026-03-08T06:30:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-03-08T07:30:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "duration_ms": -3600000
+      }
+    },
+    {
+      "id": "diff_lordHowe_fallBack_elapsed_90min",
+      "description": "LordHowe 00:00 LHDT -> 01:00 LHST (fall-back Apr 5): wall gap = 1h backward but elapsed = 90min = 5400000ms (30-min DST)",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-04-04T14:30:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "duration_ms": -5400000
+      }
+    },
+    {
+      "id": "diff_santiago_fallBack_midnight",
+      "description": "Santiago Apr 5 23:30 CLST (UTC+02:30Z) vs Apr 5 23:30 CLT (UTC+03:30Z): wall times identical, elapsed = 1h = 3600000ms (midnight fall-back ambiguity)",
+      "input": {
+        "utc": "2026-04-06T02:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "diff",
+        "input2": {
+          "utc": "2026-04-06T03:30:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "duration_ms": -3600000
+      }
+    }
+  ]
+}

@@ -3,9 +3,11 @@ package word
 import (
 	"errors"
 	"fmt"
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"net/http"
 	"reflect"
-	"sync"
+	"strings"
 	"time"
 
 	"github.com/summit-fi/wordsdk-go/source"
@@ -31,25 +33,26 @@ var (
 
 func GetDefaultConfig(apiKey string) *Config {
 	return &Config{
-		Source:         source.NewRemote("https://dev.wordapi.thesumm.it/api/v1", apiKey),
+		Source: source.NewRemote(
+			"https://dev.wordapi.thesumm.it/api/v1",
+			apiKey,
+		),
 		UpdateInterval: 10 * time.Second,
 		MaxCacheSizeMB: 256,
 	}
 }
 
 type Client struct {
-	httpClient     *http.Client
-	source         source.Source
-	logger         Logger
-	checksum       string
-	updateInterval time.Duration
-	logLevel       int
-	maxCacheSizeMB int
-	cache          Map[string, string]
-	localizersLock sync.RWMutex
-	saveStrategy   SaveStrategy
-	saveBundle     []source.Object
-	saveBundleLock sync.Mutex
+	httpClient              *http.Client
+	source                  source.Source
+	dynamicContentAccessKey string
+	logger                  Logger
+	checksum                string
+	updateInterval          time.Duration
+	logLevel                int
+	maxCacheSizeMB          int
+	cache                   fluent.Map[cldr.Language, *fluent.Bundle]
+	saveStrategy            SaveStrategy
 }
 
 func NewClient(config *Config) (SDK, error) {
@@ -63,19 +66,18 @@ func NewClient(config *Config) (SDK, error) {
 		},
 		source: config.Source,
 		logger: &DefaultLogger{
-			LogLevel: LogLevelError,
+			LogLevelError,
 		},
 		updateInterval: config.UpdateInterval,
 		maxCacheSizeMB: config.MaxCacheSizeMB,
 		saveStrategy:   config.SaveStrategy,
 	}
 
-	data, checksum, err := config.Source.LoadAll("")
+	data, checksum, err := config.Source.LoadAllStatic("")
 	if err != nil {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
-
-	c.cache = NewMap[string, string]()
+	c.cache = fluent.NewMap[cldr.Language, *fluent.Bundle]()
 
 	c.checksum = checksum
 	err = c.UpdateBundle(data)
@@ -85,6 +87,19 @@ func NewClient(config *Config) (SDK, error) {
 
 	c.runSyncTranslationsJob()
 	return &c, nil
+}
+
+func (c *Client) EnableDynamicContent(key string) *DynamicContent {
+	cli := c
+	cli.dynamicContentAccessKey = key
+	return &DynamicContent{
+		Client: cli,
+	}
+}
+func (c *Client) Dynamic() *DynamicContent {
+	return &DynamicContent{
+		Client: c,
+	}
 }
 
 func (c *Client) runSyncTranslationsJob() {
@@ -98,7 +113,7 @@ func (c *Client) runSyncTranslationsJob() {
 }
 
 func (c *Client) syncTranslations() {
-	data, checksum, err := c.source.LoadAll(c.checksum)
+	data, checksum, err := c.source.LoadAllStatic(c.checksum)
 	if err != nil {
 		c.logger.Errorf("Failed to sync translations: %v", err)
 		return
@@ -127,17 +142,88 @@ func (c *Client) syncTranslations() {
 }
 
 func (c *Client) UpdateBundle(data []source.Object) error {
-	c.localizersLock.Lock()
-	defer c.localizersLock.Unlock()
-	for _, d := range data {
-		c.cache.Set(d.LocaleCode+d.Key, d.Value)
+
+	var mapData = make(map[string]map[string]*strings.Builder)
+
+	for _, item := range data {
+
+		localeMap, exists := mapData[item.LocaleCode]
+		if !exists {
+			localeMap = make(map[string]*strings.Builder)
+			mapData[item.LocaleCode] = localeMap
+		}
+		if _, bundleExists := localeMap[item.Key]; !bundleExists {
+			localeMap[item.Key] = &strings.Builder{}
+		}
+
+		key := strings.TrimSpace(item.Key)
+		value := strings.TrimSpace(item.Value)
+
+		// Make sure key doesn't contain invalid characters
+		if strings.ContainsAny(key, "\n\r") {
+			continue // Skip invalid keys
+		}
+
+		localeMap[item.Key].WriteString(key)
+		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
+
+		if len(value) == 0 {
+			localeMap[item.Key].WriteString(` `)
+		}
+
+		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
+		localeMap[item.Key].WriteString("\n") // Only one newline at the end
+
 	}
+
+	for lang, builder := range mapData {
+		if len(builder) == 0 {
+			continue
+		}
+		var (
+			bundle *fluent.Bundle
+			ok     bool
+		)
+
+		if bundle, ok = c.cache.Exist(cldr.Language(lang)); !ok {
+			bundle = fluent.NewBundle(cldr.Language(lang))
+		}
+
+		for key, sb := range builder {
+			if bundle.HasMessage(key) {
+
+				resource, errs := fluent.NewResource(sb.String())
+				if errs != nil {
+					return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+				}
+
+				bundle.AddResourceOverriding(resource)
+				c.logger.Debugf("Updated key '%s' for language '%s'", key, lang)
+
+				c.cache.Set(cldr.Language(lang), bundle)
+
+				continue
+
+			}
+
+			resource, errs := fluent.NewResource(sb.String())
+			if errs != nil {
+				return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
+			}
+
+			if err := bundle.AddResource(resource); err != nil {
+				return fmt.Errorf("failed to add resource for language %s: %v", lang, err)
+			}
+
+			c.cache.Set(cldr.Language(lang), bundle)
+
+		}
+	}
+
 	return nil
 }
 
 func (c *Client) GetCacheSize() int {
-	c.localizersLock.RLock()
-	defer c.localizersLock.RUnlock()
 
 	size := 0
 	for _, bundle := range c.cache.GetAll() {

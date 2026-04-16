@@ -27,20 +27,19 @@ func NewRemote(apiBaseUrl, accessKey string) *Remote {
 }
 
 type response struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Values []struct {
-		Id          int    `json:"id"`
+	Key         string `json:"key"`
+	HasComments bool   `json:"hasComments"`
+	Value       []struct {
 		Value       string `json:"value"`
-		Locale      string `json:"locale"`
+		LocaleCode  string `json:"locale"`
 		Status      string `json:"status"`
 		HasComments bool   `json:"hasComments"`
 	} `json:"values"`
 }
 
-func (c *Remote) LoadAll(checksumIn string) (result []Object, checksumOut string, err error) {
+func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut string, err error) {
 
-	url := fmt.Sprintf("%s/values", c.ApiBaseUrl)
+	url := fmt.Sprintf("%s/static/values", c.ApiBaseUrl)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, "", err
@@ -76,10 +75,10 @@ func (c *Remote) LoadAll(checksumIn string) (result []Object, checksumOut string
 	}
 
 	for _, d := range data {
-		for _, v := range d.Values {
+		for _, v := range d.Value {
 			result = append(result, Object{
-				LocaleCode: v.Locale,
-				Key:        d.Name,
+				LocaleCode: v.LocaleCode,
+				Key:        d.Key,
 				Value:      v.Value,
 			})
 		}
@@ -89,11 +88,102 @@ func (c *Remote) LoadAll(checksumIn string) (result []Object, checksumOut string
 	return result, checksumOut, nil
 }
 
-func (c *Remote) Save(data []Object) error {
+func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []Object, checkSumOut string, err error) {
+	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, "", err
+	}
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
+	if checksumIn != "" {
+		req.Header.Set("If-None-Match", checksumIn)
+	}
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, "", err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusNotModified {
+		return nil, checksumIn, nil
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, "", err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, "", errors.New("Error from server returned: " + string(b))
+	}
+
+	var data []response
+	err = json.Unmarshal(b, &data)
+	if err != nil {
+		return nil, "", err
+	}
+
+	for _, d := range data {
+		for _, v := range d.Value {
+			result = append(result, Object{
+				LocaleCode: v.LocaleCode,
+				Key:        d.Key,
+				Value:      v.Value,
+			})
+		}
+	}
+
+	checkSumOut = resp.Header.Get("ETag")
+	return result, checkSumOut, nil
+}
+
+func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
+	url := fmt.Sprintf("%s/dynamic/value?lang=%s&key=%s", c.ApiBaseUrl, lang, key)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return key, err
+	}
+
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
+	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+
+		return key, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+
+		return key, err
+	}
+
+	var temp struct {
+		Value string `json:"value"`
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return key, err
+
+	}
+	err = json.Unmarshal(b, &temp)
+	if err != nil {
+		return key, err
+	}
+	return temp.Value, err
+}
+
+func (c *Remote) SaveDynamic(dynamicKey string, data []Object) error {
 	var r = struct {
 		Values []Object `json:"values"`
 	}{
+
 		Values: data,
 	}
 
@@ -102,10 +192,14 @@ func (c *Remote) Save(data []Object) error {
 		return err
 	}
 
-	req, err := http.NewRequest("PATCH", c.ApiBaseUrl+"/values", bytes.NewBuffer(b))
+	url := fmt.Sprintf("%s/dynamic/values", c.ApiBaseUrl)
+
+	req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(b))
 	if err != nil {
 		return err
 	}
+
+	req.Header.Set("X-Dynamic-Key", dynamicKey)
 	req.Header.Set("Authorization", "Bearer "+c.AccessKey)
 
 	resp, err := c.httpClient.Do(req)
@@ -122,6 +216,5 @@ func (c *Remote) Save(data []Object) error {
 
 		return errors.New("Error from server returned: " + string(b))
 	}
-
 	return nil
 }

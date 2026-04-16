@@ -1,0 +1,1787 @@
+{
+  "suite": "is_collides_with",
+  "cases": [
+    {
+      "id": "icw_disjoint_strictBefore_Etc/UTC",
+      "description": "Range1 is completely before Range2 -> false (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_disjoint_strictAfter_Etc/UTC",
+      "description": "Range1 is completely after Range2 -> false (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_closed_Etc/UTC",
+      "description": "Range1 touches Range2 end with closed -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_start_closed_Etc/UTC",
+      "description": "Range1 touches Range2 start with closed -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_end_open_Etc/UTC",
+      "description": "Range1 touches Range2 end with open -> false (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openStart_Etc/UTC",
+      "description": "Range1 touches Range2 end with openStart -> false (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openEnd_Etc/UTC",
+      "description": "Range1 touches Range2 end with openEnd -> false (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_Etc/UTC",
+      "description": "Range1 partially overlaps Range2 at start -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_open_Etc/UTC",
+      "description": "Range1 partially overlaps Range2 at start with open -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_includes_other_Etc/UTC",
+      "description": "Range1 fully includes Range2 -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_included_by_other_Etc/UTC",
+      "description": "Range1 is fully included in Range2 -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_Etc/UTC",
+      "description": "Range1 is identical to Range2 -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_open_Etc/UTC",
+      "description": "Range1 is identical to Range2 with open -> true (Etc/UTC)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Etc/UTC"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_disjoint_strictBefore_Europe/Kyiv",
+      "description": "Range1 is completely before Range2 -> false (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_disjoint_strictAfter_Europe/Kyiv",
+      "description": "Range1 is completely after Range2 -> false (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_closed_Europe/Kyiv",
+      "description": "Range1 touches Range2 end with closed -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_start_closed_Europe/Kyiv",
+      "description": "Range1 touches Range2 start with closed -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_end_open_Europe/Kyiv",
+      "description": "Range1 touches Range2 end with open -> false (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openStart_Europe/Kyiv",
+      "description": "Range1 touches Range2 end with openStart -> false (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openEnd_Europe/Kyiv",
+      "description": "Range1 touches Range2 end with openEnd -> false (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_Europe/Kyiv",
+      "description": "Range1 partially overlaps Range2 at start -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_open_Europe/Kyiv",
+      "description": "Range1 partially overlaps Range2 at start with open -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_includes_other_Europe/Kyiv",
+      "description": "Range1 fully includes Range2 -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_included_by_other_Europe/Kyiv",
+      "description": "Range1 is fully included in Range2 -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_Europe/Kyiv",
+      "description": "Range1 is identical to Range2 -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_open_Europe/Kyiv",
+      "description": "Range1 is identical to Range2 with open -> true (Europe/Kyiv)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_disjoint_strictBefore_America/New_York",
+      "description": "Range1 is completely before Range2 -> false (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_disjoint_strictAfter_America/New_York",
+      "description": "Range1 is completely after Range2 -> false (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_closed_America/New_York",
+      "description": "Range1 touches Range2 end with closed -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_start_closed_America/New_York",
+      "description": "Range1 touches Range2 start with closed -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_end_open_America/New_York",
+      "description": "Range1 touches Range2 end with open -> false (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openStart_America/New_York",
+      "description": "Range1 touches Range2 end with openStart -> false (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openEnd_America/New_York",
+      "description": "Range1 touches Range2 end with openEnd -> false (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_America/New_York",
+      "description": "Range1 partially overlaps Range2 at start -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_open_America/New_York",
+      "description": "Range1 partially overlaps Range2 at start with open -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_includes_other_America/New_York",
+      "description": "Range1 fully includes Range2 -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_included_by_other_America/New_York",
+      "description": "Range1 is fully included in Range2 -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_America/New_York",
+      "description": "Range1 is identical to Range2 -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_open_America/New_York",
+      "description": "Range1 is identical to Range2 with open -> true (America/New_York)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/New_York"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_disjoint_strictBefore_Australia/Lord_Howe",
+      "description": "Range1 is completely before Range2 -> false (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_disjoint_strictAfter_Australia/Lord_Howe",
+      "description": "Range1 is completely after Range2 -> false (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_closed_Australia/Lord_Howe",
+      "description": "Range1 touches Range2 end with closed -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_start_closed_Australia/Lord_Howe",
+      "description": "Range1 touches Range2 start with closed -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_end_open_Australia/Lord_Howe",
+      "description": "Range1 touches Range2 end with open -> false (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openStart_Australia/Lord_Howe",
+      "description": "Range1 touches Range2 end with openStart -> false (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openEnd_Australia/Lord_Howe",
+      "description": "Range1 touches Range2 end with openEnd -> false (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_Australia/Lord_Howe",
+      "description": "Range1 partially overlaps Range2 at start -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_open_Australia/Lord_Howe",
+      "description": "Range1 partially overlaps Range2 at start with open -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_includes_other_Australia/Lord_Howe",
+      "description": "Range1 fully includes Range2 -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_included_by_other_Australia/Lord_Howe",
+      "description": "Range1 is fully included in Range2 -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_Australia/Lord_Howe",
+      "description": "Range1 is identical to Range2 -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_open_Australia/Lord_Howe",
+      "description": "Range1 is identical to Range2 with open -> true (Australia/Lord_Howe)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_disjoint_strictBefore_America/Santiago",
+      "description": "Range1 is completely before Range2 -> false (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_disjoint_strictAfter_America/Santiago",
+      "description": "Range1 is completely after Range2 -> false (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T14:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_closed_America/Santiago",
+      "description": "Range1 touches Range2 end with closed -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_start_closed_America/Santiago",
+      "description": "Range1 touches Range2 start with closed -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_touch_end_open_America/Santiago",
+      "description": "Range1 touches Range2 end with open -> false (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openStart_America/Santiago",
+      "description": "Range1 touches Range2 end with openStart -> false (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openStart"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_touch_end_openEnd_America/Santiago",
+      "description": "Range1 touches Range2 end with openEnd -> false (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "openEnd"
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_America/Santiago",
+      "description": "Range1 partially overlaps Range2 at start -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_partialOverlap_start_open_America/Santiago",
+      "description": "Range1 partially overlaps Range2 at start with open -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T15:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_includes_other_America/Santiago",
+      "description": "Range1 fully includes Range2 -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T12:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_included_by_other_America/Santiago",
+      "description": "Range1 is fully included in Range2 -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T12:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T16:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_America/Santiago",
+      "description": "Range1 is identical to Range2 -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_identical_open_America/Santiago",
+      "description": "Range1 is identical to Range2 with open -> true (America/Santiago)",
+      "input": {
+        "utc": "2026-07-15T13:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-07-15T13:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-07-15T14:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "open"
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "icw_dst_santiago_fallback",
+      "description": "Santiago midnight fallback overlap -> true (pure UTC)",
+      "input": {
+        "utc": "2026-04-06T02:30:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "isCollidesWith",
+        "input2": {
+          "utc": "2026-04-06T03:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "input3": {
+          "utc": "2026-04-06T04:00:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "till": {
+          "utc": "2026-04-06T04:30:00.000Z",
+          "tz": "America/Santiago"
+        },
+        "interval": "closed"
+      },
+      "expected": {
+        "bool": true
+      }
+    }
+  ]
+}

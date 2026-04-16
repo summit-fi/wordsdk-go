@@ -1,0 +1,1167 @@
+{
+  "suite": "iterator",
+  "cases": [
+    {
+      "id": "iter_A_startEqEnd_Etc/UTC",
+      "description": "start==till in Etc/UTC -> 1 element",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T13:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_B_startGtEnd_Etc/UTC",
+      "description": "start>till in Etc/UTC -> 0 elements",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T12:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "iter_C_day3_Etc/UTC",
+      "description": "day step=1, 3 results in Etc/UTC (Jul, no DST)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-22T13:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-21T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_D_hour4_Etc/UTC",
+      "description": "hour step=1, 4 results in Etc/UTC (elapsed)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T16:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-20T14:45:30.000Z",
+          "2026-07-20T15:45:30.000Z",
+          "2026-07-20T16:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_E_month3_Etc/UTC",
+      "description": "month step=1, 3 results in Etc/UTC (wall-clock)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "month",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-20T13:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-08-20T13:45:30.000Z",
+          "2026-09-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_F_dayStep2_Etc/UTC",
+      "description": "day step=2 in Etc/UTC",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 2,
+        "till": {
+          "utc": "2026-07-24T13:45:30.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z",
+          "2026-07-24T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_G_crossYear_Etc/UTC",
+      "description": "day step crosses Dec31->Jan1 in Etc/UTC",
+      "input": {
+        "utc": "2026-12-30T10:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2027-01-02T10:00:00.000Z",
+          "tz": "Etc/UTC"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-12-30T10:00:00.000Z",
+          "2026-12-31T10:00:00.000Z",
+          "2027-01-01T10:00:00.000Z",
+          "2027-01-02T10:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_A_startEqEnd_Europe/Kyiv",
+      "description": "start==till in Europe/Kyiv -> 1 element",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T13:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_B_startGtEnd_Europe/Kyiv",
+      "description": "start>till in Europe/Kyiv -> 0 elements",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T12:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "iter_C_day3_Europe/Kyiv",
+      "description": "day step=1, 3 results in Europe/Kyiv (Jul, no DST)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-22T13:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-21T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_D_hour4_Europe/Kyiv",
+      "description": "hour step=1, 4 results in Europe/Kyiv (elapsed)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T16:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-20T14:45:30.000Z",
+          "2026-07-20T15:45:30.000Z",
+          "2026-07-20T16:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_E_month3_Europe/Kyiv",
+      "description": "month step=1, 3 results in Europe/Kyiv (wall-clock)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "month",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-20T13:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-08-20T13:45:30.000Z",
+          "2026-09-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_F_dayStep2_Europe/Kyiv",
+      "description": "day step=2 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 2,
+        "till": {
+          "utc": "2026-07-24T13:45:30.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z",
+          "2026-07-24T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_G_crossYear_Europe/Kyiv",
+      "description": "day step crosses Dec31->Jan1 in Europe/Kyiv",
+      "input": {
+        "utc": "2026-12-30T10:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2027-01-02T10:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-12-30T10:00:00.000Z",
+          "2026-12-31T10:00:00.000Z",
+          "2027-01-01T10:00:00.000Z",
+          "2027-01-02T10:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_A_startEqEnd_America/New_York",
+      "description": "start==till in America/New_York -> 1 element",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T13:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_B_startGtEnd_America/New_York",
+      "description": "start>till in America/New_York -> 0 elements",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T12:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "iter_C_day3_America/New_York",
+      "description": "day step=1, 3 results in America/New_York (Jul, no DST)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-22T13:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-21T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_D_hour4_America/New_York",
+      "description": "hour step=1, 4 results in America/New_York (elapsed)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T16:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-20T14:45:30.000Z",
+          "2026-07-20T15:45:30.000Z",
+          "2026-07-20T16:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_E_month3_America/New_York",
+      "description": "month step=1, 3 results in America/New_York (wall-clock)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "month",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-20T13:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-08-20T13:45:30.000Z",
+          "2026-09-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_F_dayStep2_America/New_York",
+      "description": "day step=2 in America/New_York",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 2,
+        "till": {
+          "utc": "2026-07-24T13:45:30.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z",
+          "2026-07-24T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_G_crossYear_America/New_York",
+      "description": "day step crosses Dec31->Jan1 in America/New_York",
+      "input": {
+        "utc": "2026-12-30T10:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2027-01-02T10:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-12-30T10:00:00.000Z",
+          "2026-12-31T10:00:00.000Z",
+          "2027-01-01T10:00:00.000Z",
+          "2027-01-02T10:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_A_startEqEnd_Australia/Lord_Howe",
+      "description": "start==till in Australia/Lord_Howe -> 1 element",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T13:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_B_startGtEnd_Australia/Lord_Howe",
+      "description": "start>till in Australia/Lord_Howe -> 0 elements",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T12:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "iter_C_day3_Australia/Lord_Howe",
+      "description": "day step=1, 3 results in Australia/Lord_Howe (Jul, no DST)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-22T13:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-21T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_D_hour4_Australia/Lord_Howe",
+      "description": "hour step=1, 4 results in Australia/Lord_Howe (elapsed)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T16:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-20T14:45:30.000Z",
+          "2026-07-20T15:45:30.000Z",
+          "2026-07-20T16:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_E_month3_Australia/Lord_Howe",
+      "description": "month step=1, 3 results in Australia/Lord_Howe (wall-clock)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "month",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-20T13:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-08-20T13:45:30.000Z",
+          "2026-09-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_F_dayStep2_Australia/Lord_Howe",
+      "description": "day step=2 in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 2,
+        "till": {
+          "utc": "2026-07-24T13:45:30.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z",
+          "2026-07-24T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_G_crossYear_Australia/Lord_Howe",
+      "description": "day step crosses Dec31->Jan1 in Australia/Lord_Howe",
+      "input": {
+        "utc": "2026-12-30T10:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2027-01-02T10:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-12-30T10:00:00.000Z",
+          "2026-12-31T10:00:00.000Z",
+          "2027-01-01T10:00:00.000Z",
+          "2027-01-02T10:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_A_startEqEnd_America/Santiago",
+      "description": "start==till in America/Santiago -> 1 element",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T13:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_B_startGtEnd_America/Santiago",
+      "description": "start>till in America/Santiago -> 0 elements",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T12:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "iter_C_day3_America/Santiago",
+      "description": "day step=1, 3 results in America/Santiago (Jul, no DST)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-22T13:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-21T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_D_hour4_America/Santiago",
+      "description": "hour step=1, 4 results in America/Santiago (elapsed)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-07-20T16:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-20T14:45:30.000Z",
+          "2026-07-20T15:45:30.000Z",
+          "2026-07-20T16:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_E_month3_America/Santiago",
+      "description": "month step=1, 3 results in America/Santiago (wall-clock)",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "month",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-20T12:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-08-20T13:45:30.000Z",
+          "2026-09-20T12:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_F_dayStep2_America/Santiago",
+      "description": "day step=2 in America/Santiago",
+      "input": {
+        "utc": "2026-07-20T13:45:30.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 2,
+        "till": {
+          "utc": "2026-07-24T13:45:30.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-07-20T13:45:30.000Z",
+          "2026-07-22T13:45:30.000Z",
+          "2026-07-24T13:45:30.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_G_crossYear_America/Santiago",
+      "description": "day step crosses Dec31->Jan1 in America/Santiago",
+      "input": {
+        "utc": "2026-12-30T10:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2027-01-02T10:00:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-12-30T10:00:00.000Z",
+          "2026-12-31T10:00:00.000Z",
+          "2027-01-01T10:00:00.000Z",
+          "2027-01-02T10:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_H_spring_day_Europe/Kyiv",
+      "description": "day step across spring-forward in Europe/Kyiv: wall preserved, elapsed=23h",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-03-30T21:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-03-28T22:00:00.000Z",
+          "2026-03-29T21:00:00.000Z",
+          "2026-03-30T21:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_H_spring_day_America/New_York",
+      "description": "day step across spring-forward in America/New_York: wall preserved, elapsed=23h",
+      "input": {
+        "utc": "2026-03-08T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-03-10T04:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-03-08T05:00:00.000Z",
+          "2026-03-09T04:00:00.000Z",
+          "2026-03-10T04:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_H_spring_day_Australia/Lord_Howe",
+      "description": "day step across spring-forward in Australia/Lord_Howe: wall preserved, elapsed=23h",
+      "input": {
+        "utc": "2026-10-03T13:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-10-05T13:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-10-03T13:30:00.000Z",
+          "2026-10-04T13:00:00.000Z",
+          "2026-10-05T13:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_I_fall_day_Europe/Kyiv",
+      "description": "day step across fall-back in Europe/Kyiv: wall preserved, elapsed=25h",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-10-26T22:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-10-24T21:00:00.000Z",
+          "2026-10-25T22:00:00.000Z",
+          "2026-10-26T22:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_I_fall_day_America/New_York",
+      "description": "day step across fall-back in America/New_York: wall preserved, elapsed=25h",
+      "input": {
+        "utc": "2026-11-01T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-11-03T05:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-11-01T04:00:00.000Z",
+          "2026-11-02T05:00:00.000Z",
+          "2026-11-03T05:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_I_fall_day_Australia/Lord_Howe",
+      "description": "day step across fall-back in Australia/Lord_Howe: wall preserved, elapsed=25h",
+      "input": {
+        "utc": "2026-04-04T13:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-04-06T13:30:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-04-04T13:00:00.000Z",
+          "2026-04-05T13:30:00.000Z",
+          "2026-04-06T13:30:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_J_spring_hour_Europe/Kyiv",
+      "description": "hour step across spring-forward in Europe/Kyiv: wall jumps, elapsed exact",
+      "input": {
+        "utc": "2026-03-29T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-03-29T03:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-03-29T00:00:00.000Z",
+          "2026-03-29T01:00:00.000Z",
+          "2026-03-29T02:00:00.000Z",
+          "2026-03-29T03:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_J_spring_hour_America/New_York",
+      "description": "hour step across spring-forward in America/New_York: wall jumps, elapsed exact",
+      "input": {
+        "utc": "2026-03-08T06:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-03-08T09:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-03-08T06:00:00.000Z",
+          "2026-03-08T07:00:00.000Z",
+          "2026-03-08T08:00:00.000Z",
+          "2026-03-08T09:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_J_spring_hour_Australia/Lord_Howe",
+      "description": "hour step across spring-forward in Australia/Lord_Howe: wall jumps, elapsed exact",
+      "input": {
+        "utc": "2026-10-03T15:00:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-10-03T18:00:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-10-03T15:00:00.000Z",
+          "2026-10-03T16:00:00.000Z",
+          "2026-10-03T17:00:00.000Z",
+          "2026-10-03T18:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_K_fall_hour_America/New_York",
+      "description": "hour step across fall-back in America/New_York: elapsed exact, wall repeats",
+      "input": {
+        "utc": "2026-11-01T05:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-11-01T08:00:00.000Z",
+          "tz": "America/New_York"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-11-01T05:00:00.000Z",
+          "2026-11-01T06:00:00.000Z",
+          "2026-11-01T07:00:00.000Z",
+          "2026-11-01T08:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_K_fall_hour_Australia/Lord_Howe",
+      "description": "hour step across fall-back in Australia/Lord_Howe: elapsed exact, wall repeats",
+      "input": {
+        "utc": "2026-04-04T14:30:00.000Z",
+        "tz": "Australia/Lord_Howe"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-04-04T17:30:00.000Z",
+          "tz": "Australia/Lord_Howe"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-04-04T14:30:00.000Z",
+          "2026-04-04T15:30:00.000Z",
+          "2026-04-04T16:30:00.000Z",
+          "2026-04-04T17:30:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_K_fall_hour_Europe/Kyiv",
+      "description": "hour step across fall-back in Europe/Kyiv: elapsed exact, wall repeats",
+      "input": {
+        "utc": "2026-10-24T23:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "hour",
+        "amount": 1,
+        "till": {
+          "utc": "2026-10-25T02:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-10-24T23:00:00.000Z",
+          "2026-10-25T00:00:00.000Z",
+          "2026-10-25T01:00:00.000Z",
+          "2026-10-25T02:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_L_spring_day_America/Santiago",
+      "description": "day step across Santiago midnight spring-forward",
+      "input": {
+        "utc": "2026-09-07T03:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-09-09T03:00:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-09-07T03:00:00.000Z",
+          "2026-09-08T03:00:00.000Z",
+          "2026-09-09T03:00:00.000Z"
+        ]
+      }
+    },
+    {
+      "id": "iter_L_fall_day_America/Santiago",
+      "description": "day step across Santiago midnight fall-back",
+      "input": {
+        "utc": "2026-04-05T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "iterator",
+        "unit": "day",
+        "amount": 1,
+        "till": {
+          "utc": "2026-04-07T04:00:00.000Z",
+          "tz": "America/Santiago"
+        }
+      },
+      "expected": {
+        "list": [
+          "2026-04-05T04:00:00.000Z",
+          "2026-04-06T04:00:00.000Z",
+          "2026-04-07T04:00:00.000Z"
+        ]
+      }
+    }
+  ]
+}
