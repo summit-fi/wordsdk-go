@@ -86,11 +86,11 @@ func computeChecksum(translations []Object) string {
 
 func (p *Postgres) LoadAllStatic(checksumIn string) (result []Object, checksumOut string, err error) {
 
-	object, err := p.getAllKeys()
+	result, err = p.getAllKeys()
 	if err != nil {
 		return nil, "", err
 	}
-	checksumOut = computeChecksum(object)
+	checksumOut = computeChecksum(result)
 
 	if checksumIn == checksumOut {
 		return result, checksumOut, nil

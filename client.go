@@ -3,12 +3,13 @@ package word
 import (
 	"errors"
 	"fmt"
-	"github.com/summit-fi/wordsdk-go/fluent"
-	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 	"net/http"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/summit-fi/wordsdk-go/fluent"
+	"github.com/summit-fi/wordsdk-go/fluent/cldr"
 
 	"github.com/summit-fi/wordsdk-go/source"
 )
@@ -190,9 +191,12 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		}
 
 		for key, sb := range builder {
+
+			content := sb.String()
+
 			if bundle.HasMessage(key) {
 
-				resource, errs := fluent.NewResource(sb.String())
+				resource, errs := fluent.NewResource(content)
 				if errs != nil {
 					return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
 				}
@@ -205,8 +209,7 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 				continue
 
 			}
-
-			resource, errs := fluent.NewResource(sb.String())
+			resource, errs := fluent.NewResource(content)
 			if errs != nil {
 				return fmt.Errorf("failed to create resource for language %s: %v", lang, errs)
 			}

@@ -14,13 +14,13 @@ const (
 
 func TestSourcePostgres_SaveDynamic(t *testing.T) {
 	ctx := context.TODO()
-	src, err := source.NewPostgres(ctx, postgresURL, nil)
+	src, err := source.NewPostgres(ctx, postgresURL)
 	assert.Nil(t, err, "NewPostgres should not return an error")
 
 	// Test SaveDynamic
 	data := []source.Object{
-		{LocaleCode: "en_EU", Key: "greet", Value: "hello"},
-		{LocaleCode: "en_EU", Key: "farewell", Value: "goodbye"},
+		{LocaleCode: "en_US", Key: "greet", Value: "hello"},
+		{LocaleCode: "en_US", Key: "farewell", Value: "goodbye"},
 	}
 	err = src.SaveDynamic("", data)
 	assert.Nil(t, err, "SaveDynamic should not return an error")
