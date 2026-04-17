@@ -4,12 +4,11 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/summit-fi/wordsdk-go/utils/locale"
-
-	"io"
 )
 
 type Postgres struct {
@@ -17,7 +16,7 @@ type Postgres struct {
 	pool *pgxpool.Pool
 }
 
-func NewPostgres(ctx context.Context, connString string, loadRemoteFiles []string) (*Postgres, error) {
+func NewPostgres(ctx context.Context, connString string) (*Postgres, error) {
 	pool, err := pgxpool.New(ctx, connString)
 	if err != nil {
 		return nil, err
@@ -28,41 +27,49 @@ func NewPostgres(ctx context.Context, connString string, loadRemoteFiles []strin
 		pool: pool,
 	}
 
-	if len(loadRemoteFiles) > 0 {
+	return &conn, nil
+}
 
-		var openedFiles []openedFile
+func (p *Postgres) LoadTranslationsFromFiles(files []string) error {
 
-		for _, filePath := range loadRemoteFiles {
-			f, err := os.Open(filePath)
-			if err != nil {
-				return nil, fmt.Errorf("failed to open remote file '%s': %v", filePath, err)
-			}
-			defer f.Close()
+	if len(files) == 0 {
+		return fmt.Errorf("no files provided to load translations from")
+	}
 
-			read, err := io.ReadAll(f)
-			if err != nil {
-				return nil, fmt.Errorf("failed to read remote file '%s': %v", filePath, err)
-			}
+	var openedFiles []openedFile
 
-			openedFiles = append(openedFiles, openedFile{
-				localeCode: locale.GetLocaleFromFileName(f.Name()),
-				bytes:      read,
-			})
+	for _, filePath := range files {
 
+		f, err := os.Open(filePath)
+		if err != nil {
+			return fmt.Errorf("failed to open remote file '%s': %v", filePath, err)
+		}
+		defer f.Close()
+
+		read, err := io.ReadAll(f)
+		if err != nil {
+			return fmt.Errorf("failed to read remote file '%s': %v", filePath, err)
 		}
 
-		for _, f := range openedFiles {
+		openedFiles = append(openedFiles, openedFile{
+			localeCode: locale.GetLocaleFromFileName(f.Name()),
+			bytes:      read,
+		})
 
-			parsed := FtlParse(f.localeCode, f.bytes)
+	}
 
-			err = conn.batchSaveTranslations(parsed)
-			if err != nil {
-				return nil, fmt.Errorf("failed to save translations from remote files: %v", err)
-			}
+	for _, f := range openedFiles {
+
+		parsed := FtlParse(f.localeCode, f.bytes)
+
+		err := p.batchSaveTranslations(parsed)
+		if err != nil {
+			return fmt.Errorf("failed to save translations from remote files: %v", err)
 		}
 
 	}
-	return &conn, nil
+
+	return nil
 }
 
 func computeChecksum(translations []Object) string {
