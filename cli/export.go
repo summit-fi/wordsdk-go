@@ -80,12 +80,7 @@ func exportObjectsToFTLFiles(objects []source.Object, outDir string, path string
 	for locale, objs := range groups {
 		var b strings.Builder
 		for _, o := range objs {
-			b.WriteString(o.Key)
-			b.WriteString(" = ")
-			b.WriteString(o.Value)
-			if !strings.HasSuffix(o.Value, "\n") {
-				b.WriteString("\n")
-			}
+			b.WriteString(formatFTLEntry(o.Key, o.Value))
 		}
 		path := filepath.Join(outDir, path, locale+".ftl")
 		if err := os.WriteFile(path, []byte(b.String()), 0o644); err != nil {
@@ -94,4 +89,28 @@ func exportObjectsToFTLFiles(objects []source.Object, outDir string, path string
 		fmt.Printf("Exported %s\n", path)
 	}
 	return nil
+}
+
+const ftlBlockIndent = "    "
+
+func formatFTLEntry(key, value string) string {
+	value = normalizeFTLNewlines(value)
+	if !strings.Contains(value, "\n") {
+		return fmt.Sprintf("%s = %s\n", key, value)
+	}
+
+	var builder strings.Builder
+	builder.WriteString(key)
+	builder.WriteString(" =\n")
+	for _, line := range strings.Split(value, "\n") {
+		builder.WriteString(ftlBlockIndent)
+		builder.WriteString(line)
+		builder.WriteString("\n")
+	}
+	return builder.String()
+}
+
+func normalizeFTLNewlines(value string) string {
+	value = strings.ReplaceAll(value, "\r\n", "\n")
+	return strings.ReplaceAll(value, "\r", "\n")
 }

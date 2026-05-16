@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -17,14 +16,41 @@ type Ftl struct {
 	sync.RWMutex
 }
 
+const ftlBlockIndent = "    "
+
+// FormatFTLEntry formats one key/value pair as a valid FTL entry.
+// Multi-line values are emitted as block patterns so line breaks are part of
+// the value instead of being interpreted as the end of the entry.
+func FormatFTLEntry(key, value string) string {
+	value = normalizeFTLNewlines(value)
+	if !strings.Contains(value, "\n") {
+		return fmt.Sprintf("%s = %s\n", key, value)
+	}
+
+	var builder strings.Builder
+	builder.WriteString(key)
+	builder.WriteString(" =\n")
+	for _, line := range strings.Split(value, "\n") {
+		builder.WriteString(ftlBlockIndent)
+		builder.WriteString(line)
+		builder.WriteString("\n")
+	}
+	return builder.String()
+}
+
+func normalizeFTLNewlines(value string) string {
+	value = strings.ReplaceAll(value, "\r\n", "\n")
+	return strings.ReplaceAll(value, "\r", "\n")
+}
+
 func (f *Ftl) SaveDynamic(accessKey string, data []Object) error {
 	f.Lock()
 	defer f.Unlock()
 
-	var dataMap = make(map[string]map[string]interface{}) // localeCode -> key -> value
+	var dataMap = make(map[string]map[string]string) // localeCode -> key -> value
 	for _, datum := range data {
 		if _, ok := dataMap[datum.LocaleCode]; !ok {
-			dataMap[datum.LocaleCode] = make(map[string]interface{})
+			dataMap[datum.LocaleCode] = make(map[string]string)
 		}
 		dataMap[datum.LocaleCode][datum.Key] = datum.Value
 	}
@@ -46,20 +72,17 @@ func (f *Ftl) SaveDynamic(accessKey string, data []Object) error {
 			return err
 		}
 
-		builder, err := strings.Builder{}, nil
+		var builder strings.Builder
+		builder.Write(b)
 
 		for key, value := range dataMap[fi.localeCode] {
-			builder.Write(b)
 			builder.WriteString("\n")
-			builder.WriteString(key)
-			builder.WriteString(" = ")
-			if strValue, ok := value.(string); ok {
-				builder.WriteString(strValue)
-			}
-			builder.WriteString("\n")
+			builder.WriteString(FormatFTLEntry(key, value))
 		}
 
-		os.WriteFile(fi.path, []byte(builder.String()), 0755)
+		if err := os.WriteFile(fi.path, []byte(builder.String()), 0755); err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -94,7 +117,7 @@ func (f *Ftl) LoadOneDynamic(accessKey, lang, key string) (string, error) {
 		}
 	}
 
-	return key, fmt.Errorf(fmt.Sprintf("Key: %s, nof found", key)) // Not found
+	return key, fmt.Errorf("Key: %s, nof found", key) // Not found
 }
 
 type file struct {
@@ -144,51 +167,51 @@ func FtlParse(locale string, data []byte) []Object {
 	scanner := bufio.NewScanner(bytes.NewReader(data))
 
 	var foundedKey string
-	var foundedValue json.RawMessage
+	var foundedValue strings.Builder
+	var foundedValueBlock bool
 
-	entries := make(map[string]json.RawMessage)
+	entries := make(map[string]string)
+	flush := func() {
+		if foundedKey != "" {
+			entries[foundedKey] = foundedValue.String()
+		}
+	}
 
 	for scanner.Scan() {
 		line := scanner.Text()
 		lineWithoutSpace := strings.TrimSpace(line)
 
-		// Skip comments
-		if strings.HasPrefix(lineWithoutSpace, "#") {
+		// Skip top-level comments.
+		if !startsWithFTLIndent(line) && strings.HasPrefix(lineWithoutSpace, "#") {
 			continue
 		}
 
-		if strings.Contains(lineWithoutSpace, "=") && !strings.HasPrefix(lineWithoutSpace, ".") {
-			split := strings.Split(lineWithoutSpace, "=")
-
-			if len(split) > 0 {
-				// When founded new key, founded value should be reset
-				foundedValue = nil
-				key := strings.TrimSpace(split[0])
-				foundedKey = key
-
-				for idx, parts := range split {
-					if idx == 0 {
-						continue
-					}
-					foundedValue = json.RawMessage(strings.TrimPrefix(parts, " ") + "\n")
-				}
-
-				if foundedKey != "" {
-					entries[foundedKey] = foundedValue
-				}
+		if key, value, ok := parseFTLEntryLine(line); ok {
+			flush()
+			foundedKey = key
+			foundedValue.Reset()
+			foundedValueBlock = value == ""
+			if value != "" {
+				foundedValue.WriteString(value)
+				foundedValue.WriteString("\n")
 			}
+			continue
 		}
 
-		if foundedKey != "" && (!strings.Contains(lineWithoutSpace, "=") || strings.HasPrefix(lineWithoutSpace, ".")) {
+		if foundedKey != "" {
 			// Skip lines without any characters
-			if len(lineWithoutSpace) < 1 {
+			if len(lineWithoutSpace) < 1 && !foundedValueBlock {
 				continue
 			}
 
-			foundedValue = append(foundedValue, []byte(line+"\n")...)
-			entries[foundedKey] = foundedValue
+			if foundedValueBlock {
+				line = strings.TrimPrefix(line, ftlBlockIndent)
+			}
+			foundedValue.WriteString(line)
+			foundedValue.WriteString("\n")
 		}
 	}
+	flush()
 
 	// Convert the map to []Object
 	var result []Object
@@ -196,11 +219,39 @@ func FtlParse(locale string, data []byte) []Object {
 		result = append(result, Object{
 			LocaleCode: locale,
 			Key:        key,
-			Value:      string(value),
+			Value:      value,
 		})
 	}
 
 	return result
+}
+
+func parseFTLEntryLine(line string) (key, value string, ok bool) {
+	if startsWithFTLIndent(line) {
+		return "", "", false
+	}
+
+	line = strings.TrimSpace(line)
+	if line == "" || strings.HasPrefix(line, "#") || strings.HasPrefix(line, ".") {
+		return "", "", false
+	}
+
+	idx := strings.Index(line, "=")
+	if idx < 0 {
+		return "", "", false
+	}
+
+	key = strings.TrimSpace(line[:idx])
+	if key == "" {
+		return "", "", false
+	}
+
+	value = strings.TrimPrefix(line[idx+1:], " ")
+	return key, value, true
+}
+
+func startsWithFTLIndent(line string) bool {
+	return strings.HasPrefix(line, " ") || strings.HasPrefix(line, "\t")
 }
 
 func (f *Ftl) LoadAllStatic(checksumIn string) ([]Object, string, error) {

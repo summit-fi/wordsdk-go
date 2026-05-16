@@ -2,6 +2,7 @@ package test
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/summit-fi/wordsdk-go/source"
@@ -107,5 +108,60 @@ func TestSaveDynamicOverwritesExistingKeys(t *testing.T) {
 	}
 	if val != "hi" {
 		t.Errorf("expected 'hi', got '%s'", val)
+	}
+}
+
+func TestFormatFTLEntrySerializesMultilineValues(t *testing.T) {
+	value := "first line\nsecond line"
+
+	got := source.FormatFTLEntry("message", value)
+	want := "message =\n    first line\n    second line\n"
+
+	if got != want {
+		t.Fatalf("FormatFTLEntry() = %q, want %q", got, want)
+	}
+}
+
+func TestSaveDynamicPreservesMultilineValues(t *testing.T) {
+	path, cleanup := createTempFile(t, "")
+	defer cleanup()
+
+	ftl := source.NewFtl()
+	_ = ftl.AddLocaleFile("en_EU", path)
+
+	value := strings.Join([]string{
+		"first line",
+		"line with equals = still value",
+		"# markdown heading, not an FTL comment",
+		"last line",
+	}, "\n")
+
+	err := ftl.SaveDynamic("", []source.Object{
+		{LocaleCode: "en_EU", Key: "complex", Value: value},
+	})
+	if err != nil {
+		t.Fatalf("SaveDynamic error: %v", err)
+	}
+
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("ReadFile error: %v", err)
+	}
+
+	expectedEntry := "complex =\n" +
+		"    first line\n" +
+		"    line with equals = still value\n" +
+		"    # markdown heading, not an FTL comment\n" +
+		"    last line\n"
+	if !strings.Contains(string(raw), expectedEntry) {
+		t.Fatalf("saved FTL does not contain formatted multiline entry:\n%s", string(raw))
+	}
+
+	got, err := ftl.LoadOneDynamic("", "en_EU", "complex")
+	if err != nil {
+		t.Fatalf("LoadOneDynamic error: %v", err)
+	}
+	if got != value {
+		t.Fatalf("LoadOneDynamic() = %q, want %q", got, value)
 	}
 }

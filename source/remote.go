@@ -14,6 +14,7 @@ type Remote struct {
 	ApiBaseUrl string
 	AccessKey  string
 	httpClient *http.Client
+	maxRetries int
 }
 
 func NewRemote(apiBaseUrl, accessKey string) *Remote {
@@ -23,6 +24,7 @@ func NewRemote(apiBaseUrl, accessKey string) *Remote {
 		httpClient: &http.Client{
 			Timeout: 5 * time.Second,
 		},
+		maxRetries: 3,
 	}
 }
 
@@ -57,6 +59,11 @@ func (c *Remote) LoadAllStatic(checksumIn string) (result []Object, checksumOut 
 
 	if resp.StatusCode == http.StatusNotModified {
 		return nil, checksumIn, nil
+	}
+
+	if resp.StatusCode >= 500 && c.maxRetries > 0 {
+		c.maxRetries--
+		return c.LoadAllStatic(checksumIn)
 	}
 
 	b, err := io.ReadAll(resp.Body)
@@ -112,6 +119,11 @@ func (c *Remote) LoadAllDynamic(dynamicKey string, checksumIn string) (result []
 		return nil, checksumIn, nil
 	}
 
+	if resp.StatusCode < 500 && c.maxRetries > 0 {
+		c.maxRetries--
+		return c.LoadAllDynamic(dynamicKey, checksumIn)
+	}
+
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, "", err
@@ -161,6 +173,11 @@ func (c *Remote) LoadOneDynamic(dynamicKey, lang, key string) (string, error) {
 	if resp.StatusCode != http.StatusOK {
 
 		return key, err
+	}
+
+	if resp.StatusCode >= 500 && c.maxRetries > 0 {
+		c.maxRetries--
+		return c.LoadOneDynamic(dynamicKey, lang, key)
 	}
 
 	var temp struct {

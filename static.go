@@ -65,9 +65,7 @@ func (c *Client) Reset() error {
 		return err
 	}
 
-	locales := c.cache.GetAll()
-
-	for _, locale := range locales {
+	for _, locale := range c.cache.GetKeys() {
 		bundle := c.cache.Get(cldr.Language(locale))
 		if bundle == nil {
 			return fmt.Errorf("no bundle found for language '%s'", locale)

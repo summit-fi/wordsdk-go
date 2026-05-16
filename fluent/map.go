@@ -1,6 +1,8 @@
 package fluent
 
-import "sync"
+import (
+	"sync"
+)
 
 func NewMap[K comparable, V any]() Map[K, V] {
 	return Map[K, V]{
@@ -46,6 +48,27 @@ func (m *Map[K, V]) RetrieveAll() map[K]V {
 	return result
 }
 
+func (m *Map[K, V]) GetKeys() []K {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+
+	keys := make([]K, 0, len(m.m))
+	for k := range m.m {
+		keys = append(keys, k)
+	}
+	return keys
+}
+
+func (m *Map[K, V]) GetValues() []V {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	values := make([]V, 0, len(m.m))
+	for _, v := range m.m {
+		values = append(values, v)
+	}
+	return values
+}
+
 func (m *Map[K, V]) Set(key K, value V) {
 	m.mu.Lock()
 	m.m[key] = value
@@ -63,4 +86,10 @@ func (m *Map[K, V]) Exist(key K) (value V, ok bool) {
 	defer m.mu.RUnlock()
 	value, ok = m.m[key]
 	return
+}
+
+func (m *Map[K, V]) Len() int {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	return len(m.m)
 }

@@ -74,27 +74,31 @@ func NewClient(config *Config) (SDK, error) {
 		saveStrategy:   config.SaveStrategy,
 	}
 
+	if config.Source == nil {
+		return nil, errors.New("source cannot be nil")
+	}
+
 	data, checksum, err := config.Source.LoadAllStatic("")
 	if err != nil {
 		return nil, fmt.Errorf("failed to load translations: %v", err)
 	}
 	c.cache = fluent.NewMap[cldr.Language, *fluent.Bundle]()
 
-	c.checksum = checksum
 	err = c.UpdateBundle(data)
 	if err != nil {
 		return nil, err
 	}
+
+	c.checksum = checksum
 
 	c.runSyncTranslationsJob()
 	return &c, nil
 }
 
 func (c *Client) EnableDynamicContent(key string) *DynamicContent {
-	cli := c
-	cli.dynamicContentAccessKey = key
+	c.dynamicContentAccessKey = key
 	return &DynamicContent{
-		Client: cli,
+		Client: c,
 	}
 }
 func (c *Client) Dynamic() *DynamicContent {
@@ -107,6 +111,9 @@ func (c *Client) runSyncTranslationsJob() {
 	c.syncTranslations()
 	go func() {
 		for {
+			if c.updateInterval <= 0 {
+				return
+			}
 			time.Sleep(c.updateInterval)
 			c.syncTranslations()
 		}
@@ -158,23 +165,18 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 		}
 
 		key := strings.TrimSpace(item.Key)
-		value := strings.TrimSpace(item.Value)
+		value := item.Value
 
 		// Make sure key doesn't contain invalid characters
 		if strings.ContainsAny(key, "\n\r") {
 			continue // Skip invalid keys
 		}
 
-		localeMap[item.Key].WriteString(key)
-		localeMap[item.Key].WriteString(" = ") // Add space before and after equals sign
-
 		if len(value) == 0 {
-			localeMap[item.Key].WriteString(` `)
+			value = "\u00a0"
 		}
 
-		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
-		localeMap[item.Key].WriteString("\n") // Only one newline at the end
-
+		localeMap[item.Key].WriteString(source.FormatFTLEntry(key, value))
 	}
 
 	for lang, builder := range mapData {
@@ -229,8 +231,8 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 func (c *Client) GetCacheSize() int {
 
 	size := 0
-	for _, bundle := range c.cache.GetAll() {
-		size += int(reflect.TypeOf(bundle).Size())
+	for keys := range c.cache.GetKeys() {
+		size += int(reflect.TypeOf(keys).Size())
 	}
 	return size
 }
