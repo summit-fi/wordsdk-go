@@ -172,11 +172,14 @@ func (c *Client) UpdateBundle(data []source.Object) error {
 			continue // Skip invalid keys
 		}
 
+		localeMap[item.Key].WriteString(key)
+		localeMap[item.Key].WriteString(" = ")
 		if len(value) == 0 {
-			value = "\u00a0"
+			localeMap[item.Key].WriteString(` `)
 		}
 
-		localeMap[item.Key].WriteString(source.FormatFTLEntry(key, value))
+		localeMap[item.Key].WriteString(fmt.Sprintf("%s", value))
+		localeMap[item.Key].WriteString("\n")
 	}
 
 	for lang, builder := range mapData {

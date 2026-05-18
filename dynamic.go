@@ -87,10 +87,7 @@ func (d *DynamicContent) saveObjects(data []source.Object) error {
 		}
 
 		// Update local cache
-		err = d.UpdateBundle(data)
-		if err != nil {
-			return err
-		}
+		d.updateSaveBundleWithData(data)
 	} else if d.saveStrategy == SaveStrategyOnDemand {
 		d.updateSaveBundleWithData(data)
 	} else {
@@ -127,6 +124,10 @@ func (d *DynamicContent) SaveTranslations(data []source.Object) error {
 func (d *DynamicContent) updateSaveBundleWithData(data []source.Object) {
 	for _, item := range data {
 		bundle := d.cache.Get(cldr.Language(item.LocaleCode))
+		if bundle == nil {
+			bundle = fluent.NewBundle(cldr.Language(item.LocaleCode))
+			d.cache.Set(cldr.Language(item.LocaleCode), bundle)
+		}
 		if !bundle.HasMessage(item.Key) {
 			d.logger.Debugf("Adding key '%s' for language '%s'", item.Key, item.LocaleCode)
 			resource, errs := fluent.NewResource(source.FormatFTLEntry(item.Key, item.Value))
