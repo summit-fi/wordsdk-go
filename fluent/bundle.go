@@ -317,6 +317,45 @@ func (bundle *Bundle) FormatMessage(key string, contexts ...*FormatContext) (str
 	return result, res.errors, nil
 }
 
+func (bundle *Bundle) FormatFullMessage(key string, contexts ...*FormatContext) (*FormattedMessage, []error, error) {
+	if bundle.messages.Get(key) == nil {
+		return nil, nil, fmt.Errorf("message '%s' does not exist", key)
+	}
+
+	msg := bundle.messages.Get(key)
+	variables, functions := assembleContexts(contexts...)
+
+	// Add the bundle's functions to the resolver's functions
+	for name, value := range bundle.functions {
+		functions[name] = value
+	}
+
+	res := &resolver{
+		bundle:          bundle,
+		primaryLanguage: bundle.locales[0],
+		params:          nil,
+		variables:       variables,
+		functions:       functions,
+		errors:          []error{},
+		activeMessages:  make(map[string]struct{}),
+	}
+
+	out := &FormattedMessage{
+		Attributes: make(map[string]string),
+	}
+
+	if msg.Value != nil {
+		v := res.resolvePattern(msg.Value).String()
+		out.Value = &v
+	}
+
+	for _, attr := range msg.Attributes {
+		out.Attributes[attr.ID.Name] = res.resolvePattern(attr.Value).String()
+	}
+
+	return out, res.errors, nil
+}
+
 // Checks whether the bundle contains a message with the given key.
 func (bundle *Bundle) HasMessage(key string) bool {
 	return bundle.messages.Get(key) != nil
