@@ -1,6 +1,10 @@
 package cldr
 
-import "golang.org/x/text/language"
+import (
+	"strings"
+
+	"golang.org/x/text/language"
+)
 
 type Language string
 
@@ -14,8 +18,19 @@ const (
 	LanguageRuUa Language = "ru_UA"
 )
 
+func (l Language) normalized() Language {
+	switch normalized := Language(strings.ReplaceAll(string(l), "-", "_")); normalized {
+	case "":
+		return LanguageEnUS
+	case LanguageEnUS, LanguageEnCo, LanguageEsCo, LanguageEnEu, LanguageEnUa, LanguageRuUa, LanguageUkUa:
+		return normalized
+	default:
+		return l
+	}
+}
+
 func (l Language) BCP47() language.Tag {
-	switch l {
+	switch l.normalized() {
 	case LanguageEnUS:
 		return language.MustParse("en-US")
 	case LanguageEnCo:
@@ -36,7 +51,7 @@ func (l Language) BCP47() language.Tag {
 }
 
 func (l Language) GetNumberRules() Numbers {
-	switch l {
+	switch l.normalized() {
 	case LanguageEnUS:
 		return Numbers{}.NumberRules(LanguageEnUS)
 	case LanguageUkUa:
@@ -58,7 +73,7 @@ func (l Language) GetNumberRules() Numbers {
 }
 
 func (l Language) OrdinalRules(num int) string {
-	switch l {
+	switch l.normalized() {
 	case LanguageEnUS, LanguageEnEu, LanguageEnUa, LanguageEnCo:
 		if num == 1 {
 			return "1"
