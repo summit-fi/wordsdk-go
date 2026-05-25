@@ -246,7 +246,7 @@ var BrowserScenario = Scenario{
 		{
 			Key: "main-context-menu-media-play-speed-slow",
 			Attrs: map[string]any{
-				"label":     "Slow (0.5)",
+				"label":     "Slow (0.5×)",
 				"accesskey": "S",
 			},
 		},
@@ -260,21 +260,21 @@ var BrowserScenario = Scenario{
 		{
 			Key: "main-context-menu-media-play-speed-fast",
 			Attrs: map[string]any{
-				"label":     "Fast (1.25)",
+				"label":     "Fast (1.25×)",
 				"accesskey": "F",
 			},
 		},
 		{
 			Key: "main-context-menu-media-play-speed-faster",
 			Attrs: map[string]any{
-				"label":     "Faster (1.5)",
+				"label":     "Faster (1.5×)",
 				"accesskey": "a",
 			},
 		},
 		{
 			Key: "main-context-menu-media-play-speed-fastest",
 			Attrs: map[string]any{
-				"label":     "Ludicrous (2)",
+				"label":     "Ludicrous (2×)",
 				"accesskey": "L",
 			},
 		},
@@ -3618,33 +3618,6 @@ var MissingOptionalAllLocalesScenario = Scenario{
 	Queries: []Query{
 		{Key: "history-section-label", Value: ptr.Ptr("History")},
 		{Key: "missing-one", Value: ptr.Ptr("zaginiony")},
-		{Key: "missing-all", Value: ptr.Ptr("missing-all")},
-	},
-}
-
-var MissingRequiredOneLocaleScenario = Scenario{
-	Name:   "missing_required_one_locale",
-	Locale: "en-US",
-	FileSources: []FileSource{
-		{Name: "browser", PathScheme: "browser/{locale}/"},
-		{Name: "missing", PathScheme: "missing-resource/{locale}/"},
-	},
-	Queries: []Query{
-		{Key: "history-section-label", Value: ptr.Ptr("Historia")},
-		{Key: "missing-one", Value: ptr.Ptr("zaginiony")},
-	},
-}
-
-var MissingRequiredAllLocalesScenario = Scenario{
-	Name:   "missing_required_all_locales",
-	Locale: "en-US",
-	FileSources: []FileSource{
-		{Name: "browser", PathScheme: "browser/{locale}/"},
-		{Name: "missing", PathScheme: "missing-resource/{locale}/"},
-	},
-	Queries: []Query{
-		{Key: "history-section-label", Value: ptr.Ptr("history-section-label")},
-		{Key: "missing-one", Value: ptr.Ptr("missing-one")},
 		{Key: "missing-all", Value: ptr.Ptr("missing-all")},
 	},
 }

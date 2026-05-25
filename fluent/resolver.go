@@ -19,6 +19,15 @@ var pluralStrings = map[plural.Form]string{
 	plural.Many:  "many",
 }
 
+var pluralCategories = map[string]plural.Form{
+	"other": plural.Other,
+	"zero":  plural.Zero,
+	"one":   plural.One,
+	"two":   plural.Two,
+	"few":   plural.Few,
+	"many":  plural.Many,
+}
+
 // The resolver is used to resolve instances of as t.Pattern into instances of Value.
 // It uses context-relevant values and the initial Bundle for resolving specific values.
 type resolver struct {
@@ -225,6 +234,9 @@ func (resolver *resolver) resolveDefaultVariant(variants []*ast.Variant) Value {
 func (resolver *resolver) matchesVariant(selector, variant Value) bool {
 	if selStr, ok := selector.(*StringValue); ok {
 		if varStr, ok := variant.(*StringValue); ok {
+			if pluralCategoryMatches(varStr.Value, selStr.Value, resolver) {
+				return true
+			}
 			return selStr.Value == varStr.Value
 		}
 		// Handling specific case where selector is a string and variant is a number, which is common in pluralization rules
@@ -244,6 +256,20 @@ func (resolver *resolver) matchesVariant(selector, variant Value) bool {
 	}
 
 	return false
+}
+
+func pluralCategoryMatches(category, value string, resolver *resolver) bool {
+	expected, ok := pluralCategories[category]
+	if !ok {
+		return false
+	}
+
+	number, err := strconv.ParseFloat(value, 32)
+	if err != nil {
+		return false
+	}
+
+	return resolver.getPluralCategory(float32(number)) == expected
 }
 
 func (resolver *resolver) resolvePattern(pattern *ast.Pattern) Value {
