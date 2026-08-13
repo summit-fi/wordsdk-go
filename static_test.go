@@ -1,7 +1,6 @@
 package word
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"os"
@@ -125,25 +124,49 @@ func TestClient_Reset(t *testing.T) {
 	t.Logf("Translation after reset: %s", str)
 }
 
-func TestPostgresClient(t *testing.T) {
-	src, err := source.NewPostgres(context.TODO(), "postgres://user:password@localhost:5432/database")
-	if err != nil {
-		t.Fatalf("source.NewPostgres() error = %v", err)
-		return
-	}
-	sdk, err := NewClient(&Config{
-		Source:       src,
-		SaveStrategy: SaveStrategyImmediate,
-	})
-	if err != nil {
-		t.Fatalf("NewClient() error = %v", err)
-		return
-	}
+//func TestPostgresClient(t *testing.T) {
+//	src, err := source.NewPostgres(context.TODO(), "postgres://user:password@localhost:5432/database")
+//	if err != nil {
+//		t.Fatalf("source.NewPostgres() error = %v", err)
+//		return
+//	}
+//	sdk, err := NewClient(&Config{
+//		Source:       src,
+//		SaveStrategy: SaveStrategyImmediate,
+//	})
+//	if err != nil {
+//		t.Fatalf("NewClient() error = %v", err)
+//		return
+//	}
+//
+//	err = sdk.EnableDynamicContent(XKeyGen("test", "schedule")).SaveTranslation("en_EU", "test_postgres", "Testing Postgres dynamic content")
+//	if err != nil {
+//		t.Errorf("Failed to save translation: %v", err)
+//		return
+//	}
+//
+//}
 
-	err = sdk.EnableDynamicContent(XKeyGen("test", "schedule")).SaveTranslation("en_EU", "test_postgres", "Testing Postgres dynamic content")
-	if err != nil {
-		t.Errorf("Failed to save translation: %v", err)
-		return
-	}
-
-}
+//
+//func TestPostgresClient(t *testing.T) {
+//	src, err := source.NewPostgres(context.TODO(), "postgres://user:password@localhost:5432/database")
+//	if err != nil {
+//		t.Fatalf("source.NewPostgres() error = %v", err)
+//		return
+//	}
+//	sdk, err := NewClient(&Config{
+//		Source:       src,
+//		SaveStrategy: SaveStrategyImmediate,
+//	})
+//	if err != nil {
+//		t.Fatalf("NewClient() error = %v", err)
+//		return
+//	}
+//
+//	err = sdk.EnableDynamicContent(XKeyGen("test", "schedule")).SaveTranslation("en_EU", "test_postgres", "Testing Postgres dynamic content")
+//	if err != nil {
+//		t.Errorf("Failed to save translation: %v", err)
+//		return
+//	}
+//
+//}

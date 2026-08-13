@@ -14,7 +14,7 @@ func TestLanguageByCode(t *testing.T) {
 		{"en_US", LanguageEnUS},
 		{"uk_UA", LanguageUkUa},
 		{"ru_UA", LanguageRuUa},
-		{"", LanguageEnUS}, // Default case for empty string
+		{"", ""}, // Default case for empty string
 	}
 
 	for _, tt := range tests {

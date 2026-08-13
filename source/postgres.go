@@ -60,9 +60,12 @@ func (p *Postgres) LoadTranslationsFromFiles(files []string) error {
 
 	for _, f := range openedFiles {
 
-		parsed := FtlParse(f.localeCode, f.bytes)
+		parsed, err := FtlParseWithError(f.localeCode, f.bytes)
+		if err != nil {
+			return fmt.Errorf("failed to parse FTL file %q: %w", f.localeCode, err)
+		}
 
-		err := p.batchSaveTranslations(parsed)
+		err = p.batchSaveTranslations(parsed)
 		if err != nil {
 			return fmt.Errorf("failed to save translations from remote files: %v", err)
 		}
