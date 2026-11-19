@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// UnifiedWhenRule describes an active window with optional bounds and repetition.
 type UnifiedWhenRule struct {
 	Start  *UnifiedTime       `json:"start"`
 	End    *UnifiedTime       `json:"end"`
@@ -14,30 +15,35 @@ type UnifiedWhenRule struct {
 }
 
 func (r UnifiedWhenRepeat) matches(day UnifiedTime) bool {
-	for _, w := range r.Weekly {
-		n := isoWeekday(day.Time)
-		if w.Start.ToISO() <= n && n <= w.End.ToISO() {
+	weekday := isoWeekday(day.Time)
+	for _, week := range r.Weekly {
+		if week.Start.ToISO() <= weekday && weekday <= week.End.ToISO() {
 			return true
 		}
 	}
-	for _, m := range r.Monthly {
-		if m.Contains(day.Time.Day(), day.Get(AnchorLastMonthDay, nil).Time.Day()) {
+	for _, month := range r.Monthly {
+		if month.Contains(day.Time.Day(), day.Get(AnchorLastMonthDay, nil).Time.Day()) {
 			return true
 		}
 	}
-	for _, y := range r.Yearly {
-		if y.Contains(day.Time.YearDay(), day.Get(AnchorLastDayOfYear, nil).Time.YearDay()) {
+	for _, year := range r.Yearly {
+		if year.Contains(day.Time.YearDay(), day.Get(AnchorLastDayOfYear, nil).Time.YearDay()) {
 			return true
 		}
 	}
 	return len(r.Weekly)+len(r.Monthly)+len(r.Yearly) == 0
 }
+
+// activeDay checks the calendar bounds, repeat pattern, and matching-day count.
 func (r UnifiedWhenRule) activeDay(day UnifiedTime) bool {
 	if !r.Validation().IsValid() {
 		return false
 	}
 	day = ruleDayStart(day, 0)
-	if r.Start != nil && day.CompareTo(ruleDayStart(*r.Start, 0)) < 0 || r.End != nil && day.CompareTo(ruleDayStart(*r.End, 0)) > 0 {
+	if r.Start != nil && day.CompareTo(ruleDayStart(*r.Start, 0)) < 0 {
+		return false
+	}
+	if r.End != nil && day.CompareTo(ruleDayStart(*r.End, 0)) > 0 {
 		return false
 	}
 	if r.Repeat == nil {
@@ -46,15 +52,19 @@ func (r UnifiedWhenRule) activeDay(day UnifiedTime) bool {
 	if !r.Repeat.matches(day) {
 		return false
 	}
-	if r.Repeat.Count != nil {
-		remaining := *r.Repeat.Count
-		for d := ruleDayStart(*r.Start, 0); d.CompareTo(day) < 0; d = ruleDayStart(d, 1) {
-			if r.Repeat.matches(d) {
-				remaining--
-				if remaining == 0 {
-					return false
-				}
-			}
+	if r.Repeat.Count == nil {
+		return true
+	}
+
+	// The current day is active if the earlier matching days leave a slot for it.
+	remaining := *r.Repeat.Count
+	for candidate := ruleDayStart(*r.Start, 0); candidate.CompareTo(day) < 0; candidate = ruleDayStart(candidate, 1) {
+		if !r.Repeat.matches(candidate) {
+			continue
+		}
+		remaining--
+		if remaining == 0 {
+			return false
 		}
 	}
 	return true
@@ -79,7 +89,8 @@ func ruleHour(token string, anchor UnifiedTime) UnifiedTime {
 	h, _ := strconv.Atoi(token[:2])
 	m, _ := strconv.Atoi(token[3:5])
 	day := anchor.Time
-	if !anchor.Equal(ruleDayStart(anchor, 0)) && (h < day.Hour() || h == day.Hour() && m < day.Minute()) {
+	beforeAnchor := h*60+m < day.Hour()*60+day.Minute()
+	if beforeAnchor && !anchor.Equal(ruleDayStart(anchor, 0)) {
 		day = day.AddDate(0, 0, 1)
 	}
 	wall := time.Date(day.Year(), day.Month(), day.Day(), h, m, 0, 0, time.UTC)
@@ -100,54 +111,70 @@ func ruleHour(token string, anchor UnifiedTime) UnifiedTime {
 	}
 	return UnifiedTime{Time: local}
 }
+
+// GetActiveRanges returns the day's matching windows clipped to the rule bounds.
 func (r UnifiedWhenRule) GetActiveRanges(day UnifiedTime) []UnifiedTimeRange {
-	var ranges []UnifiedTimeRange
 	if !r.activeDay(day) {
-		return ranges
+		return nil
 	}
-	add := func(a, b UnifiedTime) {
-		if r.Start != nil && a.CompareTo(*r.Start) < 0 {
-			a = *r.Start
+
+	var ranges []UnifiedTimeRange
+	appendClipped := func(window UnifiedTimeRange) {
+		if r.Start != nil && window.Start.CompareTo(*r.Start) < 0 {
+			window.Start = *r.Start
 		}
-		if r.End != nil && b.CompareTo(*r.End) > 0 {
-			b = *r.End
+		if r.End != nil && window.End.CompareTo(*r.End) > 0 {
+			window.End = *r.End
 		}
-		if a.CompareTo(b) < 0 {
-			ranges = append(ranges, NewUnifiedTimeRange(a, b))
+		if window.Start.CompareTo(window.End) < 0 {
+			ranges = append(ranges, window)
 		}
 	}
+
+	tomorrow := day.Add(TimeUnitDay, 1)
 	if r.Repeat == nil || len(r.Repeat.Hourly) == 0 {
-		end := day.Add(TimeUnitDay, 1)
 		if day.Equal(ruleDayStart(day, 0)) {
-			end = ruleDayStart(day, 1)
+			tomorrow = ruleDayStart(day, 1)
 		}
-		add(day, end)
+		appendClipped(NewUnifiedTimeRange(day, tomorrow))
 		return ranges
 	}
-	for _, hour := range r.Repeat.Hourly {
-		if hour.HasRepeatedHour() && timeZoneOffset(day.Time) <= timeZoneOffset(day.Add(TimeUnitDay, 1).Time) {
+
+	hasClockRollback := timeZoneOffset(day.Time) > timeZoneOffset(tomorrow.Time)
+	for _, hourly := range r.Repeat.Hourly {
+		if hourly.HasRepeatedHour() && !hasClockRollback {
 			continue
 		}
-		a, b := ruleHour(hour.TimeStart, day), ruleHour(hour.TimeEnd, day)
-		if b.CompareTo(a) < 0 {
-			b = ruleHour(hour.TimeEnd, ruleDayStart(day, 1))
-		}
-		// Dart maintains the wall-clock duration when a window crosses an offset change.
-		_, transition := a.Time.ZoneBounds()
-		if !transition.IsZero() {
-			delta := timeZoneOffset(transition) - timeZoneOffset(transition.Add(-time.Second))
-			boundary := transition
-			if delta < 0 {
-				boundary = boundary.Add(time.Duration(delta) * time.Second)
-			}
-			if a.Time.Before(boundary) && !b.Time.Before(boundary) {
-				b.Time = b.Time.Add(time.Duration(delta) * time.Second)
-			}
-		}
-		add(a, b)
+		appendClipped(resolveHourlyWindow(hourly, day))
 	}
 	return ranges
 }
+
+func resolveHourlyWindow(hourly UnifiedTimeRepeatable, day UnifiedTime) UnifiedTimeRange {
+	start := ruleHour(hourly.TimeStart, day)
+	end := ruleHour(hourly.TimeEnd, day)
+	if end.CompareTo(start) < 0 {
+		end = ruleHour(hourly.TimeEnd, ruleDayStart(day, 1))
+	}
+
+	_, transition := start.Time.ZoneBounds()
+	if transition.IsZero() {
+		return NewUnifiedTimeRange(start, end)
+	}
+
+	// Use the offset change to preserve wall-clock duration across the transition.
+	offsetChange := time.Duration(timeZoneOffset(transition)-timeZoneOffset(transition.Add(-time.Second))) * time.Second
+	boundary := transition
+	if offsetChange < 0 {
+		boundary = boundary.Add(offsetChange)
+	}
+	if start.Time.Before(boundary) && !end.Time.Before(boundary) {
+		end.Time = end.Time.Add(offsetChange)
+	}
+	return NewUnifiedTimeRange(start, end)
+}
+
+// IsActiveAt checks whether an instant falls within an active window for dayStart.
 func (r UnifiedWhenRule) IsActiveAt(t, dayStart UnifiedTime) bool {
 	for _, w := range r.GetActiveRanges(dayStart) {
 		if w.IsTimeInRange(t, RangeIntervalOpenEnd) {
@@ -156,6 +183,8 @@ func (r UnifiedWhenRule) IsActiveAt(t, dayStart UnifiedTime) bool {
 	}
 	return false
 }
+
+// IsActiveDuring checks the requested coverage for dayStart and defaults to CoverageFull.
 func (r UnifiedWhenRule) IsActiveDuring(target UnifiedTimeRange, dayStart UnifiedTime, coverage ...UnifiedWhenRuleCoverage) bool {
 	if target.Start.CompareTo(target.End) >= 0 {
 		return false
