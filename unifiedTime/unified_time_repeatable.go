@@ -7,10 +7,11 @@ import (
 
 // UnifiedTimeRepeatable represents a repeatable time range (e.g., for schedules).
 type UnifiedTimeRepeatable struct {
-	TimeStart  string
-	TimeEnd    string
-	TimeFormat string
-	TimeZone   string
+	TimeStart    string
+	TimeEnd      string
+	TimeFormat   string
+	TimeZone     string
+	invalidRange *string
 }
 
 func NewUnifiedTimeRepeatable(timeStart, timeEnd, timeFormat, timeZone string) UnifiedTimeRepeatable {

@@ -2,6 +2,7 @@ package unifiedTime
 
 import (
 	"fmt"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"github.com/summit-fi/wordsdk-go/fluent"
@@ -10,11 +11,12 @@ import (
 	"github.com/summit-fi/wordsdk-go/utils/dir"
 	"github.com/summit-fi/wordsdk-go/utils/ternary"
 
-	jsonu "github.com/summit-fi/wordsdk-go/utils/json"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
+
+	jsonu "github.com/summit-fi/wordsdk-go/utils/json"
 )
 
 type UTimeTestSuite struct {
@@ -147,6 +149,18 @@ func (s *UTimeTestSuite) runCase(tc test.UTimeCase) {
 		s.runParseTime(tc)
 	case "formatUT":
 		s.formatUT(tc)
+	case "whenRule":
+		s.runWhenRule(tc)
+	case "whenRuleValidation":
+		s.runWhenRuleValidation(tc)
+	case "whenRepeatValidation":
+		s.runWhenRepeatValidation(tc)
+	case "whenRuleActiveRanges":
+		s.runWhenRuleActiveRanges(tc)
+	case "whenRuleIsActiveAt":
+		s.runWhenRuleIsActiveAt(tc)
+	case "whenRuleIsActiveDuring":
+		s.runWhenRuleIsActiveDuring(tc)
 	default:
 		s.Failf("unknown op", "unsupported op type: %s", tc.Op.Type)
 	}
@@ -160,6 +174,15 @@ func loadLocation(s *UTimeTestSuite, tz string) *time.Location {
 	return loc
 }
 
+func (s *UTimeTestSuite) InputUTime(tc test.UTimeCase) (UnifiedTime, *time.Location) {
+	loc := loadLocation(s, tc.Input.TZ)
+
+	var t1 UnifiedTime
+	utime, err := t1.Parse(tc.Input.UTC, loc)
+	s.Require().NoError(err, "parse input UTC")
+	return utime, loc
+}
+
 func expectedFormat(tc test.UTimeCase, result any) string {
 
 	input2 := tc.Op.Input2 != nil
@@ -170,11 +193,7 @@ func expectedFormat(tc test.UTimeCase, result any) string {
 }
 
 func (s *UTimeTestSuite) runAdd(tc test.UTimeCase) {
-	loc := loadLocation(s, tc.Input.TZ)
-
-	var t1 UnifiedTime
-	utime, err := t1.Parse(tc.Input.UTC, loc)
-	assert.NoError(s.T(), err, "parse input UTC")
+	utime, _ := s.InputUTime(tc)
 
 	utime = utime.Add(TimeUnit(tc.Op.Unit), tc.Op.Amount)
 
@@ -186,11 +205,7 @@ func (s *UTimeTestSuite) runAdd(tc test.UTimeCase) {
 }
 
 func (s *UTimeTestSuite) runSub(tc test.UTimeCase) {
-	loc := loadLocation(s, tc.Input.TZ)
-
-	var t1 UnifiedTime
-	utime, err := t1.Parse(tc.Input.UTC, loc)
-	assert.NoError(s.T(), err, "parse input UTC")
+	utime, _ := s.InputUTime(tc)
 
 	utime = utime.Sub(TimeUnit(tc.Op.Unit), tc.Op.Amount)
 
@@ -624,4 +639,137 @@ func (s *UTimeTestSuite) formatUT(tc test.UTimeCase) {
 		result,
 		expectedFormat(tc, result),
 	)
+}
+
+func (s *UTimeTestSuite) runWhenRule(tc test.UTimeCase) {
+	utime, _ := s.InputUTime(tc)
+	var wr UnifiedWhenRule
+
+	err := wr.UnmarshalGQL(jsonu.Bytes(tc.Op.WhenRule))
+	assert.NoError(s.T(), err, "parse when rule")
+
+	wr.Validation().IsValid()
+
+	s.Equal(
+		*tc.Expected.Bool,
+		wr.activeDay(utime),
+		expectedFormat(tc, wr.activeDay(utime)),
+	)
+
+	s.Equal(
+		*tc.Expected.Range,
+		wr.GetActiveRanges(utime),
+		expectedFormat(tc, wr.GetActiveRanges(utime)),
+	)
+}
+
+func (s *UTimeTestSuite) runWhenRuleValidation(tc test.UTimeCase) {
+	var wr UnifiedWhenRule
+
+	err := wr.UnmarshalGQL(jsonu.Bytes(tc.Op.WhenRule))
+	s.Require().NoError(err, "parse when rule")
+
+	s.assertWhenValidation(tc, wr.Validation())
+}
+
+func (s *UTimeTestSuite) runWhenRepeatValidation(tc test.UTimeCase) {
+	s.Require().NotNil(tc.Op.WhenRepeat, "whenRepeatValidation requires repeat")
+	repeat, err := jsonu.ParseBytesWithError[UnifiedWhenRepeat](jsonu.Bytes(tc.Op.WhenRepeat))
+	s.Require().NoError(err, "parse when repeat")
+
+	s.assertWhenValidation(tc, repeat.Validation())
+}
+
+func (s *UTimeTestSuite) assertWhenValidation(tc test.UTimeCase, validation UnifiedWhenRuleValidation) {
+	codes := make([]string, len(validation.Errors))
+	for i, code := range validation.Errors {
+		codes[i] = string(code)
+	}
+	s.Equal(tc.Expected.List, codes, expectedFormat(tc, codes))
+}
+
+func (s *UTimeTestSuite) runWhenRuleActiveRanges(tc test.UTimeCase) {
+	utime, loc := s.InputUTime(tc)
+
+	var wr UnifiedWhenRule
+	err := wr.UnmarshalGQL(jsonu.Bytes(tc.Op.WhenRule))
+	s.Require().NoError(err, "parse when rule")
+
+	// Fixture rule bounds use the input time zone for calendar-day comparisons.
+	if wr.Start != nil {
+		start := wr.Start.In(loc)
+		wr.Start = &start
+	}
+	if wr.End != nil {
+		end := wr.End.In(loc)
+		wr.End = &end
+	}
+	activeRanges := wr.GetActiveRanges(utime)
+	actual := make([]test.ExpectedTimeRange, len(activeRanges))
+	for i, r := range activeRanges {
+		actual[i] = test.ExpectedTimeRange{Start: r.Start.ToISO8601UTCString(), End: r.End.ToISO8601UTCString()}
+	}
+	s.Equal(tc.Expected.Ranges, actual, expectedFormat(tc, actual))
+}
+
+func (s *UTimeTestSuite) runWhenRuleIsActiveAt(tc test.UTimeCase) {
+	dayStart, loc := s.InputUTime(tc)
+
+	var wr UnifiedWhenRule
+	err := wr.UnmarshalGQL(jsonu.Bytes(tc.Op.WhenRule))
+	s.Require().NoError(err, "parse when rule")
+
+	// Fixture rule bounds use the input time zone for calendar-day comparisons.
+	if wr.Start != nil {
+		start := wr.Start.In(loc)
+		wr.Start = &start
+	}
+	if wr.End != nil {
+		end := wr.End.In(loc)
+		wr.End = &end
+	}
+
+	s.Require().NotNil(tc.Op.Input2, "whenRuleIsActiveAt requires input2")
+	point := tc.Op.Input2
+	instant, err := (UnifiedTime{}).Parse(point.UTC, loadLocation(s, point.TZ))
+	s.Require().NoError(err, "parse input2 UTC")
+
+	result := wr.IsActiveAt(instant, dayStart)
+	s.Equal(*tc.Expected.Bool, result, expectedFormat(tc, result))
+
+}
+
+func (s *UTimeTestSuite) runWhenRuleIsActiveDuring(tc test.UTimeCase) {
+	dayStart, loc := s.InputUTime(tc)
+
+	var wr UnifiedWhenRule
+	err := wr.UnmarshalGQL(jsonu.Bytes(tc.Op.WhenRule))
+	s.Require().NoError(err, "parse when rule")
+
+	if wr.Start != nil {
+		start := wr.Start.In(loc)
+		wr.Start = &start
+	}
+	if wr.End != nil {
+		end := wr.End.In(loc)
+		wr.End = &end
+	}
+
+	s.Require().NotNil(tc.Op.Range, "whenRuleIsActiveDuring requires range")
+	parsePoint := func(point test.TestTimePoint) UnifiedTime {
+		instant, err := (UnifiedTime{}).Parse(point.UTC, loadLocation(s, point.TZ))
+		s.Require().NoError(err, "parse range endpoint %s", point.UTC)
+		return instant
+	}
+
+	target := NewUnifiedTimeRange(parsePoint(tc.Op.Range.Start), parsePoint(tc.Op.Range.End))
+
+	coverage := CoverageFull
+	if tc.Op.Coverage != nil {
+		coverage = UnifiedWhenRuleCoverage(*tc.Op.Coverage)
+	}
+
+	result := wr.IsActiveDuring(target, dayStart, coverage)
+	s.Require().NotNil(tc.Expected.Bool, "whenRuleIsActiveDuring requires expected.bool")
+	s.Equal(*tc.Expected.Bool, result, expectedFormat(tc, result))
 }
