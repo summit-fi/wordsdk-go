@@ -220,19 +220,6 @@ func (r UnifiedWhenRule) covers(target UnifiedTimeRange, windows []UnifiedTimeRa
 	return false
 }
 
-func (r UnifiedWhenRule) CopyWith(start, end *UnifiedTime, repeat *UnifiedWhenRepeat) UnifiedWhenRule {
-	if start != nil {
-		r.Start = start
-	}
-	if end != nil {
-		r.End = end
-	}
-	if repeat != nil {
-		r.Repeat = repeat
-	}
-	return r
-}
-
 func (r UnifiedWhenRule) Equal(other UnifiedWhenRule) bool {
 	sameTime := func(a, b *UnifiedTime) bool {
 		if a == nil || b == nil {

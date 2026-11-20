@@ -32,11 +32,11 @@ func LoadBundle(root string, s Scenario) *fluent.Bundle {
 			log.Fatalf("resource not found: %s", res)
 		}
 
-		res, errs := fluent.NewResource(content)
+		resource, errs := fluent.NewResource(content)
 		if len(errs) > 0 {
 			log.Fatalf("parse %s: %v", res, errs)
 		}
-		if errs := fluentBundle.AddResource(res); len(errs) > 0 {
+		if errs := fluentBundle.AddResource(resource); len(errs) > 0 {
 			log.Fatalf("add %s: %v", res, errs)
 		}
 	}

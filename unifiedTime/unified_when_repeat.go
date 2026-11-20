@@ -148,28 +148,4 @@ func (r UnifiedYear) IsValid() bool                { return r.invalid == nil }
 func (r UnifiedYear) Contains(day, last int) bool  { return calendarRange(r).contains(day, last) }
 func (r UnifiedYear) String() string               { return calendarRange(r).String() }
 
-func (r UnifiedWhenRepeat) CopyWith(overrides UnifiedWhenRepeat) UnifiedWhenRepeat {
-	if overrides.Count != nil {
-		r.Count = overrides.Count
-	}
-	if overrides.Hourly != nil {
-		r.Hourly = overrides.Hourly
-	}
-	if overrides.Weekly != nil {
-		r.Weekly = overrides.Weekly
-	}
-	if overrides.Monthly != nil {
-		r.Monthly = overrides.Monthly
-	}
-	if overrides.Yearly != nil {
-		r.Yearly = overrides.Yearly
-	}
-	if overrides.Every != nil {
-		r.Every = overrides.Every
-	}
-	if overrides.TimeZone != nil {
-		r.TimeZone = overrides.TimeZone
-	}
-	return r
-}
 func (r UnifiedWhenRepeat) Equal(other UnifiedWhenRepeat) bool { return reflect.DeepEqual(r, other) }
