@@ -126,7 +126,7 @@ func (w Weekday) ToISO() int {
 
 }
 
-func (w Weekday) FromISO(iso int) Weekday {
+func (w *Weekday) FromISO(iso int) Weekday {
 	switch iso {
 	case 1:
 		return "monday"
