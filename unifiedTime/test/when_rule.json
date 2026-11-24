@@ -1,0 +1,2944 @@
+{
+  "suite": "when_rule",
+  "cases": [
+    {
+      "id": "wr_valid_empty",
+      "description": "Empty rule: always active",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {}
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wr_valid_bounds",
+      "description": "start before end",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-04T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wr_valid_single_day",
+      "description": "A single day: start 00:00, end next day 00:00",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-08-02T21:00:00.000Z",
+          "end": "2026-08-03T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wr_start_equals_end",
+      "description": "start equal to end",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-08-02T21:00:00.000Z",
+          "end": "2026-08-02T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "list": [
+          "startNotBeforeEnd"
+        ]
+      }
+    },
+    {
+      "id": "wr_start_after_end",
+      "description": "start after end",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-08-04T21:00:00.000Z",
+          "end": "2026-07-31T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "list": [
+          "startNotBeforeEnd"
+        ]
+      }
+    },
+    {
+      "id": "wr_count_with_start",
+      "description": "count with start",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wr_count_without_start",
+      "description": "count needs start to count from",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "repeat": {
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "list": [
+          "countWithoutStart"
+        ]
+      }
+    },
+    {
+      "id": "wr_repeat_errors",
+      "description": "repeat errors are reported by the rule",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon"
+            ],
+            "monthly": [
+              "1"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "list": [
+          "multiplePatterns"
+        ]
+      }
+    },
+    {
+      "id": "wr_invalid_value",
+      "description": "An invalid scalar value makes the rule invalid",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "00:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "list": [
+          "invalidValue"
+        ]
+      }
+    },
+    {
+      "id": "wr_rule_then_repeat_errors",
+      "description": "Rule errors come first, then repeat errors",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "start": "2026-08-04T21:00:00.000Z",
+          "end": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "count": 0,
+            "every": "3d"
+          }
+        }
+      },
+      "expected": {
+        "list": [
+          "startNotBeforeEnd",
+          "countNotPositive",
+          "everyNotSupported"
+        ]
+      }
+    },
+    {
+      "id": "wr_count_without_start_and_not_positive",
+      "description": "Both count errors",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleValidation",
+        "rule": {
+          "repeat": {
+            "count": 0
+          }
+        }
+      },
+      "expected": {
+        "list": [
+          "countWithoutStart",
+          "countNotPositive"
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_always",
+      "description": "No bounds, no repeat: the whole day",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {}
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-02T21:00:00.000Z",
+            "end": "2026-08-03T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_fall_day",
+      "description": "Kyiv Oct 25 (fall-back): the whole day is 25 hours",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {}
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-10-24T21:00:00.000Z",
+            "end": "2026-10-25T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_spring_day",
+      "description": "Kyiv Mar 29 (spring-forward): the whole day is 23 hours",
+      "input": {
+        "utc": "2026-03-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {}
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-03-28T22:00:00.000Z",
+            "end": "2026-03-29T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_clip_start",
+      "description": "First day: 09:00 is clipped to the 10:00 start",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-01T07:00:00.000Z",
+            "end": "2026-08-01T14:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_inside",
+      "description": "A day inside the bounds is not clipped",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T06:00:00.000Z",
+            "end": "2026-08-03T14:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_clip_end",
+      "description": "Last day: 17:00 is clipped to the 15:00 end",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-05T06:00:00.000Z",
+            "end": "2026-08-05T12:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_after_end",
+      "description": "After the end: nothing",
+      "input": {
+        "utc": "2026-08-05T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_window_before_start",
+      "description": "The rule starts at 18:00, after the 09:00-17:00 window: nothing on the first day",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-08-01T15:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_last_full_day",
+      "description": "The day before an exclusive end is whole",
+      "input": {
+        "utc": "2026-08-03T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-04T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T21:00:00.000Z",
+            "end": "2026-08-04T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_end_day",
+      "description": "The exclusive end day is not active",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-04T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_weekly_hit",
+      "description": "Monday matches mon-wed",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T05:00:00.000Z",
+            "end": "2026-08-03T07:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_weekly_miss",
+      "description": "Thursday does not match mon-wed",
+      "input": {
+        "utc": "2026-08-05T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_several_windows",
+      "description": "Two hourly windows in their given order",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-12:00",
+              "14:00-18:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T06:00:00.000Z",
+            "end": "2026-08-03T09:00:00.000Z"
+          },
+          {
+            "start": "2026-08-03T11:00:00.000Z",
+            "end": "2026-08-03T15:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_overnight",
+      "description": "Friday 23:00-02:00 ends on Saturday",
+      "input": {
+        "utc": "2026-08-06T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "fri"
+            ],
+            "hourly": [
+              "23:00-02:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-07T20:00:00.000Z",
+            "end": "2026-08-07T23:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_business_day",
+      "description": "Business day starting Mon 06:00: 02:00-04:00 is the night after, but still Monday by pattern",
+      "input": {
+        "utc": "2026-08-03T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon"
+            ],
+            "hourly": [
+              "02:00-04:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T23:00:00.000Z",
+            "end": "2026-08-04T01:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_end",
+      "description": "\"end\" on Aug 31",
+      "input": {
+        "utc": "2026-08-30T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "end"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-30T21:00:00.000Z",
+            "end": "2026-08-31T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_end_miss",
+      "description": "\"end\" does not match Aug 30",
+      "input": {
+        "utc": "2026-08-29T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "end"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_end_february",
+      "description": "\"end\" on Feb 28 (common year)",
+      "input": {
+        "utc": "2026-02-27T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "end"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-02-27T22:00:00.000Z",
+            "end": "2026-02-28T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_31_in_30_day_month",
+      "description": "\"31\" never matches Sep",
+      "input": {
+        "utc": "2026-09-29T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "31"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_yearly_end",
+      "description": "\"end\" on Dec 31",
+      "input": {
+        "utc": "2026-12-30T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "yearly": [
+              "end"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-12-30T22:00:00.000Z",
+            "end": "2026-12-31T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_yearly_366_common_year",
+      "description": "\"366\" never matches 2026",
+      "input": {
+        "utc": "2026-12-30T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "yearly": [
+              "366"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_count_first",
+      "description": "count 2 from Sat Aug 1: Mon Aug 3 is the 1st match",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-02T21:00:00.000Z",
+            "end": "2026-08-03T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_count_exhausted",
+      "description": "count 2: Wed Aug 5 is the 3rd match",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_new_york",
+      "description": "New York Mon Aug 3, mon 09:00-17:00",
+      "input": {
+        "utc": "2026-08-03T04:00:00.000Z",
+        "tz": "America/New_York"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon"
+            ],
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-03T13:00:00.000Z",
+            "end": "2026-08-03T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_no_midnight_santiago",
+      "description": "Santiago Sep 6 has no midnight: 00:00-02:00 stays on Sep 6 and starts at 01:00",
+      "input": {
+        "utc": "2026-09-06T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "00:00-02:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-09-06T04:00:00.000Z",
+            "end": "2026-09-06T05:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_no_midnight_whole_day_santiago",
+      "description": "Santiago Sep 6 has no midnight: the whole day is 01:00 to Sep 7 00:00 (23 hours)",
+      "input": {
+        "utc": "2026-09-06T04:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {}
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-09-06T04:00:00.000Z",
+            "end": "2026-09-07T03:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_after_no_midnight_santiago",
+      "description": "Santiago Sep 7 starts exactly where Sep 6 ended, no overlap",
+      "input": {
+        "utc": "2026-09-07T03:00:00.000Z",
+        "tz": "America/Santiago"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {}
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-09-07T03:00:00.000Z",
+            "end": "2026-09-08T03:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_overnight_fall",
+      "description": "Kyiv Oct 24, 22:00-05:00 crosses the fall-back night: 7 real hours, ends 04:00 EET",
+      "input": {
+        "utc": "2026-10-23T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "22:00-05:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-10-24T19:00:00.000Z",
+            "end": "2026-10-25T02:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_asterisk_fall_day",
+      "description": "Kyiv Oct 25, 03:30*-05:00 starts at the second 03:30 (EET)",
+      "input": {
+        "utc": "2026-10-24T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "03:30*-05:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-10-25T01:30:00.000Z",
+            "end": "2026-10-25T03:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_asterisk_regular_day",
+      "description": "Kyiv Jul 15: an asterisk window is not shown on a day without the repeated hour",
+      "input": {
+        "utc": "2026-07-14T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "03:30*-05:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_end_leap_february",
+      "description": "\"end\" on Feb 29, 2028",
+      "input": {
+        "utc": "2028-02-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "end"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2028-02-28T22:00:00.000Z",
+            "end": "2028-02-29T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_29_leap_february",
+      "description": "\"29\" matches Feb 29, 2028",
+      "input": {
+        "utc": "2028-02-28T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "29"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2028-02-28T22:00:00.000Z",
+            "end": "2028-02-29T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_yearly_366_leap_year",
+      "description": "\"366\" matches Dec 31, 2028",
+      "input": {
+        "utc": "2028-12-30T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "yearly": [
+              "366"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2028-12-30T22:00:00.000Z",
+            "end": "2028-12-31T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_count_before_end",
+      "description": "count 5 but end on Aug 4: Mon Aug 3 is active",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-03T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "count": 5
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-02T21:00:00.000Z",
+            "end": "2026-08-03T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_count_cut_by_end",
+      "description": "count 5 but end on Aug 4: Tue Aug 4 is already past the end",
+      "input": {
+        "utc": "2026-08-03T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-03T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "count": 5
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_business_day_sunday_night",
+      "description": "Business day starting Sun Aug 9 06:00: sun 02:00-04:00 is the night into Monday Aug 10",
+      "input": {
+        "utc": "2026-08-09T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "sun"
+            ],
+            "hourly": [
+              "02:00-04:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-09T23:00:00.000Z",
+            "end": "2026-08-10T01:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_business_day_monday",
+      "description": "Business day starting Mon Aug 10 06:00 does not match sun",
+      "input": {
+        "utc": "2026-08-10T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "sun"
+            ],
+            "hourly": [
+              "02:00-04:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_before_start",
+      "description": "The day before start is not active",
+      "input": {
+        "utc": "2026-07-30T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-04T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_no_start_far_past",
+      "description": "Without start the rule is unbounded in the past",
+      "input": {
+        "utc": "2019-12-31T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "end": "2026-08-04T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2019-12-31T22:00:00.000Z",
+            "end": "2020-01-01T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_no_end_far_future",
+      "description": "Without end the rule is open-ended",
+      "input": {
+        "utc": "2098-12-31T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2098-12-31T22:00:00.000Z",
+            "end": "2099-01-01T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_weekly_or_hit",
+      "description": "weekly [mon, fri] matches Fri",
+      "input": {
+        "utc": "2026-08-06T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon",
+              "fri"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-06T21:00:00.000Z",
+            "end": "2026-08-07T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_weekly_or_miss",
+      "description": "weekly [mon, fri] does not match Wednesday",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon",
+              "fri"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_or_hit",
+      "description": "monthly [1, 15] matches the 15th",
+      "input": {
+        "utc": "2026-08-14T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "1",
+              "15"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-08-14T21:00:00.000Z",
+            "end": "2026-08-15T21:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_monthly_or_miss",
+      "description": "monthly [1, 15] does not match the 14th",
+      "input": {
+        "utc": "2026-08-13T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "monthly": [
+              "1",
+              "15"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_yearly_hit",
+      "description": "yearly 4-6 matches Jan 5",
+      "input": {
+        "utc": "2026-01-04T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "yearly": [
+              "4-6"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2026-01-04T22:00:00.000Z",
+            "end": "2026-01-05T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_yearly_miss",
+      "description": "yearly 4-6 does not match Jan 7",
+      "input": {
+        "utc": "2026-01-06T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "yearly": [
+              "4-6"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_weekly_far_future",
+      "description": "A weekly rule without bounds matches any Monday, e.g. Jan 5, 2099",
+      "input": {
+        "utc": "2099-01-04T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2099-01-04T22:00:00.000Z",
+            "end": "2099-01-05T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_count_non_matching_day",
+      "description": "A day that does not match weekly is never active",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_count_distant_start_last",
+      "description": "count 3 from Sat Jan 1, 2000: Mon Jan 17 is the 3rd Monday",
+      "input": {
+        "utc": "2000-01-16T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "1999-12-31T22:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2000-01-16T22:00:00.000Z",
+            "end": "2000-01-17T22:00:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_count_distant_start_after",
+      "description": "count 3 from Sat Jan 1, 2000: Mon Jan 24 is the 4th Monday",
+      "input": {
+        "utc": "2000-01-23T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "1999-12-31T22:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_ranges_business_day_asterisk_covering",
+      "description": "Kyiv 2025 fall-back on Oct 26: the business day from Oct 25 05:00 covers 03:00*-03:45*",
+      "input": {
+        "utc": "2025-10-25T02:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2025-10-19T21:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "03:00*-03:45*"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": [
+          {
+            "start": "2025-10-26T01:00:00.000Z",
+            "end": "2025-10-26T01:45:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wr_ranges_business_day_asterisk_after",
+      "description": "The business day from Oct 26 05:00 starts after the transition: nothing",
+      "input": {
+        "utc": "2025-10-26T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "start": "2025-10-19T21:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "03:00*-03:45*"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_at_weekly_count_first",
+      "description": "Mon 09:00, 1st match",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T06:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_weekly_count_second",
+      "description": "Tue 09:00, 2nd match",
+      "input": {
+        "utc": "2026-08-03T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-04T06:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_weekly_count_outside_window",
+      "description": "Mon 11:00 is outside the hourly window",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T08:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_weekly_count_exhausted",
+      "description": "Wed 09:00 is the 3rd match, beyond count 2",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-05T06:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ],
+            "count": 2
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_monthly_count_third",
+      "description": "monthly [1, 15] count 3: Feb 1 10:00 is the 3rd match",
+      "input": {
+        "utc": "2026-01-31T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-02-01T08:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2025-12-31T22:00:00.000Z",
+          "repeat": {
+            "monthly": [
+              "1",
+              "15"
+            ],
+            "hourly": [
+              "09:00-11:00"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_monthly_count_exhausted",
+      "description": "monthly [1, 15] count 3: Feb 15 10:00 is the 4th match",
+      "input": {
+        "utc": "2026-02-14T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-02-15T08:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2025-12-31T22:00:00.000Z",
+          "repeat": {
+            "monthly": [
+              "1",
+              "15"
+            ],
+            "hourly": [
+              "09:00-11:00"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_yearly_count_third",
+      "description": "yearly [3, 6] count 3: Jan 3, 2027 10:00 is the 3rd match",
+      "input": {
+        "utc": "2027-01-02T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2027-01-03T08:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2025-12-31T22:00:00.000Z",
+          "repeat": {
+            "yearly": [
+              "3",
+              "6"
+            ],
+            "hourly": [
+              "09:00-11:00"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_yearly_count_exhausted",
+      "description": "yearly [3, 6] count 3: Jan 6, 2027 10:00 is the 4th match",
+      "input": {
+        "utc": "2027-01-05T22:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2027-01-06T08:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2025-12-31T22:00:00.000Z",
+          "repeat": {
+            "yearly": [
+              "3",
+              "6"
+            ],
+            "hourly": [
+              "09:00-11:00"
+            ],
+            "count": 3
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_whole_day_before_start_time",
+      "description": "A whole-day rule starting Aug 1 10:00 is not active at 09:59",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-01T06:59:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_whole_day_start_time",
+      "description": "A whole-day rule starting Aug 1 10:00 is active at 10:00",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-01T07:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_single_day_last_minute",
+      "description": "A single-day rule is active at 23:59",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-01T20:59:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-01T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_single_day_next_midnight",
+      "description": "A single-day rule is not active at the next midnight",
+      "input": {
+        "utc": "2026-07-31T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-01T21:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-07-31T21:00:00.000Z",
+          "end": "2026-08-01T21:00:00.000Z"
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_business_day_inside",
+      "description": "Business day from Mon 06:00, 08:00-10:00 is active at 09:00",
+      "input": {
+        "utc": "2026-08-03T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T06:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_business_day_before_start",
+      "description": "Business day from Mon 06:00: 05:00 belongs to the previous business day",
+      "input": {
+        "utc": "2026-08-03T03:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T02:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_merged_windows_unordered",
+      "description": "Windows given out of order are still merged for full coverage",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "10:00-12:00",
+              "09:00-10:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T08:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_overlapping_windows",
+      "description": "Overlapping windows are merged for full coverage",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-11:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T09:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_rule_start_inside",
+      "description": "Rule starting 10:00: slot 10:00-11:00 is covered",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "start": "2026-08-03T07:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T08:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_rule_start_full",
+      "description": "Rule starting 10:00: slot 09:00-11:00 is not covered",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "start": "2026-08-03T07:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T08:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_rule_start_partial",
+      "description": "Rule starting 10:00: slot 09:00-11:00 overlaps",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "start": "2026-08-03T07:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T08:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_rule_start_before",
+      "description": "Rule starting 10:00: slot 09:00-10:00 does not overlap",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "start": "2026-08-03T07:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_whole_day",
+      "description": "A whole-day rule covers the whole day",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {},
+        "range": {
+          "start": {
+            "utc": "2026-08-02T21:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T21:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_into_next_day_full",
+      "description": "A slot into the next day is not covered by its window",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {},
+        "range": {
+          "start": {
+            "utc": "2026-08-03T20:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T22:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_into_next_day_partial",
+      "description": "A slot into the next day still overlaps",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {},
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T20:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T22:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_overnight_window",
+      "description": "An overnight window covers a slot past midnight",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "22:00-02:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T20:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T22:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_inactive_day",
+      "description": "A day that does not match neither covers nor overlaps",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "tue"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_inverted_slot",
+      "description": "An inverted slot is never active",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:45:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T06:15:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_ranges_invalid",
+      "description": "An invalid rule has no active ranges",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleActiveRanges",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon",
+              "fri-mon"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "ranges": []
+      }
+    },
+    {
+      "id": "wr_at_invalid",
+      "description": "An invalid rule is not active at any moment",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T07:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon",
+              "fri-mon"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_invalid",
+      "description": "An invalid rule does not overlap any slot",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon",
+              "fri-mon"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_window_start",
+      "description": "Window start is inclusive",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T05:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_before_window",
+      "description": "One minute before the window",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T04:59:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_window_last_minute",
+      "description": "Last minute of the window",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T06:59:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_window_end",
+      "description": "Window end is exclusive",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-03T07:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_other_weekday",
+      "description": "Thursday 09:00 is not in mon-wed",
+      "input": {
+        "utc": "2026-08-05T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-06T06:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "mon-wed"
+            ],
+            "hourly": [
+              "08:00-10:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_before_rule_end",
+      "description": "One minute before the rule end",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-05T11:59:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_rule_end",
+      "description": "Rule end is exclusive",
+      "input": {
+        "utc": "2026-08-04T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-05T12:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "start": "2026-08-01T07:00:00.000Z",
+          "end": "2026-08-05T12:00:00.000Z",
+          "repeat": {
+            "hourly": [
+              "09:00-17:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_at_overnight_own_day",
+      "description": "Saturday 01:00 belongs to Friday's overnight window",
+      "input": {
+        "utc": "2026-08-06T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-07T22:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "fri"
+            ],
+            "hourly": [
+              "23:00-02:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_at_overnight_next_day",
+      "description": "The same moment with Saturday as the day: Saturday does not match",
+      "input": {
+        "utc": "2026-08-07T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveAt",
+        "input2": {
+          "utc": "2026-08-07T22:00:00.000Z",
+          "tz": "Europe/Kyiv"
+        },
+        "rule": {
+          "repeat": {
+            "weekly": [
+              "fri"
+            ],
+            "hourly": [
+              "23:00-02:00"
+            ]
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_exact_full",
+      "description": "Slot equal to a window, full by default",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_exact_partial",
+      "description": "Slot equal to a window, partial",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_past_end_full",
+      "description": "Slot running past a window end, full",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "full",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_past_end_partial",
+      "description": "Slot running past a window end, partial",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_in_gap_full",
+      "description": "Slot inside the gap between windows, full",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_in_gap_partial",
+      "description": "Slot inside the gap, partial",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_touching",
+      "description": "Slot touching a window end is not an overlap",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T09:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T10:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_merged_windows",
+      "description": "Adjacent windows are merged for full coverage",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:00-12:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T08:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_empty_slot",
+      "description": "An empty slot is never active",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "09:00-10:00",
+              "10:30-12:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T06:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    },
+    {
+      "id": "wr_during_cell_partial",
+      "description": "Event 10:15-11:00 partly covers the 10:00-10:30 cell",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "10:15-11:00"
+            ]
+          }
+        },
+        "coverage": "partial",
+        "range": {
+          "start": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": true
+      }
+    },
+    {
+      "id": "wr_during_cell_full",
+      "description": "Event 10:15-11:00 does not fully cover the cell",
+      "input": {
+        "utc": "2026-08-02T21:00:00.000Z",
+        "tz": "Europe/Kyiv"
+      },
+      "op": {
+        "type": "whenRuleIsActiveDuring",
+        "rule": {
+          "repeat": {
+            "hourly": [
+              "10:15-11:00"
+            ]
+          }
+        },
+        "range": {
+          "start": {
+            "utc": "2026-08-03T07:00:00.000Z",
+            "tz": "Europe/Kyiv"
+          },
+          "end": {
+            "utc": "2026-08-03T07:30:00.000Z",
+            "tz": "Europe/Kyiv"
+          }
+        }
+      },
+      "expected": {
+        "bool": false
+      }
+    }
+  ]
+}

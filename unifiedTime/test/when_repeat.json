@@ -1,0 +1,436 @@
+{
+  "suite": "when_repeat",
+  "cases": [
+    {
+      "id": "wrp_empty",
+      "description": "Empty repeat: every day, all day",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {}
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_hourly_only",
+      "description": "Hourly only",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "hourly": [
+            "09:00-12:00",
+            "14:00-18:00"
+          ]
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_weekly",
+      "description": "Weekly with hourly",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon-fri",
+            "sun"
+          ],
+          "hourly": [
+            "18:00-23:00"
+          ]
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_monthly",
+      "description": "Monthly",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "monthly": [
+            "1",
+            "25-end"
+          ]
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_yearly",
+      "description": "Yearly",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "yearly": [
+            "350-end"
+          ]
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_count",
+      "description": "Positive count",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon",
+            "wed"
+          ],
+          "count": 10
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_empty_list_not_set",
+      "description": "An empty list does not count as a set pattern",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [],
+          "monthly": [
+            "1"
+          ]
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_time_zone",
+      "description": "timeZone is carried through and not validated",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon"
+          ],
+          "timeZone": "useCenter"
+        }
+      },
+      "expected": {
+        "list": []
+      }
+    },
+    {
+      "id": "wrp_count_zero",
+      "description": "Zero count",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "count": 0
+        }
+      },
+      "expected": {
+        "list": [
+          "countNotPositive"
+        ]
+      }
+    },
+    {
+      "id": "wrp_count_negative",
+      "description": "Negative count",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "count": -1
+        }
+      },
+      "expected": {
+        "list": [
+          "countNotPositive"
+        ]
+      }
+    },
+    {
+      "id": "wrp_invalid_hourly",
+      "description": "A single time is not an hourly range",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "hourly": [
+            "00:00"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "invalidValue"
+        ]
+      }
+    },
+    {
+      "id": "wrp_invalid_weekly",
+      "description": "An invalid weekly value next to a valid one",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon",
+            "fri-mon"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "invalidValue"
+        ]
+      }
+    },
+    {
+      "id": "wrp_invalid_monthly",
+      "description": "An invalid monthly value",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "monthly": [
+            "32"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "invalidValue"
+        ]
+      }
+    },
+    {
+      "id": "wrp_invalid_yearly",
+      "description": "An invalid yearly value",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "yearly": [
+            "367"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "invalidValue"
+        ]
+      }
+    },
+    {
+      "id": "wrp_weekly_and_monthly",
+      "description": "weekly and monthly together",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon"
+          ],
+          "monthly": [
+            "1"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "multiplePatterns"
+        ]
+      }
+    },
+    {
+      "id": "wrp_weekly_and_yearly",
+      "description": "weekly and yearly together",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon"
+          ],
+          "yearly": [
+            "1"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "multiplePatterns"
+        ]
+      }
+    },
+    {
+      "id": "wrp_monthly_and_yearly",
+      "description": "monthly and yearly together",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "monthly": [
+            "1"
+          ],
+          "yearly": [
+            "1"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "multiplePatterns"
+        ]
+      }
+    },
+    {
+      "id": "wrp_all_patterns",
+      "description": "All three patterns are reported once",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "weekly": [
+            "mon"
+          ],
+          "monthly": [
+            "1"
+          ],
+          "yearly": [
+            "1"
+          ]
+        }
+      },
+      "expected": {
+        "list": [
+          "multiplePatterns"
+        ]
+      }
+    },
+    {
+      "id": "wrp_every",
+      "description": "every is not supported yet",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "every": "2w"
+        }
+      },
+      "expected": {
+        "list": [
+          "everyNotSupported"
+        ]
+      }
+    },
+    {
+      "id": "wrp_all_errors",
+      "description": "All repeat-level errors in the reported order",
+      "input": {
+        "utc": "2026-07-15T00:00:00.000Z",
+        "tz": "Etc/UTC"
+      },
+      "op": {
+        "type": "whenRepeatValidation",
+        "repeat": {
+          "count": 0,
+          "hourly": [
+            "9-17"
+          ],
+          "weekly": [
+            "mon"
+          ],
+          "monthly": [
+            "1"
+          ],
+          "every": "3d"
+        }
+      },
+      "expected": {
+        "list": [
+          "countNotPositive",
+          "invalidValue",
+          "multiplePatterns",
+          "everyNotSupported"
+        ]
+      }
+    }
+  ]
+}

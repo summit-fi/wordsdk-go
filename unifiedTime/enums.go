@@ -1,5 +1,7 @@
 package unifiedTime
 
+import "strconv"
+
 /*
 ENUM(
 year, month, day, hour, minute, second, millisecond, microsecond
@@ -122,6 +124,27 @@ func (w Weekday) ToISO() int {
 		panic("invalid weekday: " + w)
 	}
 
+}
+
+func (w *Weekday) FromISO(iso int) Weekday {
+	switch iso {
+	case 1:
+		return "monday"
+	case 2:
+		return "tuesday"
+	case 3:
+		return "wednesday"
+	case 4:
+		return "thursday"
+	case 5:
+		return "friday"
+	case 6:
+		return "saturday"
+	case 7:
+		return "sunday"
+	default:
+		panic("invalid ISO weekday: " + strconv.Itoa(iso))
+	}
 }
 
 /*

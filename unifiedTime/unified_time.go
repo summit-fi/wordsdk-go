@@ -2,6 +2,7 @@ package unifiedTime
 
 import (
 	"errors"
+
 	"github.com/summit-fi/wordsdk-go/utils/ternary"
 
 	"io"
@@ -14,16 +15,34 @@ const (
 	daysInWeek = 7
 )
 
+var now *time.Time
+
 // UnifiedTime wraps time.Time and provides additional utilities.
 type UnifiedTime struct {
 	Time time.Time
 }
 
+// Now returns the current time in loc. A nil loc preserves the location
+// of the time set by SetNow, or uses the system local time for the live clock.
 func Now(loc *time.Location) UnifiedTime {
+	if now != nil {
+		if loc == nil {
+			return UnifiedTime{Time: *now}
+		}
+		return UnifiedTime{Time: now.In(loc)}
+	}
+
 	if loc == nil {
 		loc = time.Local
+		if loc == nil {
+			loc = time.UTC
+		}
 	}
 	return UnifiedTime{Time: time.Now().In(loc)}
+}
+
+func SetNow(t time.Time) {
+	now = &t
 }
 
 func NewUnifiedTime(year, month, day, hour, minute, second, millisecond, microsecond int, loc *time.Location) UnifiedTime {

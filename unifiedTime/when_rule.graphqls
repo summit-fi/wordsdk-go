@@ -1,0 +1,98 @@
+input InputWhenRepeat {
+  count: Int
+  hourly: [WRHourlyRange!]
+  weekly: [WRWeeklyRange!]
+  monthly: [WRMonthlyRange!]
+  yearly: [WRYearlyRange!]
+  every: WREveryRange
+  timeZone: String
+}
+
+input InputWhenRule {
+  start: TimeUTC
+  end: TimeUTC
+  repeat: InputWhenRepeat
+}
+
+type WhenRepeat {
+  count: Int
+  hourly: [WRHourlyRange!]
+  weekly: [WRWeeklyRange!]
+  monthly: [WRMonthlyRange!]
+  yearly: [WRYearlyRange!]
+  every: WREveryRange
+  timeZone: String
+}
+
+type WhenRule {
+  start: TimeUTC
+  end: TimeUTC
+  repeat: WhenRepeat
+}
+
+"""
+The range that represents the valid every XXX statement,
+
+Examples:
+- 30s
+- 5m
+- 4h
+- 12d
+- 2w
+- 6m
+"""
+scalar WREveryRange
+
+"""
+WRHourlyRange represents the valid hours of the day, 0-23, and minutes 0-59. Each value can be a single hour or a range of hours, separated by a dash.
+
+Examples:
+
+00:00
+16:00-17:00
+16:32-17:21
+"""
+scalar WRHourlyRange
+
+"""
+The range that represents the valid days of the month, 1-31, end is for each end of the month
+Each value can be a single day or a range of days, separated by a dash.
+For example, "1-31" represents the first 31 days of the month, while "end" represents the end of any month, e.g., 28th of February, 30th of April, 31st of May, etc.
+
+Examples:
+
+- 1-31
+- 3
+- end
+"""
+scalar WRMonthlyRange
+
+"""
+Examples
+
+mon
+tue
+wed
+thu
+fri
+sat
+sun
+
+mon-wed
+sat-sun
+"""
+scalar WRWeeklyRange
+
+"""
+The range that represents the valid days of the year, 1-366, end is for each end of the year
+Each value can be a single day or a range of days, separated by a dash.
+For example, "4-6" represents the 4th through 6th days of the year, while "end" represents the
+end of any year, e.g. the 365th day of a common year or the 366th day of a leap year.
+
+Examples:
+
+- 3
+- 4-6
+- end
+"""
+scalar WRYearlyRange
