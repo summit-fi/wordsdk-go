@@ -26,9 +26,15 @@ func Now(loc *time.Location) UnifiedTime {
 	if loc == nil {
 		loc = time.Local
 	}
+
+	if loc == nil {
+		loc = time.UTC
+	}
+
 	if now != nil {
 		return UnifiedTime{Time: now.In(loc)}
 	}
+
 	return UnifiedTime{Time: time.Now().In(loc)}
 }
 
