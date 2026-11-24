@@ -22,19 +22,22 @@ type UnifiedTime struct {
 	Time time.Time
 }
 
+// Now returns the current time in loc. A nil loc preserves the location
+// of the time set by SetNow, or uses the system local time for the live clock.
 func Now(loc *time.Location) UnifiedTime {
-	if loc == nil {
-		loc = time.Local
-	}
-
-	if loc == nil {
-		loc = time.UTC
-	}
-
 	if now != nil {
+		if loc == nil {
+			return UnifiedTime{Time: *now}
+		}
 		return UnifiedTime{Time: now.In(loc)}
 	}
 
+	if loc == nil {
+		loc = time.Local
+		if loc == nil {
+			loc = time.UTC
+		}
+	}
 	return UnifiedTime{Time: time.Now().In(loc)}
 }
 
